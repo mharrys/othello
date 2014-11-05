@@ -97,4 +97,5 @@ public interface Othello {
 	 * @param playerId the id of the player that will start the game.
 	 */
 	public void start(String playerId);
+
 }
