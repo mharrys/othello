@@ -32,11 +32,18 @@ public class OthelloLab1IT {
 		throw new IllegalStateException();
 	}
 
+	private Player getHumanPlayer(Othello othello) {
+		if (othello.getPlayers().get(0).getType() == Type.COMPUTER) {
+			return othello.getPlayers().get(1);
+		} else {
+			return othello.getPlayers().get(0);
+		}
+	}
+
 	@Test
 	public void someMovesBetweenAComputerAndHumanTest() {
 		Othello othello = getOthelloFactory().createHumanVersusComputerGame();
-		Player human = (othello.getPlayers().get(0).getType() == Type.COMPUTER) ?
-                othello.getPlayers().get(1) : othello.getPlayers().get(0);
+		Player human = getHumanPlayer(othello);
 		othello.start(human.getId());
 		makeAHumanMove(othello, human);
 		othello.move();
