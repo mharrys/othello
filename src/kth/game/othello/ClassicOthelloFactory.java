@@ -50,7 +50,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @return human player
 	 */
 	private HumanPlayer createHumanPlayer(String name) {
-		return new HumanPlayer(generatePlayerId(), name);
+		return new HumanPlayer(generateId(), name);
 	}
 
 	/**
@@ -60,15 +60,15 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @return computer player
 	 */
 	private ComputerPlayer createComputerPlayer(String name) {
-		return new ComputerPlayer(generatePlayerId(), name);
+		return new ComputerPlayer(generateId(), name);
 	}
 
 	/**
-	 * Generates a unique player id.
+	 * Generates a unique id.
 	 *
-	 * @return unique player id
+	 * @return unique id
 	 */
-	private String generatePlayerId() {
+	private String generateId() {
 		return UUID.randomUUID().toString();
 	}
 	
@@ -81,7 +81,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				Node node = new ClassicNode(generatePlayerId(), i, j);
+				Node node = new ClassicNode(generateId(), i, j);
 				nodes.add(node);
 			}		
 		}
