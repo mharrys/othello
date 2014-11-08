@@ -82,13 +82,8 @@ public class ClassicOthello implements Othello {
 			return false;
 		}
 
-		List<Node> adjacentOpponentNodes = getAdjacentOpponentNodes(player, node);
-		if (adjacentOpponentNodes.isEmpty()) {
-			// there must exist at least one adjacent node of the opponent player
-			return false;
-		}
-
 		// find the first direction which gives at least one capture
+		List<Node> adjacentOpponentNodes = getAdjacentOpponentNodes(player, node);
 		for (Node n : adjacentOpponentNodes) {
 			if (numberOfCaptures(player, node, n) > 0) {
 				return true;
