@@ -7,9 +7,20 @@ import java.util.List;
  */
 public class ClassicBoard implements Board {
 
+	private List<Node> nodes;
+	
+	/**
+	 * Construct a classic Othello board
+	 * 
+	 * @param nodes list of nodes for the board
+	 */
+	public ClassicBoard(List<Node> nodes) {
+		this.nodes = nodes;
+	}
+	
 	@Override
 	public List<Node> getNodes() {
-		return null;
+		return nodes;
 	}
 
 }
