@@ -2,6 +2,8 @@ package kth.game.othello.board;
 
 /**
  * Describes a node in a classic 8x8 Othello board.
+ * 
+ * @author Henrik Hygerth
  */
 public class ClassicNode implements Node {
 	

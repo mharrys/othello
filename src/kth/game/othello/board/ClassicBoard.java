@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Describes a classic 8x8 Othello board.
+ * 
+ * @author Henrik Hygerth
  */
 public class ClassicBoard implements Board {
 
