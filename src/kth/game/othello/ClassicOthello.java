@@ -14,6 +14,7 @@ import java.util.List;
  * @author Henrik Hygerth
  */
 public class ClassicOthello implements Othello {
+
 	private static final int PLAYER1 = 0;
 	private static final int PLAYER2 = 1;
 

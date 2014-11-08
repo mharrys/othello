@@ -4,6 +4,7 @@ package kth.game.othello.player;
  * Describes a human controlled Othello player.
  */
 public class HumanPlayer implements Player {
+
 	private String id;
 	private String name;
 
