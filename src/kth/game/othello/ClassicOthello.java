@@ -5,6 +5,7 @@ import kth.game.othello.board.Node;
 import kth.game.othello.player.Player;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -64,6 +65,37 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public boolean isMoveValid(String playerId, String nodeId) {
+		final Player player = getPlayerFromId(playerId);
+		if (player == null) {
+			// unknown player id
+			return false;
+		}
+
+		final Node node = getNodeFromId(nodeId);
+		if (node == null) {
+			// unknown node id
+			return false;
+		}
+
+		if (node.isMarked()) {
+			// this node is already occupied
+			return false;
+		}
+
+		List<Node> adjacentOpponentNodes = getAdjacentOpponentNodes(player, node);
+		if (adjacentOpponentNodes.isEmpty()) {
+			// there must exist at least one adjacent node of the opponent player
+			return false;
+		}
+
+		// find the first direction which gives at least one capture
+		for (Node n : adjacentOpponentNodes) {
+			if (numberOfCaptures(player, node, n) > 0) {
+				return true;
+			}
+		}
+
+		// no captures could be made from specified player and node
 		return false;
 	}
 
@@ -87,6 +119,103 @@ public class ClassicOthello implements Othello {
 	@Override
 	public void start(String playerId) {
 		playerInTurn = (players.get(PLAYER1).getId() == playerId) ? PLAYER1 : PLAYER2;
+	}
+
+	/**
+	 * Returns the number of captures a player can make from the specified empty node in the specified direction which
+	 * is occupied by the opponent player.
+	 *
+	 * @param player the moving player
+	 * @param from the empty node
+	 * @param direction the adjacent node occupied by the moving player opponent
+	 * @return number of captures
+	 */
+	private int numberOfCaptures(Player player, Node from, Node direction) {
+		return 0;
+	}
+
+	/**
+	 * Returns player from specified id.
+	 *
+	 * @param playerId the player id
+	 * @return the player with specified id, or null if not found
+	 */
+	private Player getPlayerFromId(String playerId) {
+		Player result = null;
+
+		for (Player player : getPlayers()) {
+			if (player.getId() == playerId) {
+				result = player;
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Returns node from specified id.
+	 *
+	 * @param nodeId the node id
+	 * @return the node with specified id, or null if not found
+	 */
+	private Node getNodeFromId(String nodeId) {
+		Node result = null;
+
+		for (Node node : getBoard().getNodes()) {
+			if (node.getId() == nodeId) {
+				result = node;
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Returns list of nodes around specified node that are the opposing player to the specified player.
+	 *
+	 * @param player the playing player
+	 * @param node the pivot node
+	 * @return list of adjacent nodes to the pivot node that are occupied by the opponent player
+	 */
+	private List<Node> getAdjacentOpponentNodes(Player player, Node node) {
+		List<Node> nodes = getAdjacentMarkedNodes(node);
+
+		Iterator<Node> iterator = nodes.iterator();
+		while (iterator.hasNext()) {
+			Node n = iterator.next();
+			if (n.getOccupantPlayerId() == player.getId()) {
+				iterator.remove();
+			}
+		}
+
+		return nodes;
+	}
+
+	/**
+	 * Returns list of marked adjacent nodes to specified node.
+	 *
+	 * @param node the pivot node
+	 * @return list of adjacent nodes to the pivot node that are marked
+	 */
+	private List<Node> getAdjacentMarkedNodes(Node node) {
+		List<Node> nodes = new ArrayList<Node>();
+
+		final int x = node.getXCoordinate();
+		final int y = node.getYCoordinate();
+
+		for (Node n : getBoard().getNodes()) {
+			if (n.isMarked()) {
+				final int adjX = n.getXCoordinate();
+				final int adjY = n.getYCoordinate();
+				if (adjX == x + 1 || adjX == x - 1 || adjY == y + 1 || adjY == y - 1) {
+					nodes.add(n);
+				}
+			}
+		}
+
+		return nodes;
 	}
 
 	/**
