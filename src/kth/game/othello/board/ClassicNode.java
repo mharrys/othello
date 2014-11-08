@@ -14,12 +14,11 @@ public class ClassicNode implements Node {
 	/**
 	 * Construct a node in a classic Othello board
 	 * 
-	 * @param id the id for the node
 	 * @param x the x-coordinate on the board
 	 * @param y the y-coordinate on the board
 	 */
-	public ClassicNode(String id, int x, int y) {
-		this.id = id;
+	public ClassicNode(int x, int y) {
+		this.id = x + "-" + y;
 		this.occupantId = "";
 		this.x = x;
 		this.y = y;

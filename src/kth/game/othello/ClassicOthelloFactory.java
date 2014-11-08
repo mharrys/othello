@@ -81,7 +81,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				Node node = new ClassicNode(generateId(), i, j);
+				Node node = new ClassicNode(i, j);
 				nodes.add(node);
 			}		
 		}
