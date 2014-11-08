@@ -4,12 +4,33 @@ import kth.game.othello.board.Board;
 import kth.game.othello.board.Node;
 import kth.game.othello.player.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Describes a classic game of Othello.
+ * This class represents an classic Othello game.
+ *
+ * @author Mattias Harrysson
  */
 public class ClassicOthello implements Othello {
+	private static int PLAYER1 = 0;
+	private static int PLAYER2 = 1;
+
+	private List<Player> players;
+	private int playerInTurn;
+
+	/**
+	 * Construct a classic Othello with two players.
+	 *
+	 * @param player1 the first player
+	 * @param player2 the second player
+	 */
+	public ClassicOthello(Player player1, Player player2) {
+		players = new ArrayList<Player>();
+		players.add(player1);
+		players.add(player2);
+		playerInTurn = PLAYER1;
+	}
 
 	@Override
 	public Board getBoard() {
@@ -23,12 +44,12 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public Player getPlayerInTurn() {
-		return null;
+		return players.get(playerInTurn);
 	}
 
 	@Override
 	public List<Player> getPlayers() {
-		return null;
+		return players;
 	}
 
 	@Override
@@ -48,22 +69,30 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public List<Node> move() {
+		nextPlayerInTurn();
 		return null;
 	}
 
 	@Override
 	public List<Node> move(String playerId, String nodeId) throws IllegalArgumentException {
+		nextPlayerInTurn();
 		return null;
 	}
 
 	@Override
 	public void start() {
-
+		playerInTurn = PLAYER1;
 	}
 
 	@Override
 	public void start(String playerId) {
-
+		playerInTurn = (players.get(PLAYER1).getId() == playerId) ? PLAYER1 : PLAYER2;
 	}
 
+	/**
+	 * Proceeds to the next player in turn.
+	 */
+	private void nextPlayerInTurn() {
+		playerInTurn = (playerInTurn + 1) % 2;
+	}
 }
