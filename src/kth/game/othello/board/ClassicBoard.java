@@ -60,4 +60,23 @@ public class ClassicBoard implements Board {
 		return nodes.get(cols * x + y);
 	}
 
+	/**
+	 * Returns node from specified id.
+	 *
+	 * @param nodeId the node id
+	 * @return the node with specified id, or null if not found
+	 */
+	public Node getNodeFromId(String nodeId) {
+		Node result = null;
+
+		for (Node node : nodes) {
+			if (node.getId() == nodeId) {
+				result = node;
+				break;
+			}
+		}
+
+		return result;
+	}
+
 }

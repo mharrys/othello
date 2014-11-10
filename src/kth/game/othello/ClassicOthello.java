@@ -77,7 +77,7 @@ public class ClassicOthello implements Othello {
 			return false;
 		}
 
-		final Node node = getNodeFromId(nodeId);
+		final Node node = board.getNodeFromId(nodeId);
 		if (node == null) {
 			// unknown node id
 			return false;
@@ -195,25 +195,6 @@ public class ClassicOthello implements Othello {
 		for (Player player : getPlayers()) {
 			if (player.getId() == playerId) {
 				result = player;
-				break;
-			}
-		}
-
-		return result;
-	}
-
-	/**
-	 * Returns node from specified id.
-	 *
-	 * @param nodeId the node id
-	 * @return the node with specified id, or null if not found
-	 */
-	private Node getNodeFromId(String nodeId) {
-		Node result = null;
-
-		for (Node node : getBoard().getNodes()) {
-			if (node.getId() == nodeId) {
-				result = node;
 				break;
 			}
 		}
