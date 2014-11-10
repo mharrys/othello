@@ -166,7 +166,7 @@ public class ClassicOthello implements Othello {
 			if (!n.isMarked()) {
 				// we hit a unmarked node before finding a node which was occupied by one of the moving players
 				break;
-			} if (n.getOccupantPlayerId() == direction.getOccupantPlayerId()) {
+			} else if (n.getOccupantPlayerId() == direction.getOccupantPlayerId()) {
 				captures.add(n);
 			} else if (n.getOccupantPlayerId() == player.getId()) {
 				validCapture = true;
