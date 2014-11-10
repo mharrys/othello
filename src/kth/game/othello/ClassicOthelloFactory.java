@@ -82,7 +82,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 		final int cols = 8;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				Node node = new ClassicNode(i, j);
+				Node node = new ClassicNode(j, i);
 				nodes.add(node);
 			}		
 		}
