@@ -54,10 +54,10 @@ public class ClassicBoard implements Board {
 	 * @return node on the specified coordinates, or null if coordinates are invalid
 	 */
 	public Node getNode(int x, int y) {
-		if (x < 0 || x >= rows || y < 0 || y >= cols) {
+		if (x < 0 || x >= cols || y < 0 || y >= rows) {
 			return null;
 		}
-		return nodes.get(cols * x + y);
+		return nodes.get(rows * y + x);
 	}
 
 }
