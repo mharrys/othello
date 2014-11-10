@@ -131,7 +131,7 @@ public class ClassicOthello implements Othello {
 	 * @param direction the adjacent node occupied by the moving player opponent
 	 * @return list of captured nodes
 	 */
-	public List<Node> numberOfCaptures(Player player, Node from, Node direction) {
+	private List<Node> numberOfCaptures(Player player, Node from, Node direction) {
 		List<Node> captures = new ArrayList<Node>();
 		List<Node> nodes = board.getNodes();
 
