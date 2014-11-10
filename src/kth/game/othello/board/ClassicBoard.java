@@ -1,5 +1,6 @@
 package kth.game.othello.board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,6 +78,31 @@ public class ClassicBoard implements Board {
 		}
 
 		return result;
+	}
+
+	/**
+	 * Returns list of marked adjacent nodes to specified node.
+	 *
+	 * @param node the pivot node
+	 * @return list of adjacent nodes to the pivot node that are marked
+	 */
+	public List<Node> getAdjacentMarkedNodes(Node node) {
+		List<Node> nodes = new ArrayList<Node>();
+
+		final int x = node.getXCoordinate();
+		final int y = node.getYCoordinate();
+
+		for (Node n : nodes) {
+			if (n.isMarked()) {
+				final int adjX = n.getXCoordinate();
+				final int adjY = n.getYCoordinate();
+				if (adjX == x + 1 || adjX == x - 1 || adjY == y + 1 || adjY == y - 1) {
+					nodes.add(n);
+				}
+			}
+		}
+
+		return nodes;
 	}
 
 }

@@ -210,7 +210,7 @@ public class ClassicOthello implements Othello {
 	 * @return list of adjacent nodes to the pivot node that are occupied by the opponent player
 	 */
 	private List<Node> getAdjacentOpponentNodes(Player player, Node node) {
-		List<Node> nodes = getAdjacentMarkedNodes(node);
+		List<Node> nodes = board.getAdjacentMarkedNodes(node);
 
 		Iterator<Node> iterator = nodes.iterator();
 		while (iterator.hasNext()) {
@@ -224,34 +224,10 @@ public class ClassicOthello implements Othello {
 	}
 
 	/**
-	 * Returns list of marked adjacent nodes to specified node.
-	 *
-	 * @param node the pivot node
-	 * @return list of adjacent nodes to the pivot node that are marked
-	 */
-	private List<Node> getAdjacentMarkedNodes(Node node) {
-		List<Node> nodes = new ArrayList<Node>();
-
-		final int x = node.getXCoordinate();
-		final int y = node.getYCoordinate();
-
-		for (Node n : getBoard().getNodes()) {
-			if (n.isMarked()) {
-				final int adjX = n.getXCoordinate();
-				final int adjY = n.getYCoordinate();
-				if (adjX == x + 1 || adjX == x - 1 || adjY == y + 1 || adjY == y - 1) {
-					nodes.add(n);
-				}
-			}
-		}
-
-		return nodes;
-	}
-
-	/**
 	 * Proceeds to the next player in turn.
 	 */
 	private void nextPlayerInTurn() {
 		playerInTurn = (playerInTurn + 1) % 2;
 	}
+
 }
