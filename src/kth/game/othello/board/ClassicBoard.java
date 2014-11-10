@@ -29,14 +29,18 @@ public class ClassicBoard implements Board {
 	}
 
 	/**
-	 * Returns the number of rows.
+	 * Returns the number of rows in the board.
+	 *
+	 * @return number of rows
 	 */
 	public int getNumRows() {
 		return rows;
 	}
 
 	/**
-	 * Returns the number of columns.
+	 * Returns the number of columns in the board.
+	 *
+	 * @return number of columns
 	 */
 	public int getNumCols() {
 		return cols;
