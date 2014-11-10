@@ -1,6 +1,5 @@
 package kth.game.othello;
 
-import kth.game.othello.board.Board;
 import kth.game.othello.board.ClassicBoard;
 import kth.game.othello.board.Node;
 import kth.game.othello.board.ClassicNode;
@@ -21,26 +20,26 @@ public class ClassicOthelloFactory implements OthelloFactory {
 
 	@Override
 	public Othello createComputerGame() {
-		Board newBoard = createClassicBoard();
+		ClassicBoard board = createClassicBoard();
 		Player player1 = createComputerPlayer("Computer 1");
 		Player player2 = createComputerPlayer("Computer 2");
-		return new ClassicOthello(newBoard, player1, player2);
+		return new ClassicOthello(board, player1, player2);
 	}
 
 	@Override
 	public Othello createHumanGame() {
-		Board newBoard = createClassicBoard();
+		ClassicBoard board = createClassicBoard();
 		Player player1 = createHumanPlayer("Player 1");
 		Player player2 = createHumanPlayer("Player 2");
-		return new ClassicOthello(newBoard, player1, player2);
+		return new ClassicOthello(board, player1, player2);
 	}
 
 	@Override
 	public Othello createHumanVersusComputerGame() {
-		Board newBoard = createClassicBoard();
+		ClassicBoard board = createClassicBoard();
 		Player player1 = createHumanPlayer("Player 1");
 		Player player2 = createComputerPlayer("Computer 1");
-		return new ClassicOthello(newBoard, player1, player2);
+		return new ClassicOthello(board, player1, player2);
 	}
 
 	/**
@@ -77,10 +76,12 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * 
 	 * @return classic board
 	 */
-	private Board createClassicBoard() {
+	private ClassicBoard createClassicBoard() {
 		ArrayList<Node> nodes = new ArrayList<Node>();
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+		final int rows = 8;
+		final int cols = 8;
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
 				Node node = new ClassicNode(i, j);
 				nodes.add(node);
 			}		
