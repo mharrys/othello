@@ -1,6 +1,7 @@
 package kth.game.othello;
 
 import kth.game.othello.board.Board;
+import kth.game.othello.board.ClassicBoard;
 import kth.game.othello.board.Node;
 import kth.game.othello.player.Player;
 
@@ -12,21 +13,26 @@ import java.util.List;
  * This class represents an classic Othello game.
  *
  * @author Mattias Harrysson
+ * @author Henrik Hygerth
  */
 public class ClassicOthello implements Othello {
+
 	private static final int PLAYER1 = 0;
 	private static final int PLAYER2 = 1;
 
+	private ClassicBoard board;
 	private List<Player> players;
 	private int playerInTurn;
 
 	/**
 	 * Construct a classic Othello with two players.
 	 *
+	 * @param board the board
 	 * @param player1 the first player
 	 * @param player2 the second player
 	 */
-	public ClassicOthello(Player player1, Player player2) {
+	public ClassicOthello(ClassicBoard board, Player player1, Player player2) {
+		this.board = board;
 		players = new ArrayList<Player>();
 		players.add(player1);
 		players.add(player2);
@@ -35,7 +41,7 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public Board getBoard() {
-		return null;
+		return board;
 	}
 
 	@Override
