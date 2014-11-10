@@ -29,6 +29,20 @@ public class ClassicBoard implements Board {
 	}
 
 	/**
+	 * Returns the number of rows.
+	 */
+	public int getNumRows() {
+		return rows;
+	}
+
+	/**
+	 * Returns the number of columns.
+	 */
+	public int getNumCols() {
+		return cols;
+	}
+
+	/**
 	 * Returns node on the specified coordinates in the grid.
 	 *
 	 * @param x the x-coordinate
