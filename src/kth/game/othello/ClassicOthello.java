@@ -85,7 +85,7 @@ public class ClassicOthello implements Othello {
 		// find the first direction which gives at least one capture
 		List<Node> adjacentOpponentNodes = getAdjacentOpponentNodes(player, node);
 		for (Node n : adjacentOpponentNodes) {
-			if (numberOfCaptures(player, node, n) > 0) {
+			if (!numberOfCaptures(player, node, n).isEmpty()) {
 				return true;
 			}
 		}
@@ -117,16 +117,18 @@ public class ClassicOthello implements Othello {
 	}
 
 	/**
-	 * Returns the number of captures a player can make from the specified empty node in the specified direction which
+	 * Returns the captured nodes that a player can make from the specified empty node in the specified direction which
 	 * is occupied by the opponent player.
 	 *
 	 * @param player the moving player
 	 * @param from the empty node
 	 * @param direction the adjacent node occupied by the moving player opponent
-	 * @return number of captures
+	 * @return list of captured nodes
 	 */
-	private int numberOfCaptures(Player player, Node from, Node direction) {
-		return 0;
+	private List<Node> numberOfCaptures(Player player, Node from, Node direction) {
+		List<Node> captures = new ArrayList<Node>();
+
+		return captures;
 	}
 
 	/**
