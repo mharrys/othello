@@ -46,10 +46,10 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public List<Node> getNodesToSwap(String playerId, String nodeId) {
-		final Player player = getPlayerFromId(playerId);
 		List<Node> nodesToSwap = new ArrayList<Node>();
+		final Player player = getPlayerFromId(playerId);
 		Node startNode = board.getNodeFromId(nodeId);
-		if (startNode == null) {
+		if (startNode == null || player == null) {
 			return nodesToSwap;
 		}
 		for (Node node : getAdjacentOpponentNodes(player, startNode)) {
