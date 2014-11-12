@@ -4,6 +4,7 @@ package kth.game.othello.board;
  * Describes a node in a classic 8x8 Othello board.
  * 
  * @author Henrik Hygerth
+ * @author Mattias Harrysson
  */
 public class ClassicNode implements Node {
 	
@@ -21,10 +22,9 @@ public class ClassicNode implements Node {
 	 */
 	public ClassicNode(int x, int y) {
 		this.id = x + "-" + y;
-		this.occupantId = "";
 		this.x = x;
 		this.y = y;
-		this.marked = false;
+		unmark();
 	}
 	
 	@Override
@@ -50,6 +50,24 @@ public class ClassicNode implements Node {
 	@Override
 	public boolean isMarked() {
 		return marked;
+	}
+
+	/**
+	 * Sets node state to marked by specified playerId.
+	 *
+	 * @param playerId the player to occupy this node
+	 */
+	public void mark(String playerId) {
+		occupantId = playerId;
+		marked = true;
+	}
+
+	/**
+	 * Sets node state to unmarked.
+	 */
+	public void unmark() {
+		occupantId = "";
+		marked = false;
 	}
 
 }
