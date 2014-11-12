@@ -13,20 +13,53 @@ public class ClassicBoard implements Board {
 
 	private final int rows = 8;
 	private final int cols = 8;
-	private List<Node> nodes;
+	private List<ClassicNode> nodes;
 	
 	/**
 	 * Construct a classic 8x8 Othello board.
 	 * 
 	 * @param nodes list of nodes for the board
 	 */
-	public ClassicBoard(List<Node> nodes) {
+	public ClassicBoard(List<ClassicNode> nodes) {
 		this.nodes = nodes;
 	}
 	
 	@Override
 	public List<Node> getNodes() {
-		return nodes;
+		return (List<Node>) (Object) nodes;
+	}
+
+	/**
+	 * Resets this board to starting state with four discs placed in the middle of the board which belongs to specified
+	 * players.
+	 *
+	 * @param playerId1 the id of player 1
+	 * @param playerId2 the id of player 2
+	 */
+	public void reset(String playerId1, String playerId2) {
+		for (ClassicNode n : nodes) {
+			n.unmark();
+		}
+
+		// place four discs in the middle of the board
+		getNode(3, 3).mark(playerId1);
+		getNode(4, 3).mark(playerId2);
+		getNode(3, 4).mark(playerId2);
+		getNode(4, 4).mark(playerId1);
+	}
+
+	/**
+	 * Swaps node in specified list to specified playerId.
+	 *
+	 * @param nodesToSwap the list of nodes to swap
+	 * @param playerId the player id to mark with
+	 */
+	public void swapNodes(List<Node> nodesToSwap, String playerId) {
+		for (Node n : nodesToSwap) {
+			int x = n.getXCoordinate();
+			int y = n.getYCoordinate();
+			getNode(x, y).mark(playerId);
+		}
 	}
 
 	/**
@@ -54,7 +87,7 @@ public class ClassicBoard implements Board {
 	 * @param y the y-coordinate
 	 * @return node on the specified coordinates, or null if coordinates are invalid
 	 */
-	public Node getNode(int x, int y) {
+	public ClassicNode getNode(int x, int y) {
 		if (x < 0 || x >= cols || y < 0 || y >= rows) {
 			return null;
 		}
