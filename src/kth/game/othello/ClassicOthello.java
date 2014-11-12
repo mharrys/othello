@@ -112,7 +112,7 @@ public class ClassicOthello implements Othello {
 	}
 
 	@Override
-	public List<Node> move() {
+	public List<Node> move() throws IllegalStateException {
 		nextPlayerInTurn();
 		return null;
 	}
