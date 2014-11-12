@@ -8,6 +8,7 @@ import kth.game.othello.player.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 /**
  * This class represents an classic Othello game.
@@ -123,7 +124,11 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public void start() {
-		playerInTurn = PLAYER1;
+		Random random = new Random();
+		random.setSeed(System.currentTimeMillis());
+		int min = PLAYER1;
+		int max = PLAYER2;
+		playerInTurn = random.nextInt((max - min) + 1) + min;
 	}
 
 	@Override
