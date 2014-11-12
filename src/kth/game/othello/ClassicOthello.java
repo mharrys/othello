@@ -168,7 +168,7 @@ public class ClassicOthello implements Othello {
 	}
 
 	/**
-	 * Make move by specified player to specified node by.
+	 * Make move by specified player to specified node.
 	 *
 	 * @param playerId the moving player id
 	 * @param nodeId the node in which the player is moving to
