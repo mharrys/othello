@@ -75,6 +75,11 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public boolean hasValidMove(String playerId) {
+		for (Node n : board.getNodes()) {
+			if (isMoveValid(playerId, n.getId())) {
+				return true;
+			}
+		}
 		return false;
 	}
 
