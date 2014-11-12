@@ -111,14 +111,41 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public List<Node> move() throws IllegalStateException {
-		nextPlayerInTurn();
-		return null;
+		Player player = getPlayerInTurn();
+
+		if (player.getType() != Player.Type.COMPUTER) {
+			throw new IllegalStateException("Computer is not in turn.");
+		}
+
+		String nodeId = "";
+		for (Node n : board.getNodes()) {
+			if (isMoveValid(player.getId(), n.getId())) {
+				nodeId = n.getId();
+				break;
+			}
+		}
+
+		if (nodeId.isEmpty()) {
+			// no valid move could be found
+			return new ArrayList<Node>();
+		} else {
+			return makeMove(player.getId(), nodeId);
+		}
 	}
 
 	@Override
 	public List<Node> move(String playerId, String nodeId) throws IllegalArgumentException {
-		nextPlayerInTurn();
-		return null;
+		Player player = getPlayerInTurn();
+
+		if (player.getId() != playerId) {
+			throw new IllegalArgumentException("Player '" + playerId + "' is not in turn.");
+		}
+
+		if (!isMoveValid(playerId, nodeId)) {
+			throw new IllegalArgumentException("Invalid move.");
+		}
+
+		return makeMove(playerId, nodeId);
 	}
 
 	@Override
@@ -133,6 +160,24 @@ public class ClassicOthello implements Othello {
 	@Override
 	public void start(String playerId) {
 		playerInTurn = (players.get(PLAYER1).getId() == playerId) ? PLAYER1 : PLAYER2;
+	}
+
+	/**
+	 * Make move by specified player to specified node by.
+	 *
+	 * @param playerId the moving player id
+	 * @param nodeId the node in which the player is moving to
+	 * @return
+	 */
+	private List<Node> makeMove(String playerId, String nodeId) {
+		List<Node> nodes = getNodesToSwap(playerId, nodeId);
+		// include the node where the player made the move to be updated and returned
+		nodes.add(board.getNodeFromId(nodeId));
+
+		board.swapNodes(nodes, playerId);
+		nextPlayerInTurn();
+
+		return nodes;
 	}
 
 	/**
