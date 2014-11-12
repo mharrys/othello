@@ -51,6 +51,7 @@ public class ClassicOthello implements Othello {
 
 		final Player player = getPlayerFromId(playerId);
 		final Node startNode = board.getNodeFromId(nodeId);
+
 		if (startNode == null || player == null) {
 			return nodesToSwap;
 		}
@@ -85,12 +86,9 @@ public class ClassicOthello implements Othello {
 	@Override
 	public boolean isMoveValid(String playerId, String nodeId) {
 		final Player player = getPlayerFromId(playerId);
-		if (player == null) {
-			return false;
-		}
-
 		final Node node = board.getNodeFromId(nodeId);
-		if (node == null) {
+
+		if (player == null || node == null) {
 			return false;
 		}
 
