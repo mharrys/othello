@@ -27,6 +27,13 @@ public class ClassicNode implements Node {
 		unmark();
 	}
 	
+	public ClassicNode(int x, int y, String playerId) {
+		this.id = x + "-" + y;
+		this.x = x;
+		this.y = y;
+		mark(playerId);
+	}
+	
 	@Override
 	public String getId() {
 		return id;
@@ -57,7 +64,7 @@ public class ClassicNode implements Node {
 	 *
 	 * @param playerId the player to occupy this node
 	 */
-	public void mark(String playerId) {
+	private void mark(String playerId) {
 		occupantId = playerId;
 		marked = true;
 	}
@@ -65,7 +72,7 @@ public class ClassicNode implements Node {
 	/**
 	 * Sets node state to unmarked.
 	 */
-	public void unmark() {
+	private void unmark() {
 		occupantId = "";
 		marked = false;
 	}
