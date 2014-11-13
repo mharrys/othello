@@ -290,7 +290,7 @@ public class ClassicOthello implements Othello {
 	 * @param nodeId the node id
 	 * @return the node with specified id, or null if not found
 	 */
-	public Node getNodeFromId(String nodeId) {
+	private Node getNodeFromId(String nodeId) {
 		Node result = null;
 
 		for (Node node : getBoard().getNodes()) {
@@ -309,7 +309,7 @@ public class ClassicOthello implements Othello {
 	 * @param node the pivot node
 	 * @return list of adjacent nodes to the pivot node that are marked
 	 */
-	public List<Node> getAdjacentMarkedNodes(Node node) {
+	private List<Node> getAdjacentMarkedNodes(Node node) {
 		List<Node> nodes = new ArrayList<Node>();
 
 		final int x = node.getXCoordinate();
