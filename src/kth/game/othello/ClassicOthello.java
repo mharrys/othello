@@ -20,8 +20,6 @@ public class ClassicOthello implements Othello {
 
 	private static final int PLAYER1 = 0;
 	private static final int PLAYER2 = 1;
-	private static final int rows = 8;
-	private static final int cols = 8;
 	
 	private BoardFactory boardFactory;
 	private Board board;
