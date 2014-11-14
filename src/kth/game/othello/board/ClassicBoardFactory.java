@@ -11,15 +11,12 @@ import kth.game.othello.player.Player;
  * @author Henrik Hygerth
  */
 public class ClassicBoardFactory implements BoardFactory {
-	private int rows = 0;
-	private int cols = 0;
-	public ClassicBoardFactory(int size) {
-		this.rows = size;
-		this.cols = size;
+	
+	public ClassicBoardFactory() {
 	}
 	
 	@Override
-	public Board constructBoard(Player player1, Player player2) {
+	public Board constructBoard(int rows, int cols, Player player1, Player player2) {
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
@@ -52,16 +49,6 @@ public class ClassicBoardFactory implements BoardFactory {
 		}
 		
 		return new ClassicBoard(nodes);
-	}
-
-	@Override
-	public int getRows() {
-		return rows;
-	}
-
-	@Override
-	public int getCols() {
-		return cols;
 	}
 
 }

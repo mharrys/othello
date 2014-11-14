@@ -20,7 +20,9 @@ public class ClassicOthello implements Othello {
 
 	private static final int PLAYER1 = 0;
 	private static final int PLAYER2 = 1;
-
+	private static final int rows = 8;
+	private static final int cols = 8;
+	
 	private BoardFactory boardFactory;
 	private Board board;
 	private List<Player> players;
@@ -201,8 +203,8 @@ public class ClassicOthello implements Othello {
 		final int adjX = direction.getXCoordinate();
 		final int adjY = direction.getYCoordinate();
 		
-		final int rows = boardFactory.getRows();
-		final int cols = boardFactory.getCols();
+		final int rows = getRows();
+		final int cols = getCols();
 
 		int start = rows * y + x;
 		int step = 0;
@@ -333,6 +335,22 @@ public class ClassicOthello implements Othello {
 	 */
 	private void nextPlayerInTurn() {
 		playerInTurn = (playerInTurn + 1) % 2;
+	}
+	
+	/**
+	 * Gets number of rows
+	 * @return number of rows
+	 */
+	private int getRows() {
+		return rows;
+	}
+
+	/**
+	 * Gets number of cols
+	 * @return number of cols
+	 */
+	private int getCols() {
+		return cols;
 	}
 
 }

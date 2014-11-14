@@ -17,7 +17,7 @@ public interface BoardFactory {
 	 * 
 	 * @return An Board game
 	 */
-	public Board constructBoard(Player player1, Player player2);
+	public Board constructBoard(int rows, int cols, Player player1, Player player2);
 
 	/**
 	 * Reconstructs a Board.
@@ -25,16 +25,5 @@ public interface BoardFactory {
 	 * @return An Board game
 	 */
 	public Board constructBoard(List<Node> nodes, List<Node> nodesToSwap, String playerId);
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public int getRows();
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public int getCols();
+
 }
