@@ -87,6 +87,12 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public boolean isActive() {
+		for (Player player : getPlayers()) {
+			if (hasValidMove(player.getId())) {
+				return true;
+			}
+		}
+	
 		return false;
 	}
 
@@ -128,11 +134,12 @@ public class ClassicOthello implements Othello {
 		for (Node n : getBoard().getNodes()) {
 			if (isMoveValid(player.getId(), n.getId())) {
 				nodeId = n.getId();
-				break;
+				return move(player.getId(), nodeId);
 			}
 		}
 
-		return move(player.getId(), nodeId);
+		nextPlayerInTurn();
+		return new ArrayList<Node>();
 	}
 
 	@Override
