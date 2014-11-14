@@ -18,7 +18,7 @@ public interface BoardFactory {
 	 * @param player2 the second player
 	 * @return constructed board game
 	 */
-	public Board constructBoard(int rows, int cols, Player player1, Player player2);
+	public Board constructBoard(Player player1, Player player2);
 
 	/**
 	 * Reconstructs a board with a collection of nodes to be occupied by specified player.

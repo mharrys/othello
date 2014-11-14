@@ -24,8 +24,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 		Player player1 = createComputerPlayer("Computer 1");
 		Player player2 = createComputerPlayer("Computer 2");
 		BoardFactory boardFactory = createClassicBoardFactory();
-		Board board = boardFactory.constructBoard(8, 8, player1, player2);
-		return new ClassicOthello(boardFactory, board, player1, player2);
+		return new ClassicOthello(boardFactory, player1, player2);
 	}
 
 	@Override
@@ -33,8 +32,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 		Player player1 = createHumanPlayer("Player 1");
 		Player player2 = createHumanPlayer("Player 2");
 		BoardFactory boardFactory = createClassicBoardFactory();
-		Board board = boardFactory.constructBoard(8, 8, player1, player2);
-		return new ClassicOthello(boardFactory, board, player1, player2);
+		return new ClassicOthello(boardFactory, player1, player2);
 	}
 
 	@Override
@@ -42,8 +40,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 		Player player1 = createHumanPlayer("Player 1");
 		Player player2 = createComputerPlayer("Computer 1");
 		BoardFactory boardFactory = createClassicBoardFactory();
-		Board board = boardFactory.constructBoard(8, 8, player1, player2);
-		return new ClassicOthello(boardFactory, board, player1, player2);
+		return new ClassicOthello(boardFactory, player1, player2);
 	}
 
 	/**

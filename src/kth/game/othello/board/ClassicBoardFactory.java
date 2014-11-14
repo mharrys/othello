@@ -21,7 +21,7 @@ public class ClassicBoardFactory implements BoardFactory {
 	}
 	
 	@Override
-	public Board constructBoard(int rows, int cols, Player player1, Player player2) {
+	public Board constructBoard(Player player1, Player player2) {
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {

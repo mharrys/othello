@@ -31,17 +31,17 @@ public class ClassicOthello implements Othello {
 	/**
 	 * Construct a classic Othello with two players.
 	 *
-	 * @param board the board
+	 * @param boardFactory the board factory to use for constructing boards
 	 * @param player1 the first player
 	 * @param player2 the second player
 	 */
-	public ClassicOthello(BoardFactory boardFactory, Board board, Player player1, Player player2) {
+	public ClassicOthello(BoardFactory boardFactory, Player player1, Player player2) {
 		this.boardFactory = boardFactory;
-		this.board = board;
+		this.board = boardFactory.constructBoard(player1, player2);
+
 		players = new ArrayList<Player>();
 		players.add(player1);
 		players.add(player2);
-		playerInTurn = PLAYER1;
 	}
 
 	@Override
