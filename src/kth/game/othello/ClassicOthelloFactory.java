@@ -3,8 +3,7 @@ package kth.game.othello;
 import kth.game.othello.board.ClassicBoard;
 import kth.game.othello.board.Node;
 import kth.game.othello.board.ClassicNode;
-import kth.game.othello.player.ComputerPlayer;
-import kth.game.othello.player.HumanPlayer;
+import kth.game.othello.player.OthelloPlayer;
 import kth.game.othello.player.Player;
 
 import java.util.ArrayList;
@@ -18,27 +17,30 @@ import java.util.UUID;
  */
 public class ClassicOthelloFactory implements OthelloFactory {
 
+	private static final String PLAYER1_NAME = "Player 1";
+	private static final String PLAYER2_NAME = "Player 2";
+
 	@Override
 	public Othello createComputerGame() {
 		ClassicBoard board = createClassicBoard();
-		Player player1 = createComputerPlayer("Computer 1");
-		Player player2 = createComputerPlayer("Computer 2");
+		Player player1 = createComputerPlayer(PLAYER1_NAME);
+		Player player2 = createComputerPlayer(PLAYER2_NAME);
 		return new ClassicOthello(board, player1, player2);
 	}
 
 	@Override
 	public Othello createHumanGame() {
 		ClassicBoard board = createClassicBoard();
-		Player player1 = createHumanPlayer("Player 1");
-		Player player2 = createHumanPlayer("Player 2");
+		Player player1 = createHumanPlayer(PLAYER1_NAME);
+		Player player2 = createHumanPlayer(PLAYER2_NAME);
 		return new ClassicOthello(board, player1, player2);
 	}
 
 	@Override
 	public Othello createHumanVersusComputerGame() {
 		ClassicBoard board = createClassicBoard();
-		Player player1 = createHumanPlayer("Player 1");
-		Player player2 = createComputerPlayer("Computer 1");
+		Player player1 = createHumanPlayer(PLAYER1_NAME);
+		Player player2 = createComputerPlayer(PLAYER2_NAME);
 		return new ClassicOthello(board, player1, player2);
 	}
 
@@ -48,8 +50,8 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param name the name of the player
 	 * @return human player
 	 */
-	private HumanPlayer createHumanPlayer(String name) {
-		return new HumanPlayer(generateId(), name);
+	private OthelloPlayer createHumanPlayer(String name) {
+		return new OthelloPlayer(generateId(), name, Player.Type.HUMAN);
 	}
 
 	/**
@@ -58,8 +60,8 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param name the name of the player
 	 * @return computer player
 	 */
-	private ComputerPlayer createComputerPlayer(String name) {
-		return new ComputerPlayer(generateId(), name);
+	private OthelloPlayer createComputerPlayer(String name) {
+		return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER);
 	}
 
 	/**
