@@ -1,12 +1,10 @@
 package kth.game.othello;
 
-import kth.game.othello.board.ClassicBoard;
-import kth.game.othello.board.Node;
-import kth.game.othello.board.ClassicNode;
 import kth.game.othello.player.OthelloPlayer;
+import kth.game.othello.board.BoardFactory;
+import kth.game.othello.board.ClassicBoardFactory;
 import kth.game.othello.player.Player;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -22,26 +20,26 @@ public class ClassicOthelloFactory implements OthelloFactory {
 
 	@Override
 	public Othello createComputerGame() {
-		ClassicBoard board = createClassicBoard();
 		Player player1 = createComputerPlayer(PLAYER1_NAME);
 		Player player2 = createComputerPlayer(PLAYER2_NAME);
-		return new ClassicOthello(board, player1, player2);
+		BoardFactory boardFactory = createClassicBoardFactory();
+		return new ClassicOthello(boardFactory, player1, player2);
 	}
 
 	@Override
 	public Othello createHumanGame() {
-		ClassicBoard board = createClassicBoard();
 		Player player1 = createHumanPlayer(PLAYER1_NAME);
 		Player player2 = createHumanPlayer(PLAYER2_NAME);
-		return new ClassicOthello(board, player1, player2);
+		BoardFactory boardFactory = createClassicBoardFactory();
+		return new ClassicOthello(boardFactory, player1, player2);
 	}
 
 	@Override
 	public Othello createHumanVersusComputerGame() {
-		ClassicBoard board = createClassicBoard();
 		Player player1 = createHumanPlayer(PLAYER1_NAME);
 		Player player2 = createComputerPlayer(PLAYER2_NAME);
-		return new ClassicOthello(board, player1, player2);
+		BoardFactory boardFactory = createClassicBoardFactory();
+		return new ClassicOthello(boardFactory, player1, player2);
 	}
 
 	/**
@@ -74,21 +72,12 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	}
 	
 	/**
-	 * Creates a classic 8x8 Othello board
+	 * Creates a classic board factory
 	 * 
-	 * @return classic board
+	 * @return classic board factory
 	 */
-	private ClassicBoard createClassicBoard() {
-		ArrayList<Node> nodes = new ArrayList<Node>();
-		final int rows = 8;
-		final int cols = 8;
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				Node node = new ClassicNode(j, i);
-				nodes.add(node);
-			}		
-		}
-		return new ClassicBoard(nodes);
+	private ClassicBoardFactory createClassicBoardFactory() {
+		return new ClassicBoardFactory(8, 8);
 	}
 
 }

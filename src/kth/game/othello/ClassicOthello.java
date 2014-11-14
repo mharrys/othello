@@ -1,7 +1,7 @@
 package kth.game.othello;
 
 import kth.game.othello.board.Board;
-import kth.game.othello.board.ClassicBoard;
+import kth.game.othello.board.BoardFactory;
 import kth.game.othello.board.Node;
 import kth.game.othello.player.Player;
 
@@ -20,24 +20,26 @@ public class ClassicOthello implements Othello {
 
 	private static final int PLAYER1 = 0;
 	private static final int PLAYER2 = 1;
-
-	private ClassicBoard board;
+	
+	private BoardFactory boardFactory;
+	private Board board;
 	private List<Player> players;
 	private int playerInTurn;
 
 	/**
 	 * Construct a classic Othello with two players.
 	 *
-	 * @param board the board
+	 * @param boardFactory the board factory to use for constructing boards
 	 * @param player1 the first player
 	 * @param player2 the second player
 	 */
-	public ClassicOthello(ClassicBoard board, Player player1, Player player2) {
-		this.board = board;
+	public ClassicOthello(BoardFactory boardFactory, Player player1, Player player2) {
+		this.boardFactory = boardFactory;
+		this.board = boardFactory.constructBoard(player1, player2);
+
 		players = new ArrayList<Player>();
 		players.add(player1);
 		players.add(player2);
-		playerInTurn = PLAYER1;
 	}
 
 	@Override
@@ -50,7 +52,7 @@ public class ClassicOthello implements Othello {
 		List<Node> nodesToSwap = new ArrayList<Node>();
 
 		final Player player = getPlayerFromId(playerId);
-		final Node startNode = board.getNodeFromId(nodeId);
+		final Node startNode = getNodeFromId(nodeId);
 
 		if (startNode == null || player == null) {
 			return nodesToSwap;
@@ -75,6 +77,11 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public boolean hasValidMove(String playerId) {
+		for (Node n : getBoard().getNodes()) {
+			if (isMoveValid(playerId, n.getId())) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -86,7 +93,7 @@ public class ClassicOthello implements Othello {
 	@Override
 	public boolean isMoveValid(String playerId, String nodeId) {
 		final Player player = getPlayerFromId(playerId);
-		final Node node = board.getNodeFromId(nodeId);
+		final Node node = getNodeFromId(nodeId);
 
 		if (player == null || node == null) {
 			return false;
@@ -111,14 +118,36 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public List<Node> move() throws IllegalStateException {
-		nextPlayerInTurn();
-		return null;
+		Player player = getPlayerInTurn();
+
+		if (player.getType() != Player.Type.COMPUTER) {
+			throw new IllegalStateException("Computer is not in turn.");
+		}
+
+		String nodeId = "";
+		for (Node n : getBoard().getNodes()) {
+			if (isMoveValid(player.getId(), n.getId())) {
+				nodeId = n.getId();
+				break;
+			}
+		}
+
+		return move(player.getId(), nodeId);
 	}
 
 	@Override
 	public List<Node> move(String playerId, String nodeId) throws IllegalArgumentException {
-		nextPlayerInTurn();
-		return null;
+		Player player = getPlayerInTurn();
+
+		if (player.getId() != playerId) {
+			throw new IllegalArgumentException("Player '" + playerId + "' is not in turn.");
+		}
+
+		if (!isMoveValid(playerId, nodeId)) {
+			throw new IllegalArgumentException("Invalid move.");
+		}
+
+		return makeMove(playerId, nodeId);
 	}
 
 	@Override
@@ -133,6 +162,25 @@ public class ClassicOthello implements Othello {
 	@Override
 	public void start(String playerId) {
 		playerInTurn = (players.get(PLAYER1).getId() == playerId) ? PLAYER1 : PLAYER2;
+	}
+
+	/**
+	 * Make move by specified player to specified node.
+	 *
+	 * @param playerId the moving player id
+	 * @param nodeId the node in which the player is moving to
+	 * @return
+	 */
+	private List<Node> makeMove(String playerId, String nodeId) {
+		List<Node> nodes = getNodesToSwap(playerId, nodeId);
+		// include the node where the player made the move to be updated and returned
+		nodes.add(getNodeFromId(nodeId));
+		
+		this.board = boardFactory.constructBoard(board.getNodes(), nodes, playerId);
+		
+		nextPlayerInTurn();
+
+		return nodes;
 	}
 
 	/**
@@ -153,8 +201,20 @@ public class ClassicOthello implements Othello {
 		final int adjX = direction.getXCoordinate();
 		final int adjY = direction.getYCoordinate();
 
-		final int rows = board.getNumRows();
-		final int cols = board.getNumCols();
+		int rows = 0;
+		int cols = 0;
+		for (Node n : nodes) {
+			if (n.getXCoordinate() > cols) {
+				cols = n.getXCoordinate();
+			}
+
+			if (n.getYCoordinate() > rows) {
+				rows = n.getYCoordinate();
+			}
+		}
+		// increment to account for zero based coordinates
+		rows++;
+		cols++;
 
 		int start = rows * y + x;
 		int step = 0;
@@ -223,13 +283,57 @@ public class ClassicOthello implements Othello {
 	 * @return list of adjacent nodes to the pivot node that are occupied by the opponent player
 	 */
 	private List<Node> getAdjacentOpponentNodes(Player player, Node node) {
-		List<Node> nodes = board.getAdjacentMarkedNodes(node);
+		List<Node> nodes = getAdjacentMarkedNodes(node);
 
 		Iterator<Node> iterator = nodes.iterator();
 		while (iterator.hasNext()) {
 			Node n = iterator.next();
 			if (n.getOccupantPlayerId() == player.getId()) {
 				iterator.remove();
+			}
+		}
+
+		return nodes;
+	}
+	
+	/**
+	 * Returns node from specified id.
+	 *
+	 * @param nodeId the node id
+	 * @return the node with specified id, or null if not found
+	 */
+	private Node getNodeFromId(String nodeId) {
+		Node result = null;
+
+		for (Node node : getBoard().getNodes()) {
+			if (node.getId() == nodeId) {
+				result = node;
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Returns list of marked adjacent nodes to specified node.
+	 *
+	 * @param node the pivot node
+	 * @return list of adjacent nodes to the pivot node that are marked
+	 */
+	private List<Node> getAdjacentMarkedNodes(Node node) {
+		List<Node> nodes = new ArrayList<Node>();
+
+		final int x = node.getXCoordinate();
+		final int y = node.getYCoordinate();
+
+		for (Node n : getBoard().getNodes()) {
+			if (n.isMarked()) {
+				final int adjX = n.getXCoordinate();
+				final int adjY = n.getYCoordinate();
+				if (adjX == x + 1 || adjX == x - 1 || adjY == y + 1 || adjY == y - 1) {
+					nodes.add(n);
+				}
 			}
 		}
 
