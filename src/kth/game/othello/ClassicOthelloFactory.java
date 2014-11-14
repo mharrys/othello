@@ -1,6 +1,5 @@
 package kth.game.othello;
 
-import kth.game.othello.board.Board;
 import kth.game.othello.board.BoardFactory;
 import kth.game.othello.board.ClassicBoardFactory;
 import kth.game.othello.player.ComputerPlayer;
