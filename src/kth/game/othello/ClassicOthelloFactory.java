@@ -3,8 +3,7 @@ package kth.game.othello;
 import kth.game.othello.board.ClassicBoard;
 import kth.game.othello.board.Node;
 import kth.game.othello.board.ClassicNode;
-import kth.game.othello.player.ComputerPlayer;
-import kth.game.othello.player.HumanPlayer;
+import kth.game.othello.player.OthelloPlayer;
 import kth.game.othello.player.Player;
 
 import java.util.ArrayList;
@@ -48,8 +47,8 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param name the name of the player
 	 * @return human player
 	 */
-	private HumanPlayer createHumanPlayer(String name) {
-		return new HumanPlayer(generateId(), name);
+	private OthelloPlayer createHumanPlayer(String name) {
+		return new OthelloPlayer(generateId(), name, Player.Type.HUMAN);
 	}
 
 	/**
@@ -58,8 +57,8 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param name the name of the player
 	 * @return computer player
 	 */
-	private ComputerPlayer createComputerPlayer(String name) {
-		return new ComputerPlayer(generateId(), name);
+	private OthelloPlayer createComputerPlayer(String name) {
+		return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER);
 	}
 
 	/**
