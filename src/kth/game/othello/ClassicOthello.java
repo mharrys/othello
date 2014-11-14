@@ -202,9 +202,21 @@ public class ClassicOthello implements Othello {
 		final int y = from.getYCoordinate();
 		final int adjX = direction.getXCoordinate();
 		final int adjY = direction.getYCoordinate();
-		
-		final int rows = getRows();
-		final int cols = getCols();
+
+		int rows = 0;
+		int cols = 0;
+		for (Node n : nodes) {
+			if (n.getXCoordinate() > cols) {
+				cols = n.getXCoordinate();
+			}
+
+			if (n.getYCoordinate() > rows) {
+				rows = n.getYCoordinate();
+			}
+		}
+		// increment to account for zero based coordinates
+		rows++;
+		cols++;
 
 		int start = rows * y + x;
 		int step = 0;
@@ -335,22 +347,6 @@ public class ClassicOthello implements Othello {
 	 */
 	private void nextPlayerInTurn() {
 		playerInTurn = (playerInTurn + 1) % 2;
-	}
-	
-	/**
-	 * Gets number of rows
-	 * @return number of rows
-	 */
-	private int getRows() {
-		return rows;
-	}
-
-	/**
-	 * Gets number of cols
-	 * @return number of cols
-	 */
-	private int getCols() {
-		return cols;
 	}
 
 }
