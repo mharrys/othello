@@ -11,8 +11,13 @@ import kth.game.othello.player.Player;
  * @author Henrik Hygerth
  */
 public class ClassicBoardFactory implements BoardFactory {
-	
-	public ClassicBoardFactory() {
+
+	private int rows;
+	private int cols;
+
+	public ClassicBoardFactory(int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
 	}
 	
 	@Override

@@ -81,7 +81,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @return classic board factory
 	 */
 	private ClassicBoardFactory createClassicBoardFactory() {
-		return new ClassicBoardFactory();
+		return new ClassicBoardFactory(8, 8);
 	}
 
 }
