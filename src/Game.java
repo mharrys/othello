@@ -37,7 +37,7 @@ abstract public class Game {
 					try {
 						othello.move(movingPlayer.getId(), onHumanMove());
 					} catch (IllegalArgumentException e) {
-						onBadHumanMove(e.getMessage());
+						onError(e.getMessage());
 					}
 				}
 			}
@@ -50,7 +50,7 @@ abstract public class Game {
 
 	abstract protected String onHumanMove();
 
-	abstract protected void onBadHumanMove(String message);
+	abstract protected void onError(String message);
 
 	abstract protected void onEnd();
 
