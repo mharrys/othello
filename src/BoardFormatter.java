@@ -9,4 +9,5 @@ public interface BoardFormatter {
 	 * Presents the visualization of the board.
 	 */
 	public void present();
+	
 }
