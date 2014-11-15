@@ -4,7 +4,7 @@ import kth.game.othello.player.Player;
 import java.util.List;
 
 /**
- * This class provides a game entry point.
+ * This class enforces a Othello game loop.
  *
  * @author Mattias Harrysson
  */
@@ -12,11 +12,9 @@ abstract public class Game {
 
 	protected Othello othello;
 	protected List<Player> players;
-	private BoardFormatter formatter;
 
-	public Game(Othello othello, BoardFormatter formatter) {
+	public Game(Othello othello) {
 		this.othello = othello;
-		this.formatter = formatter;
 		players = othello.getPlayers();
 	}
 
@@ -24,10 +22,12 @@ abstract public class Game {
 	 * Start and runs the game until no more moves can be made.
 	 */
 	public void run() {
-		onStart();
 		othello.start(players.get(1).getId());
+
+		onStart();
 		while (othello.isActive()) {
-			formatter.present();
+			onDraw();
+
 			Player movingPlayer = othello.getPlayerInTurn();
 			if (movingPlayer.getType() == Player.Type.COMPUTER) {
 				othello.move();
@@ -42,16 +42,38 @@ abstract public class Game {
 				}
 			}
 		}
-		formatter.present();
+
+		onDraw();
 		onEnd();
 	}
 
+	/**
+	 * Called when game is started.
+	 */
 	abstract protected void onStart();
 
+	/**
+	 * Called when a human player needs to make a move.
+	 *
+	 * @return node id
+	 */
 	abstract protected String onHumanMove();
 
+	/**
+	 * Called when a error has occurred.
+	 *
+	 * @param message the error message
+	 */
 	abstract protected void onError(String message);
 
+	/**
+	 * Called when the game needs to draw itself.
+	 */
+	abstract protected void onDraw();
+
+	/**
+	 * Called when the game has ended.
+	 */
 	abstract protected void onEnd();
 
 }

@@ -10,6 +10,8 @@ import java.util.Scanner;
  */
 public class AsciiGame extends Game {
 
+	private BoardFormatter formatter;
+
 	/**
 	 * Constructs a ASCII game loop from specified Othello game and board formatter.
 	 *
@@ -17,7 +19,8 @@ public class AsciiGame extends Game {
 	 * @param formatter the board formatter to use
 	 */
 	public AsciiGame(Othello othello, BoardFormatter formatter) {
-		super(othello, formatter);
+		super(othello);
+		this.formatter = formatter;
 	}
 
 	@Override
@@ -45,8 +48,13 @@ public class AsciiGame extends Game {
 	}
 
 	@Override
-	protected void onBadHumanMove(String message) {
+	protected void onError(String message) {
 		System.out.println(message);
+	}
+
+	@Override
+	protected void onDraw() {
+		formatter.present();
 	}
 
 	@Override
