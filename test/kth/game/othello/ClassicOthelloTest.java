@@ -45,10 +45,20 @@ public class ClassicOthelloTest {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				Node n = Mockito.mock(Node.class);
-				if ((i == midRow - 2 && j == midCol - 3) || (i == midRow - 1 && j == midCol - 2) || (i == midRow - 2 && j == midRow - 1) || (i == midRow && j == midCol - 1) || (i == midRow - 1 && j == midCol) || (i == midRow + 1 && j == midCol)) {
+				if ((i == midRow - 2 && j == midCol - 3)        ||
+						(i == midRow - 1 && j == midCol - 2)    ||
+						(i == midRow - 2 && j == midRow - 1)    ||
+						(i == midRow && j == midCol - 1)        ||
+						(i == midRow - 1 && j == midCol)        ||
+						(i == midRow + 1 && j == midCol)) {
 					Mockito.when(n.getOccupantPlayerId()).thenReturn(player1Id);
 					Mockito.when(n.isMarked()).thenReturn(true);
-				} else if ((i == midRow - 3 && j == midCol - 3) || (i == midRow - 2 && j == midCol - 2) || (i == midRow && j == midCol - 2) || (i == midRow - 1 && j == midCol - 1) || (i == midRow && j == midCol) || (i == midRow + 1 && j == midCol + 1)) {
+				} else if ((i == midRow - 3 && j == midCol - 3) ||
+						(i == midRow - 2 && j == midCol - 2)    ||
+						(i == midRow && j == midCol - 2)        ||
+						(i == midRow - 1 && j == midCol - 1)    ||
+						(i == midRow && j == midCol)            ||
+						(i == midRow + 1 && j == midCol + 1)) {
 					Mockito.when(n.getOccupantPlayerId()).thenReturn(player2Id);
 					Mockito.when(n.isMarked()).thenReturn(true);
 				} else {
@@ -71,7 +81,10 @@ public class ClassicOthelloTest {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				Node n = Mockito.mock(Node.class);
-				if ((i == ((rows / 2) - 1) && j == ((cols / 2) - 1)) || (i == (rows / 2) && j == (cols / 2)) || (i == ((rows / 2) - 1) && j == (cols / 2)) || ((i == (rows / 2) - 2) && j == (cols / 2))) {
+				if ((i == ((rows / 2) - 1) && j == ((cols / 2) - 1))    ||
+						(i == (rows / 2) && j == (cols / 2))            ||
+						(i == ((rows / 2) - 1) && j == (cols / 2))      ||
+						((i == (rows / 2) - 2) && j == (cols / 2))) {
 					Mockito.when(n.getOccupantPlayerId()).thenReturn(player1Id);
 					Mockito.when(n.isMarked()).thenReturn(true);
 				} else if ((i == ((rows / 2)) && j == ((cols / 2) - 1))) {
@@ -283,4 +296,5 @@ public class ClassicOthelloTest {
 		// End of game, board full by one player
 		Assert.assertFalse(othello.isActive());
 	}
+
 }
