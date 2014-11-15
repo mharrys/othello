@@ -11,7 +11,7 @@ public class OnePlayerGame {
 	public static void main(String[] args) {
 		GameFactory factory = new AsciiGameFactory();
 		Game game = factory.createOnePlayerGame();
-		game.start();
+		game.run();
 	}
 
 }

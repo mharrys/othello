@@ -11,7 +11,7 @@ public class ComputerGame {
 	public static void main(String[] args) {
 		GameFactory factory = new AsciiGameFactory();
 		Game game = factory.createComputerGame();
-		game.start();
+		game.run();
 	}
 
 }
