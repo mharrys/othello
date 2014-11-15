@@ -338,7 +338,12 @@ public class ClassicOthello implements Othello {
 			if (n.isMarked()) {
 				final int adjX = n.getXCoordinate();
 				final int adjY = n.getYCoordinate();
-				if (adjX == x + 1 || adjX == x - 1 || adjY == y + 1 || adjY == y - 1) {
+				final boolean deltaH = (adjX == x + 1 || adjX == x - 1);
+				final boolean deltaV = (adjY == y + 1 || adjY == y - 1);
+				final boolean adjHorizontal = deltaH && (adjY == y);
+				final boolean adjVertical = deltaV && (adjX == x);
+				final boolean adjDiagonal = deltaH && deltaV;
+				if (adjDiagonal || adjHorizontal || adjVertical) {
 					nodes.add(n);
 				}
 			}
