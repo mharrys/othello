@@ -1,16 +1,16 @@
 /**
- * Setup and run a one player game of Othello between a human and a computer.
+ * Setup and run a one player game of Othello between two humans.
  *
  * @author Mattias Harrysson
  */
-public class OnePlayerGame {
+public class TwoPlayerGame {
 
 	/**
 	 * Game entry point.
 	 */
 	public static void main(String[] args) {
 		GameFactory factory = new AsciiGameFactory();
-		Game game = factory.createOnePlayerGame();
+		Game game = factory.createTwoPlayerGame();
 		game.run();
 	}
 

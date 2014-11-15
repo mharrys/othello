@@ -29,6 +29,14 @@ public class AsciiGameFactory implements GameFactory {
 		return new AsciiGame(othello, formatter);
 	}
 
+	@Override
+	public Game createTwoPlayerGame() {
+		OthelloFactory factory = new ClassicOthelloFactory();
+		Othello othello = factory.createHumanGame();
+		BoardFormatter formatter = createBoardFormatter(othello.getBoard(), othello.getPlayers());
+		return new AsciiGame(othello, formatter);
+	}
+
 	/**
 	 * Creates ASCII board formatter with the specified board and a selected starting player from specified players.
 	 *

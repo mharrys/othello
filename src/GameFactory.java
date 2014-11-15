@@ -19,4 +19,11 @@ public interface GameFactory {
 	 */
 	public Game createOnePlayerGame();
 
+	/**
+	 * Creates a complete Othello game with two humans.
+	 *
+	 * @return complete Othello game
+	 */
+	public Game createTwoPlayerGame();
+
 }
