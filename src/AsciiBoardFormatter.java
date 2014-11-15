@@ -12,6 +12,7 @@ public class AsciiBoardFormatter implements BoardFormatter {
 
 	private Board board;
 	private String startingPlayerId;
+	private int rows;
 	private int cols;
 
 	/**
@@ -24,19 +25,39 @@ public class AsciiBoardFormatter implements BoardFormatter {
 		this.board = board;
 		this.startingPlayerId = startingPlayerId;
 
+		rows = 0;
 		cols = 0;
 		for (Node node : board.getNodes()) {
 			if (node.getXCoordinate() > cols) {
 				cols = node.getXCoordinate();
 			}
+
+			if (node.getYCoordinate() > rows) {
+				rows = node.getYCoordinate();
+			}
 		}
-		cols++; // adjust for zero based coordinates
+		// adjust for zero based coordinates
+		rows++;
+		cols++;
 	}
 
 	@Override
 	public void present() {
 		List<Node> nodes = board.getNodes();
+
+		System.out.print("  ");
+		for (int i = 0; i < cols; i++) {
+			System.out.print(i + " ");
+		}
+		System.out.println();
+
+		int row = 0;
 		for (int i = 0; i < nodes.size(); i++) {
+			if (i % rows == 0) {
+				System.out.print(row + " ");
+				row++;
+			}
+
 			Node node = nodes.get(i);
 			if (!node.isMarked()) {
 				System.out.print('.');
