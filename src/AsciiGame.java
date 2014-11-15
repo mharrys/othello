@@ -44,12 +44,14 @@ public class AsciiGame extends Game {
 		System.out.print("> ");
 		int x = reader.nextInt();
 		int y = reader.nextInt();
+		System.out.println();
 		return "" + x + "-" + y;
 	}
 
 	@Override
 	protected void onError(String message) {
 		System.out.println(message);
+		System.out.println();
 	}
 
 	@Override
