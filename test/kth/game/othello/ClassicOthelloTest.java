@@ -146,6 +146,94 @@ public class ClassicOthelloTest {
 	}
 
 	@Test
+	public void getNodesToSwap() {
+		BoardFactory bf = Mockito.mock(BoardFactory.class);
+		Player player1 = Mockito.mock(Player.class);
+		Player player2 = Mockito.mock(Player.class);
+
+		Mockito.when(player1.getId()).thenReturn("foo");
+		Mockito.when(player2.getId()).thenReturn("bar");
+
+		Board b = getBoardStateOneMoveMade(8, 8, player1.getId(), player2.getId());
+		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(b);
+
+		Othello othello = new ClassicOthello(bf, player1, player2);
+		Assert.assertEquals(1, othello.getNodesToSwap(player2.getId(), "5-4").size());
+		Assert.assertEquals(1, othello.getNodesToSwap(player2.getId(), "5-2").size());
+		Assert.assertEquals(0, othello.getNodesToSwap(player2.getId(), "5-0").size());
+	}
+
+	@Test
+	public void isMoveValid() {
+		BoardFactory bf = Mockito.mock(BoardFactory.class);
+		Player player1 = Mockito.mock(Player.class);
+		Player player2 = Mockito.mock(Player.class);
+
+		Mockito.when(player1.getId()).thenReturn("foo");
+		Mockito.when(player2.getId()).thenReturn("bar");
+
+		Board b = getBoardStateOneMoveMade(8, 8, player1.getId(), player2.getId());
+		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(b);
+
+		Othello othello = new ClassicOthello(bf, player1, player2);
+		othello.start(player2.getId());
+		Assert.assertFalse(othello.isMoveValid(player2.getId(), "5-0"));
+		Assert.assertTrue(othello.isMoveValid(player2.getId(), "5-4"));
+		Assert.assertTrue(othello.isMoveValid(player2.getId(), "5-2"));
+	}
+
+	@Test
+	public void hasVaildMovesStateStart() {
+		BoardFactory bf = Mockito.mock(BoardFactory.class);
+		Player player1 = Mockito.mock(Player.class);
+		Player player2 = Mockito.mock(Player.class);
+
+		Mockito.when(player1.getId()).thenReturn("foo");
+		Mockito.when(player2.getId()).thenReturn("bar");
+
+		Board b = getBoardStateStart(8, 8, player1.getId(), player2.getId());
+		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(b);
+
+		Othello othello = new ClassicOthello(bf, player1, player2);
+		Assert.assertTrue(othello.hasValidMove(player1.getId()));
+		Assert.assertTrue(othello.hasValidMove(player2.getId()));
+	}
+
+	@Test
+	public void hasVaildMovesStateMidGame() {
+		BoardFactory bf = Mockito.mock(BoardFactory.class);
+		Player player1 = Mockito.mock(Player.class);
+		Player player2 = Mockito.mock(Player.class);
+
+		Mockito.when(player1.getId()).thenReturn("foo");
+		Mockito.when(player2.getId()).thenReturn("bar");
+
+		Board b = getBoardStateMidGame(8, 8, player1.getId(), player2.getId());
+		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(b);
+
+		Othello othello = new ClassicOthello(bf, player1, player2);
+		Assert.assertTrue(othello.hasValidMove(player1.getId()));
+		Assert.assertTrue(othello.hasValidMove(player2.getId()));
+	}
+
+	@Test
+	public void hasVaildMovesStateFullBoard() {
+		BoardFactory bf = Mockito.mock(BoardFactory.class);
+		Player player1 = Mockito.mock(Player.class);
+		Player player2 = Mockito.mock(Player.class);
+
+		Mockito.when(player1.getId()).thenReturn("foo");
+		Mockito.when(player2.getId()).thenReturn("bar");
+
+		Board b = getBoardStateFullByOnePlayer(8, 8, player1.getId(), player2.getId());
+		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(b);
+
+		Othello othello = new ClassicOthello(bf, player1, player2);
+		Assert.assertFalse(othello.hasValidMove(player1.getId()));
+		Assert.assertFalse(othello.hasValidMove(player2.getId()));
+	}
+
+	@Test
 	public void isGameActiveStateStart() {
 		BoardFactory bf = Mockito.mock(BoardFactory.class);
 		Player player1 = Mockito.mock(Player.class);
