@@ -45,7 +45,7 @@ public class ClassicBoardFactory implements BoardFactory {
 	public Board constructBoard(List<Node> nodes, List<Node> nodesToSwap, String playerId) {
 		for (int i = 0; i < nodes.size(); i++) {
 			for (int j = 0; j < nodesToSwap.size(); j++) {
-				if (nodes.get(i).getId() == nodesToSwap.get(j).getId()) {
+				if (nodes.get(i).getId().equals(nodesToSwap.get(j).getId())) {
 					final int x = nodesToSwap.get(j).getXCoordinate();
 					final int y = nodesToSwap.get(j).getYCoordinate();
 					nodes.set(i, new ClassicNode(x, y, playerId));

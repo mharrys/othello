@@ -146,7 +146,7 @@ public class ClassicOthello implements Othello {
 	public List<Node> move(String playerId, String nodeId) throws IllegalArgumentException {
 		Player player = getPlayerInTurn();
 
-		if (player.getId() != playerId) {
+		if (!(player.getId().equals(playerId))) {
 			throw new IllegalArgumentException("Player '" + playerId + "' is not in turn.");
 		}
 
@@ -168,7 +168,7 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public void start(String playerId) {
-		playerInTurn = (players.get(PLAYER1).getId() == playerId) ? PLAYER1 : PLAYER2;
+		playerInTurn = (players.get(PLAYER1).getId().equals(playerId)) ? PLAYER1 : PLAYER2;
 	}
 
 	/**
@@ -246,9 +246,9 @@ public class ClassicOthello implements Othello {
 			if (!n.isMarked()) {
 				// we hit a unmarked node before finding a node which was occupied by one of the moving players
 				break;
-			} else if (n.getOccupantPlayerId() == direction.getOccupantPlayerId()) {
+			} else if (n.getOccupantPlayerId().equals(direction.getOccupantPlayerId())) {
 				captures.add(n);
-			} else if (n.getOccupantPlayerId() == player.getId()) {
+			} else if (n.getOccupantPlayerId().equals(player.getId())) {
 				validCapture = true;
 				break;
 			}
@@ -273,7 +273,7 @@ public class ClassicOthello implements Othello {
 		Player result = null;
 
 		for (Player player : getPlayers()) {
-			if (player.getId() == playerId) {
+			if (player.getId().equals(playerId)) {
 				result = player;
 				break;
 			}
@@ -295,7 +295,7 @@ public class ClassicOthello implements Othello {
 		Iterator<Node> iterator = nodes.iterator();
 		while (iterator.hasNext()) {
 			Node n = iterator.next();
-			if (n.getOccupantPlayerId() == player.getId()) {
+			if (n.getOccupantPlayerId().equals(player.getId())) {
 				iterator.remove();
 			}
 		}
@@ -313,7 +313,7 @@ public class ClassicOthello implements Othello {
 		Node result = null;
 
 		for (Node node : getBoard().getNodes()) {
-			if (node.getId() == nodeId) {
+			if (node.getId().equals(nodeId)) {
 				result = node;
 				break;
 			}
