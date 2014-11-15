@@ -36,6 +36,7 @@ public class ClassicOthelloTest {
 		Mockito.when(b.getNodes()).thenReturn(nodes);
 		return b;
 	}
+
 	private Board getBoardStateMidGame(int rows, int cols, String player1Id, String player2Id) {
 		Board b = Mockito.mock(Board.class);
 		List<Node> nodes = new ArrayList<Node>();
@@ -61,7 +62,7 @@ public class ClassicOthelloTest {
 		Mockito.when(b.getNodes()).thenReturn(nodes);
 		return b;
 	}
-	
+
 	private Board getBoardStateFullByOnePlayer(int rows, int cols, String player1Id, String player2Id) {
 		Board b = Mockito.mock(Board.class);
 		List<Node> nodes = new ArrayList<Node>();
