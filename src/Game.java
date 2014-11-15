@@ -31,14 +31,11 @@ abstract public class Game {
 			Player movingPlayer = othello.getPlayerInTurn();
 			if (movingPlayer.getType() == Player.Type.COMPUTER) {
 				othello.move();
-			} else {
-				String movingPlayerId = movingPlayer.getId();
-				while (othello.hasValidMove(movingPlayerId) && movingPlayerId == othello.getPlayerInTurn().getId()) {
-					try {
-						othello.move(movingPlayer.getId(), onHumanMove());
-					} catch (IllegalArgumentException e) {
-						onError(e.getMessage());
-					}
+			} else if (othello.hasValidMove(movingPlayer.getId())) {
+				try {
+					othello.move(movingPlayer.getId(), onHumanMove());
+				} catch (IllegalArgumentException e) {
+					onError(e.getMessage());
 				}
 			}
 		}
