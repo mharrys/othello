@@ -15,10 +15,20 @@ public class ComputerGame {
 
 	private Othello othello;
 	private List<Player> players;
+	private int cols;
 
 	public ComputerGame(OthelloFactory factory) {
 		othello = factory.createComputerGame();
 		players = othello.getPlayers();
+
+		cols = 0;
+		for (Node node : othello.getBoard().getNodes()) {
+			if (node.getXCoordinate() > cols) {
+				cols = node.getXCoordinate();
+			}
+		}
+		// adjust for zero based coordinates
+		cols++;
 	}
 
 	/**
@@ -94,7 +104,7 @@ public class ComputerGame {
 				System.out.print(node.getOccupantPlayerId() == id1 ? 'w' : 'b');
 			}
 
-			if ((i + 1) % 8 == 0) {
+			if ((i + 1) % cols == 0) {
 				System.out.print('\n');
 			} else {
 				System.out.print(' ');
