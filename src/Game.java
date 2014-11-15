@@ -13,6 +13,11 @@ abstract public class Game {
 	protected Othello othello;
 	protected List<Player> players;
 
+	/**
+	 * Constructs a Othello game.
+	 *
+	 * @param othello the Othello game to use
+	 */
 	public Game(Othello othello) {
 		this.othello = othello;
 		players = othello.getPlayers();
