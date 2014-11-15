@@ -63,6 +63,32 @@ public class ClassicOthelloTest {
 		return b;
 	}
 
+	private Board getBoardStateOneMoveMade(int rows, int cols, String player1Id, String player2Id) {
+		Board b = Mockito.mock(Board.class);
+		List<Node> nodes = new ArrayList<Node>();
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				Node n = Mockito.mock(Node.class);
+				if ((i == (rows / 2) && j == ((cols / 2) - 1)) || (i == (rows / 2) && j == (cols / 2)) || (i == ((rows / 2) - 1) && j == (cols / 2)) || ((i == (rows / 2) + 1) && j == (cols / 2))) {
+					Mockito.when(n.getOccupantPlayerId()).thenReturn(player1Id);
+					Mockito.when(n.isMarked()).thenReturn(true);
+				} else if ((i == ((rows / 2) - 1) && j == ((cols / 2) - 1))) {
+					Mockito.when(n.getOccupantPlayerId()).thenReturn(player2Id);
+					Mockito.when(n.isMarked()).thenReturn(true);
+				} else {
+					Mockito.when(n.getOccupantPlayerId()).thenReturn("");
+					Mockito.when(n.isMarked()).thenReturn(false);
+				}
+				Mockito.when(n.getId()).thenReturn(j + "-" + i);
+				Mockito.when(n.getXCoordinate()).thenReturn(j);
+				Mockito.when(n.getYCoordinate()).thenReturn(i);
+				nodes.add(n);
+			}
+		}
+		Mockito.when(b.getNodes()).thenReturn(nodes);
+		return b;
+	}
+
 	private Board getBoardStateFullByOnePlayer(int rows, int cols, String player1Id, String player2Id) {
 		Board b = Mockito.mock(Board.class);
 		List<Node> nodes = new ArrayList<Node>();
