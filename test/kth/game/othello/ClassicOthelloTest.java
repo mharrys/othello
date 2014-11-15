@@ -40,13 +40,15 @@ public class ClassicOthelloTest {
 	private Board getBoardStateMidGame(int rows, int cols, String player1Id, String player2Id) {
 		Board b = Mockito.mock(Board.class);
 		List<Node> nodes = new ArrayList<Node>();
+		final int midRow = rows / 2;
+		final int midCol = cols / 2;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				Node n = Mockito.mock(Node.class);
-				if ((i == 2 && j == 1) || (i == 3 && j == 2) || (i == 2 && j == 3) || (i == 4 && j == 3) || (i == 3 && j == 4) || (i == 5 && j == 4)) {
+				if ((i == midRow - 2 && j == midCol - 3) || (i == midRow - 1 && j == midCol - 2) || (i == midRow - 2 && j == midRow - 1) || (i == midRow && j == midCol - 1) || (i == midRow - 1 && j == midCol) || (i == midRow + 1 && j == midCol)) {
 					Mockito.when(n.getOccupantPlayerId()).thenReturn(player1Id);
 					Mockito.when(n.isMarked()).thenReturn(true);
-				} else if ((i == 1 && j == 1) || (i == 2 && j == 2) || (i == 4 && j == 2) || (i == 3 && j == 3) || (i == 4 && j == 4) || (i == 5 && j == 5)) {
+				} else if ((i == midRow - 3 && j == midCol - 3) || (i == midRow - 2 && j == midCol - 2) || (i == midRow && j == midCol - 2) || (i == midRow - 1 && j == midCol - 1) || (i == midRow && j == midCol) || (i == midRow + 1 && j == midCol + 1)) {
 					Mockito.when(n.getOccupantPlayerId()).thenReturn(player2Id);
 					Mockito.when(n.isMarked()).thenReturn(true);
 				} else {
