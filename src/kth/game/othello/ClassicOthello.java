@@ -226,22 +226,29 @@ public class ClassicOthello implements Othello {
 		int start = rows * y + x;
 		int step = 0;
 		int size = 0;
+		int nrSteps = 0;
 		if (x != adjX && y != adjY) {
 			// diagonal search
 			step = (rows * adjY + adjX) - start;
 			size = rows * cols;
+			nrSteps = (step < 0) ? Math.min(adjX, adjY) : Math.min((cols - x), (rows - y));
 		} else if (x != adjX) {
 			// horizontal search
 			step = adjX - x;
 			size = rows * y + cols;
+			nrSteps = (step < 0) ? adjX : (cols - x);
 		} else if (y != adjY) {
 			// vertical search
 			step = (rows * adjY + x) - start;
 			size = rows * rows + x;
+			nrSteps = (step < 0) ? adjY : (rows - y);
 		}
-
+		nrSteps = Math.abs(nrSteps);
 		boolean validCapture = false;
-		for (int i = start + step; i < size && i >= 0; i += step) {
+		int i = start + step;
+		int j = 0;
+		//for (int i = start + step; i < size && i >= 0; i += step) {
+		while (i < size && i >= 0 && j < nrSteps) {
 			Node n = nodes.get(i);
 			if (!n.isMarked()) {
 				// we hit a unmarked node before finding a node which was occupied by one of the moving players
@@ -252,6 +259,8 @@ public class ClassicOthello implements Othello {
 				validCapture = true;
 				break;
 			}
+			i += step;
+			j++;
 		}
 
 		if (validCapture) {
