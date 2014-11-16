@@ -260,7 +260,6 @@ public class ClassicOthello implements Othello {
 		boolean validCapture = false;
 		int i = start + step;
 		int j = 0;
-		//for (int i = start + step; i < size && i >= 0; i += step) {
 		while (i < size && i >= 0 && j < nrSteps) {
 			Node n = nodes.get(i);
 			if (!n.isMarked()) {
