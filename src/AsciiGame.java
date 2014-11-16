@@ -45,6 +45,7 @@ public class AsciiGame extends Game {
 		int x = reader.nextInt();
 		int y = reader.nextInt();
 		System.out.println();
+		reader.close();
 		return "" + x + "-" + y;
 	}
 
