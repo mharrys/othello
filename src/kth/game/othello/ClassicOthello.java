@@ -82,6 +82,7 @@ public class ClassicOthello implements Othello {
 				return true;
 			}
 		}
+		nextPlayerInTurn();
 		return false;
 	}
 
@@ -138,7 +139,6 @@ public class ClassicOthello implements Othello {
 			}
 		}
 
-		nextPlayerInTurn();
 		return new ArrayList<Node>();
 	}
 
