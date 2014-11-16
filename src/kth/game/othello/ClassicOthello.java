@@ -25,6 +25,8 @@ public class ClassicOthello implements Othello {
 	private Board board;
 	private List<Player> players;
 	private int playerInTurn;
+	private int rows;
+	private int cols;
 
 	/**
 	 * Construct a classic Othello with two players.
@@ -40,6 +42,21 @@ public class ClassicOthello implements Othello {
 		players = new ArrayList<Player>();
 		players.add(player1);
 		players.add(player2);
+
+		rows = 0;
+		cols = 0;
+		for (Node n : board.getNodes()) {
+			if (n.getXCoordinate() > cols) {
+				cols = n.getXCoordinate();
+			}
+
+			if (n.getYCoordinate() > rows) {
+				rows = n.getYCoordinate();
+			}
+		}
+		// increment to account for zero based coordinates
+		rows++;
+		cols++;
 	}
 
 	@Override
@@ -222,21 +239,6 @@ public class ClassicOthello implements Othello {
 		final int y = from.getYCoordinate();
 		final int adjX = direction.getXCoordinate();
 		final int adjY = direction.getYCoordinate();
-
-		int rows = 0;
-		int cols = 0;
-		for (Node n : nodes) {
-			if (n.getXCoordinate() > cols) {
-				cols = n.getXCoordinate();
-			}
-
-			if (n.getYCoordinate() > rows) {
-				rows = n.getYCoordinate();
-			}
-		}
-		// increment to account for zero based coordinates
-		rows++;
-		cols++;
 
 		int start = rows * y + x;
 		int step = 0;
