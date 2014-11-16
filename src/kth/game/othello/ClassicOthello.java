@@ -233,60 +233,19 @@ public class ClassicOthello implements Othello {
 	 */
 	private List<Node> numberOfCaptures(Player player, Node from, Node direction) {
 		List<Node> captures = new ArrayList<Node>();
-		List<Node> nodes = board.getNodes();
 
 		int x = from.getXCoordinate();
 		int y = from.getYCoordinate();
 		int adjX = direction.getXCoordinate();
 		int adjY = direction.getYCoordinate();
 
-		boolean validCapture = false;
-		/*
-		int start = rows * y + x;
-		int step = 0;
-		int size = 0;
-		int nrSteps = 0;
-		if (x != adjX && y != adjY) {
-			// diagonal search
-			step = (rows * adjY + adjX) - start;
-			size = rows * cols;
-			nrSteps = (step < 0) ? Math.max(x, y) : Math.min((cols - adjX), (rows - adjY));
-		} else if (x != adjX) {
-			// horizontal search
-			step = adjX - x;
-			size = rows * y + cols;
-			nrSteps = (step < 0) ? x : (cols - adjX);
-		} else if (y != adjY) {
-			// vertical search
-			step = (rows * adjY + x) - start;
-			size = rows * rows + x;
-			nrSteps = (step < 0) ? y : (rows - adjY);
-		}
-		nrSteps = Math.abs(nrSteps);
-		boolean validCapture = false;
-		int i = start + step;
-		int j = 0;
-		while (i < size && i >= 0 && j < nrSteps) {
-			Node n = nodes.get(i);
-			if (!n.isMarked()) {
-				// we hit a unmarked node before finding a node which was occupied by one of the moving players
-				break;
-			} else if (n.getOccupantPlayerId().equals(direction.getOccupantPlayerId())) {
-				captures.add(n);
-			} else if (n.getOccupantPlayerId().equals(player.getId())) {
-				validCapture = true;
-				break;
-			}
-			i += step;
-			j++;
-		}
-		*/
-
 		int stepX = adjX - x;
 		int stepY = adjY - y;
 		// start looking on the next adjacent node
 		x += stepX;
 		y += stepY;
+
+		boolean validCapture = false;
 		while (x >= 0 && y >= 0 && x < cols && y < rows) {
 			Node n = getNodeFromGrid(x, y);
 
