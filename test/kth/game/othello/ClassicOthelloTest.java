@@ -131,9 +131,9 @@ public class ClassicOthelloTest {
 				if ((j == 1 && i == 7) || (j == 4 && i == 7)) {
 					Mockito.when(n.getOccupantPlayerId()).thenReturn("");
 					Mockito.when(n.isMarked()).thenReturn(false);
-				} else if ((j == 0 && i== 3) || (j == 1 && i== 4) || (j == 2 && i == 6) ||
-							(j == 3 && i == 5) || (j == 3 && i == 6) || (j == 4 && i == 6) ||
-							(j == 5 && i == 7) || (j == 7 && i == 5)) {
+				} else if ((i== 3 && j == 0) || (i== 4 && j == 1) || (i == 6 && j == 2) ||
+							(i == 5 && j == 3) || (i == 6 && j == 3) || (i == 6 && j == 4) ||
+							(i == 7 && j == 5) || (i == 5 && j == 7)) {
 					Mockito.when(n.getOccupantPlayerId()).thenReturn(player2Id);
 					Mockito.when(n.isMarked()).thenReturn(true);
 				} else {
