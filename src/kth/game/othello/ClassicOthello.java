@@ -357,7 +357,7 @@ public class ClassicOthello implements Othello {
 	private Node getNodeFromGrid(int x, int y) {
 		int index = rows * y + x;
 		if (index >= 0 && index < (rows * cols)) {
-			return getBoard().getNodes().get(rows * y + x);
+			return getBoard().getNodes().get(index);
 		} else {
 			return null;
 		}
