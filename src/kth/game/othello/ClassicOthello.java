@@ -235,11 +235,13 @@ public class ClassicOthello implements Othello {
 		List<Node> captures = new ArrayList<Node>();
 		List<Node> nodes = board.getNodes();
 
-		final int x = from.getXCoordinate();
-		final int y = from.getYCoordinate();
-		final int adjX = direction.getXCoordinate();
-		final int adjY = direction.getYCoordinate();
+		int x = from.getXCoordinate();
+		int y = from.getYCoordinate();
+		int adjX = direction.getXCoordinate();
+		int adjY = direction.getYCoordinate();
 
+		boolean validCapture = false;
+		/*
 		int start = rows * y + x;
 		int step = 0;
 		int size = 0;
@@ -277,6 +279,29 @@ public class ClassicOthello implements Othello {
 			}
 			i += step;
 			j++;
+		}
+		*/
+
+		int stepX = adjX - x;
+		int stepY = adjY - y;
+		// start looking on the next adjacent node
+		x += stepX;
+		y += stepY;
+		while (x >= 0 && y >= 0 && x < cols && y < rows) {
+			Node n = getNodeFromGrid(x, y);
+
+			if (!n.isMarked()) {
+				// we hit a unmarked node before finding a node which was occupied by one of the moving players
+				break;
+			} else if (n.getOccupantPlayerId().equals(direction.getOccupantPlayerId())) {
+				captures.add(n);
+			} else if (n.getOccupantPlayerId().equals(player.getId())) {
+				validCapture = true;
+				break;
+			}
+
+			x += stepX;
+			y += stepY;
 		}
 
 		if (validCapture) {
