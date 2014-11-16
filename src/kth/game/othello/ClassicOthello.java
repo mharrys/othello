@@ -129,11 +129,13 @@ public class ClassicOthello implements Othello {
 			throw new IllegalStateException("Computer is not in turn.");
 		}
 
-		String nodeId = "";
-		for (Node n : getBoard().getNodes()) {
-			if (isMoveValid(player.getId(), n.getId())) {
-				nodeId = n.getId();
-				return move(player.getId(), nodeId);
+		if (hasValidMove(player.getId())) {
+			String nodeId = "";
+			for (Node n : getBoard().getNodes()) {
+				if (isMoveValid(player.getId(), n.getId())) {
+					nodeId = n.getId();
+					return move(player.getId(), nodeId);
+				}
 			}
 		}
 
