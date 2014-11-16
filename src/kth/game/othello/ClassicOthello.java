@@ -348,6 +348,22 @@ public class ClassicOthello implements Othello {
 	}
 
 	/**
+	 * Returns node from specified coordinates.
+	 *
+	 * @param x the x-coordinate
+	 * @param y the y-coordinate
+	 * @return the node with on specified coordinates, or null if not found
+	 */
+	private Node getNodeFromGrid(int x, int y) {
+		int index = rows * y + x;
+		if (index >= 0 && index < (rows * cols)) {
+			return getBoard().getNodes().get(rows * y + x);
+		} else {
+			return null;
+		}
+	}
+
+	/**
 	 * Returns list of marked adjacent nodes to specified node.
 	 *
 	 * @param node the pivot node
