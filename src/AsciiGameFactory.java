@@ -5,6 +5,7 @@ import kth.game.othello.board.Board;
 import kth.game.othello.player.Player;
 
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * A factory for producing classic ASCII othello games.
@@ -18,7 +19,8 @@ public class AsciiGameFactory implements GameFactory {
 		OthelloFactory factory = new ClassicOthelloFactory();
 		Othello othello = factory.createComputerGame();
 		BoardFormatter formatter = createBoardFormatter(othello.getBoard(), othello.getPlayers());
-		return new AsciiGame(othello, formatter);
+		Scanner reader = createInputReader();
+		return new AsciiGame(othello, formatter, reader);
 	}
 
 	@Override
@@ -26,7 +28,8 @@ public class AsciiGameFactory implements GameFactory {
 		OthelloFactory factory = new ClassicOthelloFactory();
 		Othello othello = factory.createHumanVersusComputerGame();
 		BoardFormatter formatter = createBoardFormatter(othello.getBoard(), othello.getPlayers());
-		return new AsciiGame(othello, formatter);
+		Scanner reader = createInputReader();
+		return new AsciiGame(othello, formatter, reader);
 	}
 
 	@Override
@@ -34,7 +37,8 @@ public class AsciiGameFactory implements GameFactory {
 		OthelloFactory factory = new ClassicOthelloFactory();
 		Othello othello = factory.createHumanGame();
 		BoardFormatter formatter = createBoardFormatter(othello.getBoard(), othello.getPlayers());
-		return new AsciiGame(othello, formatter);
+		Scanner reader = createInputReader();
+		return new AsciiGame(othello, formatter, reader);
 	}
 
 	/**
@@ -46,6 +50,15 @@ public class AsciiGameFactory implements GameFactory {
 	 */
 	private BoardFormatter createBoardFormatter(Board board, List<Player> players) {
 		return new AsciiBoardFormatter(board, players.get(1).getId());
+	}
+
+	/**
+	 * Creates input reader.
+	 *
+	 * @return scanner reading from stdin
+	 */
+	private Scanner createInputReader() {
+		return new Scanner(System.in);
 	}
 
 }

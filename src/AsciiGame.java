@@ -11,16 +11,19 @@ import java.util.Scanner;
 public class AsciiGame extends Game {
 
 	private BoardFormatter formatter;
+	private Scanner reader;
 
 	/**
-	 * Constructs a ASCII game loop from specified Othello game and board formatter.
+	 * Constructs a ASCII game loop from specified Othello game, board formatter and input reader.
 	 *
 	 * @param othello the Othello game
 	 * @param formatter the board formatter to use
+	 * @param reader the human input reader
 	 */
-	public AsciiGame(Othello othello, BoardFormatter formatter) {
+	public AsciiGame(Othello othello, BoardFormatter formatter, Scanner reader) {
 		super(othello);
 		this.formatter = formatter;
+		this.reader = reader;
 	}
 
 	@Override
@@ -39,12 +42,16 @@ public class AsciiGame extends Game {
 
 	@Override
 	protected String onHumanMove() {
-		Scanner reader = new Scanner(System.in);
 		System.out.println("Enter move");
 		System.out.print("> ");
-		int x = reader.nextInt();
-		int y = reader.nextInt();
+
+		int x = getNextInputInt();
+		int y = getNextInputInt();
+
+		reader.nextLine(); // consume \n
+
 		System.out.println();
+
 		return "" + x + "-" + y;
 	}
 
@@ -82,6 +89,20 @@ public class AsciiGame extends Game {
 			System.out.println(players.get(0).getName() + " wins with " + p1Score + " over " + p2Score);
 		} else {
 			System.out.println(players.get(0).getName() + " wins with " + p2Score + " over " + p1Score);
+		}
+	}
+
+	/**
+	 * Returns next integer from input reader.
+	 *
+	 * @return next input integer, or -1 if invalid input
+	 */
+	private int getNextInputInt() {
+		if (reader.hasNextInt()) {
+			return reader.nextInt();
+		} else {
+			reader.next(); // skip
+			return -1;
 		}
 	}
 
