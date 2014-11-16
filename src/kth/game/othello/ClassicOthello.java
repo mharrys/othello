@@ -77,10 +77,8 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public boolean hasValidMove(String playerId) {
-		for (Node n : getBoard().getNodes()) {
-			if (isMoveValid(playerId, n.getId())) {
-				return true;
-			}
+		if (hasMoves(playerId)) {
+			return true;
 		}
 		nextPlayerInTurn();
 		return false;
@@ -89,7 +87,7 @@ public class ClassicOthello implements Othello {
 	@Override
 	public boolean isActive() {
 		for (Player player : getPlayers()) {
-			if (hasValidMove(player.getId())) {
+			if (hasMoves(player.getId())) {
 				return true;
 			}
 		}
@@ -169,6 +167,21 @@ public class ClassicOthello implements Othello {
 	@Override
 	public void start(String playerId) {
 		playerInTurn = (players.get(PLAYER1).getId().equals(playerId)) ? PLAYER1 : PLAYER2;
+	}
+
+	/**
+	 * Checks whether a player has valid moves
+	 * 
+	 * @param playerId the id of the player to checks if it has moves
+	 * @return
+	 */
+	private Boolean hasMoves(String playerId) {
+		for (Node n : getBoard().getNodes()) {
+			if (isMoveValid(playerId, n.getId())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
