@@ -154,10 +154,12 @@ public class ClassicOthelloTest {
 	@Test
 	public void chosenPlayerStartsGame() {
 		BoardFactory bf = Mockito.mock(BoardFactory.class);
+		Board b = Mockito.mock(Board.class);
 		Player player1 = Mockito.mock(Player.class);
 		Player player2 = Mockito.mock(Player.class);
 
-		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(null);
+		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(b);
+		Mockito.when(b.getNodes()).thenReturn(new ArrayList<Node>());
 		Mockito.when(player1.getId()).thenReturn("foo");
 		Mockito.when(player2.getId()).thenReturn("bar");
 
@@ -173,10 +175,12 @@ public class ClassicOthelloTest {
 	@Test
 	public void randomPlayerStartsGame() {
 		BoardFactory bf = Mockito.mock(BoardFactory.class);
+		Board b = Mockito.mock(Board.class);
 		Player player1 = Mockito.mock(Player.class);
 		Player player2 = Mockito.mock(Player.class);
 
-		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(null);
+		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(b);
+		Mockito.when(b.getNodes()).thenReturn(new ArrayList<Node>());
 		Mockito.when(player1.getId()).thenReturn("foo");
 		Mockito.when(player2.getId()).thenReturn("bar");
 
