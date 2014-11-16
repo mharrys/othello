@@ -246,17 +246,17 @@ public class ClassicOthello implements Othello {
 			// diagonal search
 			step = (rows * adjY + adjX) - start;
 			size = rows * cols;
-			nrSteps = (step < 0) ? Math.min(adjX, adjY) : Math.min((cols - x), (rows - y));
+			nrSteps = (step < 0) ? Math.max(x, y) : Math.min((cols - adjX), (rows - adjY));
 		} else if (x != adjX) {
 			// horizontal search
 			step = adjX - x;
 			size = rows * y + cols;
-			nrSteps = (step < 0) ? adjX : (cols - x);
+			nrSteps = (step < 0) ? x : (cols - adjX);
 		} else if (y != adjY) {
 			// vertical search
 			step = (rows * adjY + x) - start;
 			size = rows * rows + x;
-			nrSteps = (step < 0) ? adjY : (rows - y);
+			nrSteps = (step < 0) ? y : (rows - adjY);
 		}
 		nrSteps = Math.abs(nrSteps);
 		boolean validCapture = false;
