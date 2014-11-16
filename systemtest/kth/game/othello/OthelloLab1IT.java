@@ -55,6 +55,21 @@ public class OthelloLab1IT {
 	}
 
 	@Test
+	public void someMovesBetweenTwoHumansTest() {
+		Othello othello = getOthelloFactory().createHumanGame();
+		Player player1 = othello.getPlayers().get(0);
+		Player player2 = othello.getPlayers().get(1);
+		othello.start(player1.getId());
+		makeAHumanMove(othello, player1);
+		makeAHumanMove(othello, player2);
+		makeAHumanMove(othello, player1);
+		makeAHumanMove(othello, player2);
+		makeAHumanMove(othello, player1);
+		makeAHumanMove(othello, player2);
+		Assert.assertEquals(10, getNumberOfOccupiedNodes(othello));
+	}
+
+	@Test
 	public void twoComputerOnAClassicalBoardTest() {
 		Othello othello = getOthelloFactory().createComputerGame();
 		othello.start(othello.getPlayers().get(0).getId());
