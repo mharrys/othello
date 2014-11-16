@@ -122,13 +122,44 @@ public class ClassicOthelloTest {
 		return b;
 	}
 
+	private Board getBoardStateSpecialCase(int rows, int cols, String player1Id, String player2Id) {
+		Board b = Mockito.mock(Board.class);
+		List<Node> nodes = new ArrayList<Node>();
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				Node n = Mockito.mock(Node.class);
+				if ((j == 1 && i == 7) || (j == 4 && i == 7)) {
+					Mockito.when(n.getOccupantPlayerId()).thenReturn("");
+					Mockito.when(n.isMarked()).thenReturn(false);
+				} else if ((j == 0 && i== 3) || (j == 1 && i== 4) || (j == 2 && i == 6) ||
+							(j == 3 && i == 5) || (j == 3 && i == 6) || (j == 4 && i == 6) ||
+							(j == 5 && i == 7) || (j == 7 && i == 5)) {
+					Mockito.when(n.getOccupantPlayerId()).thenReturn(player2Id);
+					Mockito.when(n.isMarked()).thenReturn(true);
+				} else {
+					Mockito.when(n.getOccupantPlayerId()).thenReturn(player1Id);
+					Mockito.when(n.isMarked()).thenReturn(true);
+				}
+				Mockito.when(n.getId()).thenReturn(j + "-" + i);
+				Mockito.when(n.getXCoordinate()).thenReturn(j);
+				Mockito.when(n.getYCoordinate()).thenReturn(i);
+				nodes.add(n);
+			}
+		}
+		Mockito.when(b.getNodes()).thenReturn(nodes);
+		return b;
+	}
+	
+
 	@Test
 	public void chosenPlayerStartsGame() {
 		BoardFactory bf = Mockito.mock(BoardFactory.class);
+		Board b = Mockito.mock(Board.class);
 		Player player1 = Mockito.mock(Player.class);
 		Player player2 = Mockito.mock(Player.class);
 
-		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(null);
+		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(b);
+		Mockito.when(b.getNodes()).thenReturn(new ArrayList<Node>());
 		Mockito.when(player1.getId()).thenReturn("foo");
 		Mockito.when(player2.getId()).thenReturn("bar");
 
@@ -144,10 +175,12 @@ public class ClassicOthelloTest {
 	@Test
 	public void randomPlayerStartsGame() {
 		BoardFactory bf = Mockito.mock(BoardFactory.class);
+		Board b = Mockito.mock(Board.class);
 		Player player1 = Mockito.mock(Player.class);
 		Player player2 = Mockito.mock(Player.class);
 
-		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(null);
+		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(b);
+		Mockito.when(b.getNodes()).thenReturn(new ArrayList<Node>());
 		Mockito.when(player1.getId()).thenReturn("foo");
 		Mockito.when(player2.getId()).thenReturn("bar");
 
@@ -174,6 +207,22 @@ public class ClassicOthelloTest {
 		Assert.assertEquals(1, othello.getNodesToSwap(player2.getId(), "5-4").size());
 		Assert.assertEquals(1, othello.getNodesToSwap(player2.getId(), "5-2").size());
 		Assert.assertEquals(0, othello.getNodesToSwap(player2.getId(), "5-0").size());
+	}
+
+	@Test
+	public void getNodesToSwapSpecialCase() {
+		BoardFactory bf = Mockito.mock(BoardFactory.class);
+		Player player1 = Mockito.mock(Player.class);
+		Player player2 = Mockito.mock(Player.class);
+
+		Mockito.when(player1.getId()).thenReturn("foo");
+		Mockito.when(player2.getId()).thenReturn("bar");
+
+		Board b = getBoardStateSpecialCase(8, 8, player1.getId(), player2.getId());
+		Mockito.when(bf.constructBoard(player1, player2)).thenReturn(b);
+
+		Othello othello = new ClassicOthello(bf, player1, player2);
+		Assert.assertEquals(2, othello.getNodesToSwap(player2.getId(), "1-7").size());
 	}
 
 	@Test

@@ -25,6 +25,8 @@ public class ClassicOthello implements Othello {
 	private Board board;
 	private List<Player> players;
 	private int playerInTurn;
+	private int rows;
+	private int cols;
 
 	/**
 	 * Construct a classic Othello with two players.
@@ -40,6 +42,21 @@ public class ClassicOthello implements Othello {
 		players = new ArrayList<Player>();
 		players.add(player1);
 		players.add(player2);
+
+		rows = 0;
+		cols = 0;
+		for (Node n : board.getNodes()) {
+			if (n.getXCoordinate() > cols) {
+				cols = n.getXCoordinate();
+			}
+
+			if (n.getYCoordinate() > rows) {
+				rows = n.getYCoordinate();
+			}
+		}
+		// increment to account for zero based coordinates
+		rows++;
+		cols++;
 	}
 
 	@Override
@@ -77,18 +94,17 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public boolean hasValidMove(String playerId) {
-		for (Node n : getBoard().getNodes()) {
-			if (isMoveValid(playerId, n.getId())) {
-				return true;
-			}
+		if (hasMoves(playerId)) {
+			return true;
 		}
+		nextPlayerInTurn();
 		return false;
 	}
 
 	@Override
 	public boolean isActive() {
 		for (Player player : getPlayers()) {
-			if (hasValidMove(player.getId())) {
+			if (hasMoves(player.getId())) {
 				return true;
 			}
 		}
@@ -130,15 +146,16 @@ public class ClassicOthello implements Othello {
 			throw new IllegalStateException("Computer is not in turn.");
 		}
 
-		String nodeId = "";
-		for (Node n : getBoard().getNodes()) {
-			if (isMoveValid(player.getId(), n.getId())) {
-				nodeId = n.getId();
-				return move(player.getId(), nodeId);
+		if (hasValidMove(player.getId())) {
+			String nodeId = "";
+			for (Node n : getBoard().getNodes()) {
+				if (isMoveValid(player.getId(), n.getId())) {
+					nodeId = n.getId();
+					return move(player.getId(), nodeId);
+				}
 			}
 		}
 
-		nextPlayerInTurn();
 		return new ArrayList<Node>();
 	}
 
@@ -172,6 +189,21 @@ public class ClassicOthello implements Othello {
 	}
 
 	/**
+	 * Checks whether a player has valid moves
+	 * 
+	 * @param playerId the id of the player to checks if it has moves
+	 * @return
+	 */
+	private Boolean hasMoves(String playerId) {
+		for (Node n : getBoard().getNodes()) {
+			if (isMoveValid(playerId, n.getId())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Make move by specified player to specified node.
 	 *
 	 * @param playerId the moving player id
@@ -201,48 +233,22 @@ public class ClassicOthello implements Othello {
 	 */
 	private List<Node> numberOfCaptures(Player player, Node from, Node direction) {
 		List<Node> captures = new ArrayList<Node>();
-		List<Node> nodes = board.getNodes();
 
-		final int x = from.getXCoordinate();
-		final int y = from.getYCoordinate();
-		final int adjX = direction.getXCoordinate();
-		final int adjY = direction.getYCoordinate();
+		int x = from.getXCoordinate();
+		int y = from.getYCoordinate();
+		int adjX = direction.getXCoordinate();
+		int adjY = direction.getYCoordinate();
 
-		int rows = 0;
-		int cols = 0;
-		for (Node n : nodes) {
-			if (n.getXCoordinate() > cols) {
-				cols = n.getXCoordinate();
-			}
-
-			if (n.getYCoordinate() > rows) {
-				rows = n.getYCoordinate();
-			}
-		}
-		// increment to account for zero based coordinates
-		rows++;
-		cols++;
-
-		int start = rows * y + x;
-		int step = 0;
-		int size = 0;
-		if (x != adjX && y != adjY) {
-			// diagonal search
-			step = (rows * adjY + adjX) - start;
-			size = rows * cols;
-		} else if (x != adjX) {
-			// horizontal search
-			step = adjX - x;
-			size = rows * y + cols;
-		} else if (y != adjY) {
-			// vertical search
-			step = (rows * adjY + x) - start;
-			size = rows * rows + x;
-		}
+		int stepX = adjX - x;
+		int stepY = adjY - y;
+		// start looking on the next adjacent node
+		x += stepX;
+		y += stepY;
 
 		boolean validCapture = false;
-		for (int i = start + step; i < size && i >= 0; i += step) {
-			Node n = nodes.get(i);
+		while (x >= 0 && y >= 0 && x < cols && y < rows) {
+			Node n = getNodeFromGrid(x, y);
+
 			if (!n.isMarked()) {
 				// we hit a unmarked node before finding a node which was occupied by one of the moving players
 				break;
@@ -252,6 +258,9 @@ public class ClassicOthello implements Othello {
 				validCapture = true;
 				break;
 			}
+
+			x += stepX;
+			y += stepY;
 		}
 
 		if (validCapture) {
@@ -320,6 +329,22 @@ public class ClassicOthello implements Othello {
 		}
 
 		return result;
+	}
+
+	/**
+	 * Returns node from specified coordinates.
+	 *
+	 * @param x the x-coordinate
+	 * @param y the y-coordinate
+	 * @return the node with on specified coordinates, or null if not found
+	 */
+	private Node getNodeFromGrid(int x, int y) {
+		int index = rows * y + x;
+		if (index >= 0 && index < (rows * cols)) {
+			return getBoard().getNodes().get(index);
+		} else {
+			return null;
+		}
 	}
 
 	/**
