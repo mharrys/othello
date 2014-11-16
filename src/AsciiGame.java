@@ -81,7 +81,7 @@ public class AsciiGame extends Game {
 		} else if (p1Score > p2Score) {
 			System.out.println(players.get(0).getName() + " wins with " + p1Score + " over " + p2Score);
 		} else {
-			System.out.println(players.get(0).getName() + " wins with " + p2Score + " over " + p1Score);
+			System.out.println(players.get(1).getName() + " wins with " + p2Score + " over " + p1Score);
 		}
 	}
 
