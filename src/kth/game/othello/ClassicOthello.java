@@ -27,8 +27,7 @@ public class ClassicOthello implements Othello {
 	 * Construct a classic Othello with two players.
 	 *
 	 * @param boardFactory the board factory to use for constructing boards
-	 * @param player1 the first player
-	 * @param player2 the second player
+	 * @param playerSwitcher the object that holds the responsibility over the players
 	 */
 	public ClassicOthello(BoardFactory boardFactory, PlayerSwitcher playerSwitcher) {
 		this.boardFactory = boardFactory;
