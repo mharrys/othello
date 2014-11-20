@@ -14,12 +14,12 @@ import kth.game.othello.player.Player;
 public class PlayerSwitcher {
 
 	private List<Player> players;
-	private int nrPlayers;
+	private int numPlayers;
 	private int playerInTurn;
 
 	public PlayerSwitcher(List<Player> players) {
 		this.players = players;
-		nrPlayers = players.size();
+		numPlayers = players.size();
 
 	}
 
@@ -48,7 +48,7 @@ public class PlayerSwitcher {
 	public void setStartingPlayer() {
 		Random random = new Random();
 		random.setSeed(System.currentTimeMillis());
-		playerInTurn = random.nextInt((getNumberOfPlayers()) + 1) % nrPlayers;
+		playerInTurn = random.nextInt(numPlayers + 1) % numPlayers;
 	}
 
 	/**
@@ -68,16 +68,7 @@ public class PlayerSwitcher {
 	 * Proceeds to the next player in turn.
 	 */
 	public void switchToNextPlayer() {
-		playerInTurn = (playerInTurn + 1) % nrPlayers;
-	}
-	
-
-	/**
-	 * Get the number of players in the game
-	 * @return
-	 */
-	private int getNumberOfPlayers() {
-		return nrPlayers;
+		playerInTurn = (playerInTurn + 1) % numPlayers;
 	}
 
 }
