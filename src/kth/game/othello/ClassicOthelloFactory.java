@@ -5,6 +5,8 @@ import kth.game.othello.board.BoardFactory;
 import kth.game.othello.board.ClassicBoardFactory;
 import kth.game.othello.player.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -22,24 +24,42 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	public Othello createComputerGame() {
 		Player player1 = createComputerPlayer(PLAYER1_NAME);
 		Player player2 = createComputerPlayer(PLAYER2_NAME);
-		BoardFactory boardFactory = createClassicBoardFactory();
-		return new ClassicOthello(boardFactory, player1, player2);
+		List<Player> players = new ArrayList<Player>();
+		players.add(player1);
+		players.add(player2);
+		return createGame(players);
 	}
 
 	@Override
 	public Othello createHumanGame() {
 		Player player1 = createHumanPlayer(PLAYER1_NAME);
 		Player player2 = createHumanPlayer(PLAYER2_NAME);
-		BoardFactory boardFactory = createClassicBoardFactory();
-		return new ClassicOthello(boardFactory, player1, player2);
+		List<Player> players = new ArrayList<Player>();
+		players.add(player1);
+		players.add(player2);
+		return createGame(players);
 	}
 
 	@Override
 	public Othello createHumanVersusComputerGame() {
 		Player player1 = createHumanPlayer(PLAYER1_NAME);
 		Player player2 = createComputerPlayer(PLAYER2_NAME);
+		List<Player> players = new ArrayList<Player>();
+		players.add(player1);
+		players.add(player2);
+		return createGame(players);
+	}
+
+	/**
+	 * Creates Othello game with given players
+	 * 
+	 * @param players a list of players for the game
+	 * @return othello game
+	 */
+	private Othello createGame(List<Player> players) {
 		BoardFactory boardFactory = createClassicBoardFactory();
-		return new ClassicOthello(boardFactory, player1, player2);
+		PlayerSwitcher ps = new PlayerSwitcher(players);
+		return new ClassicOthello(boardFactory, ps);
 	}
 
 	/**
