@@ -8,7 +8,6 @@ import kth.game.othello.player.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 /**
  * This class represents an classic Othello game.
@@ -17,14 +16,10 @@ import java.util.Random;
  * @author Henrik Hygerth
  */
 public class ClassicOthello implements Othello {
-
-	private static final int PLAYER1 = 0;
-	private static final int PLAYER2 = 1;
 	
 	private BoardFactory boardFactory;
 	private Board board;
-	private List<Player> players;
-	private int playerInTurn;
+	private PlayerSwitcher playerSwitcher;
 	private int rows;
 	private int cols;
 
@@ -35,13 +30,11 @@ public class ClassicOthello implements Othello {
 	 * @param player1 the first player
 	 * @param player2 the second player
 	 */
-	public ClassicOthello(BoardFactory boardFactory, Player player1, Player player2) {
+	public ClassicOthello(BoardFactory boardFactory, PlayerSwitcher playerSwitcher) {
 		this.boardFactory = boardFactory;
-		this.board = boardFactory.constructBoard(player1, player2);
-
-		players = new ArrayList<Player>();
-		players.add(player1);
-		players.add(player2);
+		this.playerSwitcher = playerSwitcher;
+		List<Player> players = this.playerSwitcher.getPlayers();
+		this.board = boardFactory.constructBoard(players.get(0), players.get(1));
 
 		rows = 0;
 		cols = 0;
@@ -84,12 +77,13 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public Player getPlayerInTurn() {
-		return players.get(playerInTurn);
+		// TODO Return null if no player can move, as according to the interface
+		return playerSwitcher.getPlayerInTurn();
 	}
 
 	@Override
 	public List<Player> getPlayers() {
-		return players;
+		return playerSwitcher.getPlayers();
 	}
 
 	@Override
@@ -97,7 +91,7 @@ public class ClassicOthello implements Othello {
 		if (hasMoves(playerId)) {
 			return true;
 		}
-		nextPlayerInTurn();
+		playerSwitcher.switchToNextPlayer();
 		return false;
 	}
 
@@ -140,7 +134,7 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public List<Node> move() throws IllegalStateException {
-		Player player = getPlayerInTurn();
+		Player player = playerSwitcher.getPlayerInTurn();
 
 		if (player.getType() != Player.Type.COMPUTER) {
 			throw new IllegalStateException("Computer is not in turn.");
@@ -161,7 +155,7 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public List<Node> move(String playerId, String nodeId) throws IllegalArgumentException {
-		Player player = getPlayerInTurn();
+		Player player = playerSwitcher.getPlayerInTurn();
 
 		if (!(player.getId().equals(playerId))) {
 			throw new IllegalArgumentException("Player '" + playerId + "' is not in turn.");
@@ -176,16 +170,12 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public void start() {
-		Random random = new Random();
-		random.setSeed(System.currentTimeMillis());
-		int min = PLAYER1;
-		int max = PLAYER2;
-		playerInTurn = random.nextInt((max - min) + 1) + min;
+		playerSwitcher.setStartingPlayer();
 	}
 
 	@Override
 	public void start(String playerId) {
-		playerInTurn = (players.get(PLAYER1).getId().equals(playerId)) ? PLAYER1 : PLAYER2;
+		playerSwitcher.setStartingPlayer(playerId);
 	}
 
 	/**
@@ -217,7 +207,7 @@ public class ClassicOthello implements Othello {
 		
 		this.board = boardFactory.constructBoard(board.getNodes(), nodes, playerId);
 		
-		nextPlayerInTurn();
+		playerSwitcher.switchToNextPlayer();
 
 		return nodes;
 	}
@@ -377,11 +367,6 @@ public class ClassicOthello implements Othello {
 		return nodes;
 	}
 
-	/**
-	 * Proceeds to the next player in turn.
-	 */
-	private void nextPlayerInTurn() {
-		playerInTurn = (playerInTurn + 1) % 2;
-	}
+
 
 }
