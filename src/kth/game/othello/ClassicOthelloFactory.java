@@ -27,9 +27,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 		List<Player> players = new ArrayList<Player>();
 		players.add(player1);
 		players.add(player2);
-		BoardFactory boardFactory = createClassicBoardFactory();
-		PlayerSwitcher ps = new PlayerSwitcher(players);
-		return new ClassicOthello(boardFactory, ps);
+		return createGame(players);
 	}
 
 	@Override
@@ -39,9 +37,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 		List<Player> players = new ArrayList<Player>();
 		players.add(player1);
 		players.add(player2);
-		BoardFactory boardFactory = createClassicBoardFactory();
-		PlayerSwitcher ps = new PlayerSwitcher(players);
-		return new ClassicOthello(boardFactory, ps);
+		return createGame(players);
 	}
 
 	@Override
@@ -51,6 +47,16 @@ public class ClassicOthelloFactory implements OthelloFactory {
 		List<Player> players = new ArrayList<Player>();
 		players.add(player1);
 		players.add(player2);
+		return createGame(players);
+	}
+
+	/**
+	 * Creates Othello game with given players
+	 * 
+	 * @param players a list of players for the game
+	 * @return othello game
+	 */
+	private Othello createGame(List<Player> players) {
 		BoardFactory boardFactory = createClassicBoardFactory();
 		PlayerSwitcher ps = new PlayerSwitcher(players);
 		return new ClassicOthello(boardFactory, ps);
