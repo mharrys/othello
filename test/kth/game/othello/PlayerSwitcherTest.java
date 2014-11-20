@@ -11,9 +11,7 @@ import org.mockito.Mockito;
 
 public class PlayerSwitcherTest {
 
-
-	@Test
-	public void chosenPlayerStartsGame() {
+	private List<Player> create2Players() {
 		Player player1 = Mockito.mock(Player.class);
 		Player player2 = Mockito.mock(Player.class);
 		List<Player> players = new ArrayList<Player>();
@@ -22,32 +20,56 @@ public class PlayerSwitcherTest {
 	
 		Mockito.when(player1.getId()).thenReturn("foo");
 		Mockito.when(player2.getId()).thenReturn("bar");
+		
+		return players;
+	}
+	
+	@Test
+	public void switchToNextPlayer() {
+		List<Player> players = create2Players();
+
+		Player p1 = players.get(0);
+		Player p2 = players.get(1);
+		
+		PlayerSwitcher ps = new PlayerSwitcher(players);
+		ps.setStartingPlayer(p1.getId());
+		Assert.assertEquals(p1, ps.getPlayerInTurn());
+		ps.switchToNextPlayer();
+		Assert.assertEquals(p2, ps.getPlayerInTurn());
+		ps.switchToNextPlayer();
+		Assert.assertEquals(p1, ps.getPlayerInTurn());
+		ps.switchToNextPlayer();
+		Assert.assertEquals(p2, ps.getPlayerInTurn());
+	}
+
+	@Test
+	public void chosenPlayerStartsGame() {
+		List<Player> players = create2Players();
+
+		Player p1 = players.get(0);
+		Player p2 = players.get(1);
 
 		PlayerSwitcher ps = new PlayerSwitcher(players);
 
-		ps.setStartingPlayer(player1.getId());
-		Assert.assertEquals(ps.getPlayerInTurn().getId(), player1.getId());
+		ps.setStartingPlayer(p1.getId());
+		Assert.assertEquals(p1, ps.getPlayerInTurn());
 
-		ps.setStartingPlayer(player2.getId());
-		Assert.assertEquals(ps.getPlayerInTurn().getId(), player2.getId());
+		ps.setStartingPlayer(p2.getId());
+		Assert.assertEquals(p2, ps.getPlayerInTurn());
 	}
 
 	@Test
 	public void randomPlayerStartsGame() {
-		Player player1 = Mockito.mock(Player.class);
-		Player player2 = Mockito.mock(Player.class);
-		List<Player> players = new ArrayList<Player>();
-		players.add(player1);
-		players.add(player2);
+		List<Player> players = create2Players();
 
-		Mockito.when(player1.getId()).thenReturn("foo");
-		Mockito.when(player2.getId()).thenReturn("bar");
+		Player p1 = players.get(0);
+		Player p2 = players.get(1);
 
 		PlayerSwitcher ps = new PlayerSwitcher(players);
 		ps.setStartingPlayer();
 
-		String playerInTurnId = ps.getPlayerInTurn().getId();
-		assert(playerInTurnId.equals(player1.getId()) || playerInTurnId.equals(player2.getId()));
+		Player playerInTurnId = ps.getPlayerInTurn();
+		assert(playerInTurnId.equals(p1) || playerInTurnId.equals(p2));
 	}
 
 }
