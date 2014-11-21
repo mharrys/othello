@@ -20,6 +20,17 @@ public class ClassicBoard implements Board {
 	public ClassicBoard(List<Node> nodes) {
 		this.nodes = nodes;
 	}
+
+	@Override
+	public Node getNode(int x, int y) throws IllegalArgumentException {
+		for (Node node : nodes) {
+			if (node.getXCoordinate() == x && node.getYCoordinate() == y) {
+				return node;
+			}
+		}
+
+		throw new IllegalArgumentException("No node with coordinates " + x + "-" + y + ".");
+	}
 	
 	@Override
 	public List<Node> getNodes() {
