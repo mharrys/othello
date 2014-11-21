@@ -13,8 +13,6 @@ import kth.game.othello.board.Node;
 public class NodeCapturer {
 
 	private NodeFinder nodeFinder;
-	private int cols = 8;
-	private int rows = 8;
 
 	/**
 	 * Constructs node capturer from specified node finder.
@@ -37,6 +35,21 @@ public class NodeCapturer {
 	 */
 	public List<Node> nodesToCaptureInDirection(List<Node> nodes, String playerId, Node from, Node direction) {
 		List<Node> captures = new ArrayList<Node>();
+
+		int rows = 0;
+		int cols = 0;
+		for (Node node : nodes) {
+			if (node.getXCoordinate() > cols) {
+				cols = node.getXCoordinate();
+			}
+
+			if (node.getYCoordinate() > rows) {
+				rows = node.getYCoordinate();
+			}
+		}
+		// adjust for zero based coordinates
+		rows++;
+		cols++;
 
 		int x = from.getXCoordinate();
 		int y = from.getYCoordinate();
