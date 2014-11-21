@@ -13,7 +13,7 @@ public class AsciiBoardFormatter implements BoardFormatter {
 	private String startingPlayerId;
 
 	/**
-	 * Construct a ASCII board formatter from specified board and starting player id (black player).
+	 * Construct a ASCII board formatter with specified starting player id (black player).
 	 *
 	 * @param startingPlayerId the starting player id
 	 */

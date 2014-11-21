@@ -9,6 +9,8 @@ public interface BoardFormatter {
 
 	/**
 	 * Presents the visualization of the board.
+	 *
+	 * @param board the board to visualize
 	 */
 	public void format(Board board);
 
