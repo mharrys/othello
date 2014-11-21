@@ -33,8 +33,7 @@ public class ClassicOthello implements Othello {
 		this.nodeCapturer = nodeCapturer;
 		this.nodeFinder = nodeFinder;
 		this.playerSwitcher = playerSwitcher;
-		List<Player> players = this.playerSwitcher.getPlayers();
-		this.board = boardFactory.constructBoard(players.get(0), players.get(1));
+		resetBoard();
 	}
 
 	@Override
@@ -127,11 +126,13 @@ public class ClassicOthello implements Othello {
 	@Override
 	public void start() {
 		playerSwitcher.setStartingPlayer();
+		resetBoard();
 	}
 
 	@Override
 	public void start(String playerId) {
 		playerSwitcher.setStartingPlayer(playerId);
+		resetBoard();
 	}
 
 	/**
@@ -150,6 +151,14 @@ public class ClassicOthello implements Othello {
 		playerSwitcher.switchToNextPlayer();
 
 		return nodes;
+	}
+
+	/**
+	 * Resets board to its starting state.
+	 */
+	private void resetBoard() {
+		List<Player> players = this.playerSwitcher.getPlayers();
+		this.board = boardFactory.constructBoard(players.get(0), players.get(1));
 	}
 
 }
