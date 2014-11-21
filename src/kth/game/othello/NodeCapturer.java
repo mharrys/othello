@@ -9,7 +9,6 @@ import kth.game.othello.board.Node;
  * This class is responsible for calculating nodes to capture
  * 
  * @author Henrik Hygerth
- *
  */
 public class NodeCapturer {
 
@@ -72,6 +71,16 @@ public class NodeCapturer {
 		}
 	}
 
+	/**
+	 * Returns the captured nodes surrounding the specified empty node in all directions which is occupied by the
+	 * opponent player.
+	 *
+	 * @param nodes list of all the captured nodes
+	 * @param playerId the moving player id
+	 * @param nodeId the empty node
+	 *
+	 * @return list of nodes to be captured surrounding the empty node
+	 */
 	List<Node> getNodesToCapture(List<Node> nodes, String playerId, String nodeId) {
 		List<Node> captures = new ArrayList<Node>();
 
