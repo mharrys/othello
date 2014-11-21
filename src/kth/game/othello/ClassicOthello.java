@@ -144,6 +144,8 @@ public class ClassicOthello implements Othello {
 			}
 		}
 
+		playerSwitcher.switchToNextPlayer();
+
 		return new ArrayList<Node>();
 	}
 
