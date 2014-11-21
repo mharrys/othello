@@ -22,8 +22,6 @@ public class ClassicOthello implements Othello {
 	private NodeCapturer nodeCapturer;
 	private NodeFinder nodeFinder;
 	private PlayerSwitcher playerSwitcher;
-	private int rows;
-	private int cols;
 
 	/**
 	 * Construct a classic Othello with two players.
@@ -39,21 +37,6 @@ public class ClassicOthello implements Othello {
 		this.playerSwitcher = playerSwitcher;
 		List<Player> players = this.playerSwitcher.getPlayers();
 		this.board = boardFactory.constructBoard(players.get(0), players.get(1));
-
-		rows = 0;
-		cols = 0;
-		for (Node n : board.getNodes()) {
-			if (n.getXCoordinate() > cols) {
-				cols = n.getXCoordinate();
-			}
-
-			if (n.getYCoordinate() > rows) {
-				rows = n.getYCoordinate();
-			}
-		}
-		// increment to account for zero based coordinates
-		rows++;
-		cols++;
 	}
 
 	@Override
