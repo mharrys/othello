@@ -92,17 +92,17 @@ public class NodeFinder {
 	 * Returns list of nodes around specified node that are the opposing player to the specified player.
 	 * 
 	 * @param nodes the list of all the nodes
-	 * @param player the playing player
+	 * @param playerId the playing player id
 	 * @param node the pivot node
 	 * @return list of adjacent nodes to the pivot node that are occupied by the opponent player
 	 */
-	public List<Node> getAdjacentOpponentNodes(List<Node> nodes, Player player, Node node) {
+	public List<Node> getAdjacentOpponentNodes(List<Node> nodes, String playerId, Node node) {
 		List<Node> markedNodes = getAdjacentMarkedNodes(nodes, node);
 
 		Iterator<Node> iter = markedNodes.iterator();
 		while (iter.hasNext()) {
 			Node n = iter.next();
-			if (n.getOccupantPlayerId().equals(player.getId())) {
+			if (n.getOccupantPlayerId().equals(playerId)) {
 				iter.remove();
 			}
 		}

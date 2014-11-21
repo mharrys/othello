@@ -25,15 +25,15 @@ public class MoveValidator {
 	 * Determines if a player is allowed to make a move at the given node.
 	 * 
 	 * @param nodes list of all the nodes
-	 * @param player the moving player
+	 * @param playerId the moving player id
 	 * @param node the node where the player wants to play
 	 * @return true if the move is valid
 	 */
-	public boolean isMoveValid(List<Node> nodes, Player player, Node node) {
+	public boolean isMoveValid(List<Node> nodes, String playerId, Node node) {
 		// find the first direction which gives at least one capture
-		List<Node> adjacentOpponentNodes = nodeFinder.getAdjacentOpponentNodes(nodes, player, node);
+		List<Node> adjacentOpponentNodes = nodeFinder.getAdjacentOpponentNodes(nodes, playerId, node);
 		for (Node n : adjacentOpponentNodes) {
-			if (!nodeCapturer.nodesToCaptureInDirection(nodes, player, node, n).isEmpty()) {
+			if (!nodeCapturer.nodesToCaptureInDirection(nodes, playerId, node, n).isEmpty()) {
 				return true;
 			}
 		}
@@ -46,12 +46,12 @@ public class MoveValidator {
 	 * Determines if a player has any valid move.
 	 * 
 	 * @param nodes list of all the nodes
-	 * @param player the player the check
+	 * @param playerId the validating player id
 	 * @return true if the player has a valid move
 	 */
-	public boolean hasValidMove(List<Node> nodes, Player player) {
+	public boolean hasValidMove(List<Node> nodes, String playerId) {
 		for (Node node : nodes) {
-			if (!node.isMarked() && isMoveValid(nodes, player, node)) {
+			if (!node.isMarked() && isMoveValid(nodes, playerId, node)) {
 				return true;
 			}
 		}

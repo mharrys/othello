@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kth.game.othello.board.Node;
-import kth.game.othello.player.Player;
 
 /**
  * This class is responsible for calculating nodes to capture
@@ -27,12 +26,12 @@ public class NodeCapturer {
 	 * is occupied by the opponent player.
 	 *
 	 * @param nodes list of all the nodes
-	 * @param player the moving player
+	 * @param playerId the moving player id
 	 * @param from the empty node
 	 * @param direction the adjacent node occupied by the moving player opponent
 	 * @return list of nodes to be captured in this direction by the empty node
 	 */
-	public List<Node> nodesToCaptureInDirection(List<Node> nodes, Player player, Node from, Node direction) {
+	public List<Node> nodesToCaptureInDirection(List<Node> nodes, String playerId, Node from, Node direction) {
 		List<Node> captures = new ArrayList<Node>();
 
 		int x = from.getXCoordinate();
@@ -55,7 +54,7 @@ public class NodeCapturer {
 				break;
 			} else if (n.getOccupantPlayerId().equals(direction.getOccupantPlayerId())) {
 				captures.add(n);
-			} else if (n.getOccupantPlayerId().equals(player.getId())) {
+			} else if (n.getOccupantPlayerId().equals(playerId)) {
 				validCapture = true;
 				break;
 			}

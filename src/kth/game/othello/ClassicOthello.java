@@ -48,15 +48,14 @@ public class ClassicOthello implements Othello {
 	public List<Node> getNodesToSwap(String playerId, String nodeId) {
 		List<Node> nodesToSwap = new ArrayList<Node>();
 
-		final Player player = getPlayerFromId(playerId);
 		final Node startNode = nodeFinder.getNodeFromId(getBoard().getNodes(), nodeId);
 
-		if (startNode == null || player == null) {
+		if (startNode == null) {
 			return nodesToSwap;
 		}
 
-		for (Node node : nodeFinder.getAdjacentOpponentNodes(getBoard().getNodes(), player, startNode)) {
-			nodesToSwap.addAll(nodeCapturer.nodesToCaptureInDirection(getBoard().getNodes(), player, startNode, node));
+		for (Node node : nodeFinder.getAdjacentOpponentNodes(getBoard().getNodes(), playerId, startNode)) {
+			nodesToSwap.addAll(nodeCapturer.nodesToCaptureInDirection(getBoard().getNodes(), playerId, startNode, node));
 		}
 
 		return nodesToSwap;
@@ -78,9 +77,7 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public boolean hasValidMove(String playerId) {
-		final Player player = getPlayerFromId(playerId);
-		boolean result =  moveValidator.hasValidMove(getBoard().getNodes(), player);
-		return result;
+		return moveValidator.hasValidMove(getBoard().getNodes(), playerId);
 	}
 
 	@Override
@@ -96,10 +93,9 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public boolean isMoveValid(String playerId, String nodeId) {
-		final Player player = getPlayerFromId(playerId);
 		final Node node = nodeFinder.getNodeFromId(getBoard().getNodes(), nodeId);
 
-		if (player == null || node == null) {
+		if (node == null) {
 			return false;
 		}
 
@@ -108,7 +104,7 @@ public class ClassicOthello implements Othello {
 			return false;
 		}
 
-		boolean result = moveValidator.isMoveValid(getBoard().getNodes(), player, node);
+		boolean result = moveValidator.isMoveValid(getBoard().getNodes(), playerId, node);
 		return result;
 	}
 
@@ -177,25 +173,6 @@ public class ClassicOthello implements Othello {
 		playerSwitcher.switchToNextPlayer();
 
 		return nodes;
-	}
-
-	/**
-	 * Returns player from specified id.
-	 *
-	 * @param playerId the player id
-	 * @return the player with specified id, or null if not found
-	 */
-	private Player getPlayerFromId(String playerId) {
-		Player result = null;
-
-		for (Player player : getPlayers()) {
-			if (player.getId().equals(playerId)) {
-				result = player;
-				break;
-			}
-		}
-
-		return result;
 	}
 
 }
