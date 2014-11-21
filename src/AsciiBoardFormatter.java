@@ -10,24 +10,24 @@ import java.util.List;
  */
 public class AsciiBoardFormatter implements BoardFormatter {
 
-	private Board board;
 	private String startingPlayerId;
-	private int rows;
-	private int cols;
 
 	/**
 	 * Construct a ASCII board formatter from specified board and starting player id (black player).
 	 *
-	 * @param board the board to read from
 	 * @param startingPlayerId the starting player id
 	 */
-	public AsciiBoardFormatter(Board board, String startingPlayerId) {
-		this.board = board;
+	public AsciiBoardFormatter(String startingPlayerId) {
 		this.startingPlayerId = startingPlayerId;
+	}
 
-		rows = 0;
-		cols = 0;
-		for (Node node : board.getNodes()) {
+	@Override
+	public void format(Board board) {
+		List<Node> nodes = board.getNodes();
+
+		int rows = 0;
+		int cols = 0;
+		for (Node node : nodes) {
 			if (node.getXCoordinate() > cols) {
 				cols = node.getXCoordinate();
 			}
@@ -39,11 +39,6 @@ public class AsciiBoardFormatter implements BoardFormatter {
 		// adjust for zero based coordinates
 		rows++;
 		cols++;
-	}
-
-	@Override
-	public void present() {
-		List<Node> nodes = board.getNodes();
 
 		System.out.print("  ");
 		for (int i = 0; i < cols; i++) {
