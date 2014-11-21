@@ -5,19 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import kth.game.othello.board.Node;
-import kth.game.othello.player.Player;
 
 /**
- * This class is responsible for finding nodes
+ * This class is responsible for finding nodes.
  * 
  * @author Henrik Hygerth
- *
  */
 public class NodeFinder {
-
-	public NodeFinder() {
-		
-	}
 
 	/**
 	 * Returns node from specified id.
@@ -99,11 +93,11 @@ public class NodeFinder {
 	public List<Node> getAdjacentOpponentNodes(List<Node> nodes, String playerId, Node node) {
 		List<Node> markedNodes = getAdjacentMarkedNodes(nodes, node);
 
-		Iterator<Node> iter = markedNodes.iterator();
-		while (iter.hasNext()) {
-			Node n = iter.next();
+		Iterator<Node> iterator = markedNodes.iterator();
+		while (iterator.hasNext()) {
+			Node n = iterator.next();
 			if (n.getOccupantPlayerId().equals(playerId)) {
-				iter.remove();
+				iterator.remove();
 			}
 		}
 

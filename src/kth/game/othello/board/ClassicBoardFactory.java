@@ -52,7 +52,6 @@ public class ClassicBoardFactory implements BoardFactory {
 				}
 			}
 		}
-		
 		return new ClassicBoard(nodes);
 	}
 
