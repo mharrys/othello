@@ -16,6 +16,11 @@ public class NodeCapturer {
 	private int cols = 8;
 	private int rows = 8;
 
+	/**
+	 * Constructs node capturer from specified node finder.
+	 *
+	 * @param nodeFinder the node finder
+	 */
 	public NodeCapturer(NodeFinder nodeFinder) {
 		this.nodeFinder = nodeFinder;
 	}

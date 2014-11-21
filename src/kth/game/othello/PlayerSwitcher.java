@@ -9,7 +9,6 @@ import kth.game.othello.player.Player;
  * This class is responsible for the players in the game
  * 
  * @author Henrik Hygerth
- *
  */
 public class PlayerSwitcher {
 
@@ -17,6 +16,11 @@ public class PlayerSwitcher {
 	private int numPlayers;
 	private int playerInTurn;
 
+	/**
+	 * Constructs player switcher from specified list of players.
+	 *
+	 * @param players the list of players included in the game
+	 */
 	public PlayerSwitcher(List<Player> players) {
 		this.players = players;
 		numPlayers = players.size();
