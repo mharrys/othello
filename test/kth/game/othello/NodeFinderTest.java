@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kth.game.othello.board.Node;
-import kth.game.othello.player.Player;
 
 import org.junit.Assert;
 import org.junit.Test;
