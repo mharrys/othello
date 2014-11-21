@@ -25,4 +25,5 @@ public class ClassicBoard implements Board {
 	public List<Node> getNodes() {
 		return nodes;
 	}
+
 }

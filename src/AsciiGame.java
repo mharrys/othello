@@ -63,7 +63,7 @@ public class AsciiGame extends Game {
 
 	@Override
 	protected void onDraw() {
-		formatter.present();
+		formatter.format(othello.getBoard());
 	}
 
 	@Override

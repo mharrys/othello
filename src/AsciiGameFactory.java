@@ -49,7 +49,7 @@ public class AsciiGameFactory implements GameFactory {
 	 * @return ascii board formatter
 	 */
 	private BoardFormatter createBoardFormatter(Board board, List<Player> players) {
-		return new AsciiBoardFormatter(board, players.get(1).getId());
+		return new AsciiBoardFormatter(players.get(1).getId());
 	}
 
 	/**
