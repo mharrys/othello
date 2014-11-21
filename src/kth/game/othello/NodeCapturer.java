@@ -71,4 +71,20 @@ public class NodeCapturer {
 			return captures;
 		}
 	}
+
+	List<Node> getNodesToCapture(List<Node> nodes, String playerId, String nodeId) {
+		List<Node> captures = new ArrayList<Node>();
+
+		final Node startNode = nodeFinder.getNodeFromId(nodes, nodeId);
+		if (startNode == null || startNode.isMarked()) {
+			return captures;
+		}
+
+		for (Node node : nodeFinder.getAdjacentOpponentNodes(nodes, playerId, startNode)) {
+			captures.addAll(nodesToCaptureInDirection(nodes, playerId, startNode, node));
+		}
+
+		return captures;
+	}
+
 }

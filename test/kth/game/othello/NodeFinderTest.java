@@ -77,15 +77,13 @@ public class NodeFinderTest {
 		String player2Id = "bar";
 		List<Node> nodes = createListOfNodes(8, 8, player1Id, player2Id);
 
-		Player player = Mockito.mock(Player.class);
-		Mockito.when(player.getId()).thenReturn(player1Id);
 		Node node = Mockito.mock(Node.class);
 		Mockito.when(node.getXCoordinate()).thenReturn(3);
 		Mockito.when(node.getYCoordinate()).thenReturn(2);
-		Assert.assertEquals(1, nf.getAdjacentOpponentNodes(nodes, player, node).size());
+		Assert.assertEquals(1, nf.getAdjacentOpponentNodes(nodes, player1Id, node).size());
 
 		Mockito.when(node.getXCoordinate()).thenReturn(3);
 		Mockito.when(node.getYCoordinate()).thenReturn(3);
-		Assert.assertEquals(2, nf.getAdjacentOpponentNodes(nodes, player, node).size());
+		Assert.assertEquals(2, nf.getAdjacentOpponentNodes(nodes, player1Id, node).size());
 	}
 }

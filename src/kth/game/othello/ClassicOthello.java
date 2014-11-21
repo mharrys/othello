@@ -18,7 +18,6 @@ public class ClassicOthello implements Othello {
 	
 	private BoardFactory boardFactory;
 	private Board board;
-	private MoveValidator moveValidator;
 	private NodeCapturer nodeCapturer;
 	private NodeFinder nodeFinder;
 	private PlayerSwitcher playerSwitcher;
@@ -29,9 +28,8 @@ public class ClassicOthello implements Othello {
 	 * @param boardFactory the board factory to use for constructing boards
 	 * @param playerSwitcher the object that holds the responsibility over the players
 	 */
-	public ClassicOthello(BoardFactory boardFactory, MoveValidator moveValidator, NodeCapturer nodeCapturer, NodeFinder nodeFinder, PlayerSwitcher playerSwitcher) {
+	public ClassicOthello(BoardFactory boardFactory, NodeCapturer nodeCapturer, NodeFinder nodeFinder, PlayerSwitcher playerSwitcher) {
 		this.boardFactory = boardFactory;
-		this.moveValidator = moveValidator;
 		this.nodeCapturer = nodeCapturer;
 		this.nodeFinder = nodeFinder;
 		this.playerSwitcher = playerSwitcher;
@@ -46,19 +44,7 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public List<Node> getNodesToSwap(String playerId, String nodeId) {
-		List<Node> nodesToSwap = new ArrayList<Node>();
-
-		final Node startNode = nodeFinder.getNodeFromId(getBoard().getNodes(), nodeId);
-
-		if (startNode == null) {
-			return nodesToSwap;
-		}
-
-		for (Node node : nodeFinder.getAdjacentOpponentNodes(getBoard().getNodes(), playerId, startNode)) {
-			nodesToSwap.addAll(nodeCapturer.nodesToCaptureInDirection(getBoard().getNodes(), playerId, startNode, node));
-		}
-
-		return nodesToSwap;
+		return nodeCapturer.getNodesToCapture(getBoard().getNodes(), playerId, nodeId);
 	}
 
 	@Override
@@ -77,7 +63,12 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public boolean hasValidMove(String playerId) {
-		return moveValidator.hasValidMove(getBoard().getNodes(), playerId);
+		for (Node node : getBoard().getNodes()) {
+			if (!node.isMarked() && isMoveValid(playerId, node.getId())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -87,25 +78,12 @@ public class ClassicOthello implements Othello {
 				return true;
 			}
 		}
-	
 		return false;
 	}
 
 	@Override
 	public boolean isMoveValid(String playerId, String nodeId) {
-		final Node node = nodeFinder.getNodeFromId(getBoard().getNodes(), nodeId);
-
-		if (node == null) {
-			return false;
-		}
-
-		if (node.isMarked()) {
-			// this node is already occupied
-			return false;
-		}
-
-		boolean result = moveValidator.isMoveValid(getBoard().getNodes(), playerId, node);
-		return result;
+		return !nodeCapturer.getNodesToCapture(getBoard().getNodes(), playerId, nodeId).isEmpty();
 	}
 
 	@Override
@@ -169,7 +147,6 @@ public class ClassicOthello implements Othello {
 		nodes.add(nodeFinder.getNodeFromId(getBoard().getNodes(), nodeId));
 
 		this.board = boardFactory.constructBoard(board.getNodes(), nodes, playerId);
-
 		playerSwitcher.switchToNextPlayer();
 
 		return nodes;
