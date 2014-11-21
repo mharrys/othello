@@ -64,8 +64,11 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public Player getPlayerInTurn() {
-		// TODO Return null if no player can move, as according to the interface
-		return playerSwitcher.getPlayerInTurn();
+		if (isActive()) {
+			return playerSwitcher.getPlayerInTurn();
+		} else {
+			return null;
+		}
 	}
 
 	@Override
