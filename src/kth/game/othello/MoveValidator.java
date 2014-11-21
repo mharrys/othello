@@ -51,7 +51,7 @@ public class MoveValidator {
 	 */
 	public boolean hasValidMove(List<Node> nodes, Player player) {
 		for (Node node : nodes) {
-			if (isMoveValid(nodes, player, node)) {
+			if (!node.isMarked() && isMoveValid(nodes, player, node)) {
 				return true;
 			}
 		}
