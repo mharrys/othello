@@ -43,16 +43,6 @@ public class NodeFinderTest {
 	}
 
 	@Test
-	public void getNodeFromGrid() {
-		NodeFinder nf = new NodeFinder();
-		String player1Id = "foo";
-		String player2Id = "bar";
-		List<Node> nodes = createListOfNodes(8, 8, player1Id, player2Id);
-		Assert.assertEquals("4-4", nf.getNodeFromGrid(nodes, 4, 4).getId());
-		Assert.assertEquals("0-7", nf.getNodeFromGrid(nodes, 0, 7).getId());
-	}
-
-	@Test
 	public void getAdjacentMarkedNodes() {
 		NodeFinder nf = new NodeFinder();
 		String player1Id = "foo";

@@ -43,7 +43,7 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public List<Node> getNodesToSwap(String playerId, String nodeId) {
-		return nodeCapturer.getNodesToCapture(getBoard().getNodes(), playerId, nodeId);
+		return nodeCapturer.getNodesToCapture(board, playerId, nodeId);
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public boolean hasValidMove(String playerId) {
-		for (Node node : getBoard().getNodes()) {
+		for (Node node : board.getNodes()) {
 			if (!node.isMarked() && isMoveValid(playerId, node.getId())) {
 				return true;
 			}
@@ -82,7 +82,7 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public boolean isMoveValid(String playerId, String nodeId) {
-		return !nodeCapturer.getNodesToCapture(getBoard().getNodes(), playerId, nodeId).isEmpty();
+		return !nodeCapturer.getNodesToCapture(board, playerId, nodeId).isEmpty();
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class ClassicOthello implements Othello {
 
 		if (hasValidMove(player.getId())) {
 			String nodeId;
-			for (Node n : getBoard().getNodes()) {
+			for (Node n : board.getNodes()) {
 				if (isMoveValid(player.getId(), n.getId())) {
 					nodeId = n.getId();
 					return move(player.getId(), nodeId);
@@ -145,7 +145,7 @@ public class ClassicOthello implements Othello {
 	private List<Node> makeMove(String playerId, String nodeId) {
 		List<Node> nodes = getNodesToSwap(playerId, nodeId);
 		// include the node where the player made the move to be updated and returned
-		nodes.add(nodeFinder.getNodeFromId(getBoard().getNodes(), nodeId));
+		nodes.add(nodeFinder.getNodeFromId(board.getNodes(), nodeId));
 
 		this.board = boardFactory.constructBoard(board.getNodes(), nodes, playerId);
 		playerSwitcher.switchToNextPlayer();
