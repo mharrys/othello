@@ -33,7 +33,7 @@ public class NodeCapturer {
 	 * @param direction the adjacent node occupied by the moving player opponent
 	 * @return list of nodes to be captured in this direction by the empty node
 	 */
-	public List<Node> nodesToCaptureInDirection(List<Node> nodes, String playerId, Node from, Node direction) {
+	public List<Node> getNodesToCaptureInDirection(List<Node> nodes, String playerId, Node from, Node direction) {
 		List<Node> captures = new ArrayList<Node>();
 
 		int rows = 0;
@@ -108,7 +108,7 @@ public class NodeCapturer {
 		}
 
 		for (Node node : nodeFinder.getAdjacentOpponentNodes(nodes, playerId, startNode)) {
-			captures.addAll(nodesToCaptureInDirection(nodes, playerId, startNode, node));
+			captures.addAll(getNodesToCaptureInDirection(nodes, playerId, startNode, node));
 		}
 
 		return captures;

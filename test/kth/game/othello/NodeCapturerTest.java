@@ -59,22 +59,22 @@ public class NodeCapturerTest {
 		Mockito.when(direction.getOccupantPlayerId()).thenReturn(p1Id);
 		Mockito.when(direction.getXCoordinate()).thenReturn(4);
 		Mockito.when(direction.getYCoordinate()).thenReturn(4);
-		Assert.assertEquals(1, nc.nodesToCaptureInDirection(nodes, p2Id, from, direction).size());
+		Assert.assertEquals(1, nc.getNodesToCaptureInDirection(nodes, p2Id, from, direction).size());
 		
 		Mockito.when(direction.getXCoordinate()).thenReturn(4);
 		Mockito.when(direction.getYCoordinate()).thenReturn(3);
-		Assert.assertEquals(0, nc.nodesToCaptureInDirection(nodes, p2Id, from, direction).size());
+		Assert.assertEquals(0, nc.getNodesToCaptureInDirection(nodes, p2Id, from, direction).size());
 
 		Mockito.when(from.getXCoordinate()).thenReturn(3);
 		Mockito.when(from.getYCoordinate()).thenReturn(2);
 
 		Mockito.when(direction.getXCoordinate()).thenReturn(3);
 		Mockito.when(direction.getYCoordinate()).thenReturn(3);
-		Assert.assertEquals(1, nc.nodesToCaptureInDirection(nodes, p2Id, from, direction).size());
+		Assert.assertEquals(1, nc.getNodesToCaptureInDirection(nodes, p2Id, from, direction).size());
 		
 		Mockito.when(direction.getXCoordinate()).thenReturn(4);
 		Mockito.when(direction.getYCoordinate()).thenReturn(3);
-		Assert.assertEquals(0, nc.nodesToCaptureInDirection(nodes, p2Id, from, direction).size());
+		Assert.assertEquals(0, nc.getNodesToCaptureInDirection(nodes, p2Id, from, direction).size());
 	}
 
 }
