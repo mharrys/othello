@@ -32,26 +32,6 @@ public class NodeFinder {
 	}
 
 	/**
-	 * Returns node from specified coordinates.
-	 * 
-	 * @param nodes the list of all the nodes
-	 * @param x the x-coordinate
-	 * @param y the y-coordinate
-	 * @return the node with on specified coordinates, or null if not found
-	 */
-	public Node getNodeFromGrid(List<Node> nodes, int x, int y) {
-		Node result = null;
-		for (Node node : nodes) {
-			if (node.getXCoordinate() == x && node.getYCoordinate() == y) {
-				result = node;
-				break;
-			}
-		}
-
-		return result;
-	}
-
-	/**
 	 * Returns list of marked adjacent nodes to specified node.
 	 * 
 	 * @param nodes the list of all the nodes
