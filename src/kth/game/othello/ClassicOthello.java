@@ -22,6 +22,7 @@ public class ClassicOthello implements Othello {
 	private NodeCapturer nodeCapturer;
 	private NodeSwapper nodeSwapper;
 	private PlayerSwitcher playerSwitcher;
+	private Score score;
 
 	/**
 	 * Construct a classic Othello with two players.
@@ -29,11 +30,17 @@ public class ClassicOthello implements Othello {
 	 * @param boardFactory the board factory to use for constructing boards
 	 * @param playerSwitcher the object that holds the responsibility over the players
 	 */
-	public ClassicOthello(BoardFactory boardFactory, NodeCapturer nodeCapturer, NodeSwapper nodeSwapper, PlayerSwitcher playerSwitcher) {
+	public ClassicOthello(
+			BoardFactory boardFactory,
+			NodeCapturer nodeCapturer,
+			NodeSwapper nodeSwapper,
+			PlayerSwitcher playerSwitcher,
+			Score score) {
 		this.boardFactory = boardFactory;
 		this.nodeCapturer = nodeCapturer;
 		this.nodeSwapper = nodeSwapper;
 		this.playerSwitcher = playerSwitcher;
+		this.score = score;
 		resetBoard();
 	}
 
@@ -63,7 +70,7 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public Score getScore() {
-		return null;
+		return score;
 	}
 
 	@Override

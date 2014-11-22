@@ -4,6 +4,8 @@ import kth.game.othello.player.OthelloPlayer;
 import kth.game.othello.board.BoardFactory;
 import kth.game.othello.board.ClassicBoardFactory;
 import kth.game.othello.player.Player;
+import kth.game.othello.score.OthelloScore;
+import kth.game.othello.score.ScoreItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +64,8 @@ public class ClassicOthelloFactory implements OthelloFactory {
 		NodeCapturer nc = new NodeCapturer(nf);
 		NodeSwapper ns = new NodeSwapper(nf);
 		PlayerSwitcher ps = new PlayerSwitcher(players);
-		return new ClassicOthello(boardFactory, nc, ns, ps);
+		OthelloScore os = new OthelloScore(createScoreItems(players));
+		return new ClassicOthello(boardFactory, nc, ns, ps, os);
 	}
 
 	/**
@@ -101,6 +104,23 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 */
 	private ClassicBoardFactory createClassicBoardFactory() {
 		return new ClassicBoardFactory(8, 8);
+	}
+
+	/**
+	 * Creates a list of score items from specified list of players.
+	 *
+	 * @param players a list of players for the game
+	 * @return the list of score items
+	 */
+	private List<ScoreItem> createScoreItems(List<Player> players) {
+		List<ScoreItem> items = new ArrayList<ScoreItem>();
+
+		for (Player player : players) {
+			ScoreItem item = new ScoreItem(player.getId(), 0);
+			items.add(item);
+		}
+
+		return items;
 	}
 
 }
