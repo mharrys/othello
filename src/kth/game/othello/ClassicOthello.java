@@ -4,6 +4,7 @@ import kth.game.othello.board.Board;
 import kth.game.othello.board.BoardFactory;
 import kth.game.othello.board.Node;
 import kth.game.othello.player.Player;
+import kth.game.othello.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,11 @@ public class ClassicOthello implements Othello {
 	@Override
 	public List<Player> getPlayers() {
 		return playerSwitcher.getPlayers();
+	}
+
+	@Override
+	public Score getScore() {
+		return null;
 	}
 
 	@Override
