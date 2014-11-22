@@ -19,7 +19,7 @@ public class ClassicOthello implements Othello {
 	private BoardFactory boardFactory;
 	private Board board;
 	private NodeCapturer nodeCapturer;
-	private NodeFinder nodeFinder;
+	private NodeSwapper nodeSwapper;
 	private PlayerSwitcher playerSwitcher;
 
 	/**
@@ -28,10 +28,10 @@ public class ClassicOthello implements Othello {
 	 * @param boardFactory the board factory to use for constructing boards
 	 * @param playerSwitcher the object that holds the responsibility over the players
 	 */
-	public ClassicOthello(BoardFactory boardFactory, NodeCapturer nodeCapturer, NodeFinder nodeFinder, PlayerSwitcher playerSwitcher) {
+	public ClassicOthello(BoardFactory boardFactory, NodeCapturer nodeCapturer, NodeSwapper nodeSwapper, PlayerSwitcher playerSwitcher) {
 		this.boardFactory = boardFactory;
 		this.nodeCapturer = nodeCapturer;
-		this.nodeFinder = nodeFinder;
+		this.nodeSwapper = nodeSwapper;
 		this.playerSwitcher = playerSwitcher;
 		resetBoard();
 	}
@@ -120,7 +120,9 @@ public class ClassicOthello implements Othello {
 			throw new IllegalArgumentException("Invalid move.");
 		}
 
-		return makeMove(playerId, nodeId);
+		List <Node> nodesToSwap = nodeCapturer.getNodesToCapture(board, playerId, nodeId);
+		playerSwitcher.switchToNextPlayer();
+		return nodeSwapper.swap(boardFactory, board, nodesToSwap, playerId, nodeId);
 	}
 
 	@Override
@@ -133,24 +135,6 @@ public class ClassicOthello implements Othello {
 	public void start(String playerId) {
 		playerSwitcher.setStartingPlayer(playerId);
 		resetBoard();
-	}
-
-	/**
-	 * Make move by specified player to specified node.
-	 *
-	 * @param playerId the moving player id
-	 * @param nodeId the node in which the player is moving to
-	 * @return
-	 */
-	private List<Node> makeMove(String playerId, String nodeId) {
-		List<Node> nodes = getNodesToSwap(playerId, nodeId);
-		// include the node where the player made the move to be updated and returned
-		nodes.add(nodeFinder.getNodeFromId(board.getNodes(), nodeId));
-
-		this.board = boardFactory.constructBoard(board.getNodes(), nodes, playerId);
-		playerSwitcher.switchToNextPlayer();
-
-		return nodes;
 	}
 
 	/**
