@@ -60,8 +60,9 @@ public class ClassicOthelloFactory implements OthelloFactory {
 		BoardFactory boardFactory = createClassicBoardFactory();
 		NodeFinder nf = new NodeFinder();
 		NodeCapturer nc = new NodeCapturer(nf);
+		NodeSwapper ns = new NodeSwapper(nf);
 		PlayerSwitcher ps = new PlayerSwitcher(players);
-		return new ClassicOthello(boardFactory, nc, nf, ps);
+		return new ClassicOthello(boardFactory, nc, ns, ps);
 	}
 
 	/**
