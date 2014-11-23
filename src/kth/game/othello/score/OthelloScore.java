@@ -1,9 +1,6 @@
 package kth.game.othello.score;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * The responsibility of this class is to control the score for the players in a Othello game. It will notify all
@@ -50,6 +47,9 @@ public class OthelloScore extends Observable implements Score, Observer {
 		} else {
 			notifyObservers(Arrays.asList(prevPlayerId, nextPlayerId));
 		}
+
+		// highest score first
+		Collections.sort(scores, Collections.reverseOrder());
 	}
 
 	private void updateScore(String prevPlayerId, String nextPlayerId) {
