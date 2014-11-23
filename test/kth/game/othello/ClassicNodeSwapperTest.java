@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class NodeSwapperTest {
+public class ClassicNodeSwapperTest {
 
 	private List<ClassicNode> createNodes() {
 		List<ClassicNode> nodes = new ArrayList<ClassicNode>();
@@ -52,7 +52,7 @@ public class NodeSwapperTest {
 		return nodesToSwap;
 	}
 	@Test
-	public void testSwapList() {
+	public void testSwap() {
 		List<ClassicNode> nodes= createNodes();
 		List<Node> nodesToSwap = createNodesToSwap();
 
