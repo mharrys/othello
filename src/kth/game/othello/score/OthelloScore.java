@@ -18,6 +18,7 @@ public class OthelloScore extends Observable implements Score, Observer {
 
 	public OthelloScore(List<ScoreItem> scores) {
 		this.scores = scores;
+		updateOrder();
 	}
 
 	@Override
@@ -52,8 +53,7 @@ public class OthelloScore extends Observable implements Score, Observer {
 			notifyObservers(Arrays.asList(prevPlayerId, nextPlayerId));
 		}
 
-		// highest score first
-		Collections.sort(scores, Collections.reverseOrder());
+		updateOrder();
 	}
 
 	private void updateScore(String prevPlayerId, String nextPlayerId) {
@@ -67,6 +67,11 @@ public class OthelloScore extends Observable implements Score, Observer {
 				setChanged();
 			}
 		}
+	}
+
+	private void updateOrder() {
+		// highest score first
+		Collections.sort(scores, Collections.reverseOrder());
 	}
 
 }
