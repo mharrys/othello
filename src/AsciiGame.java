@@ -73,27 +73,6 @@ public class AsciiGame extends Game {
 	@Override
 	protected void onEnd() {
 		System.out.println("**** Othello: Game Ended ****");
-
-		int p1Score = 0;
-		int p2Score = 0;
-		for (Node node : othello.getBoard().getNodes()) {
-			if (node.isMarked()) {
-				if (node.getOccupantPlayerId() == players.get(0).getId()) {
-					p1Score++;
-				} else {
-					p2Score++;
-				}
-			}
-		}
-
-		System.out.print("Result: ");
-		if (p1Score == p2Score) {
-			System.out.println("It is a draw!");
-		} else if (p1Score > p2Score) {
-			System.out.println(players.get(0).getName() + " wins with " + p1Score + " over " + p2Score);
-		} else {
-			System.out.println(players.get(1).getName() + " wins with " + p2Score + " over " + p1Score);
-		}
 	}
 
 	/**
@@ -114,7 +93,7 @@ public class AsciiGame extends Game {
 	 * Prints current score for all participating players.
 	 */
 	private void printScore() {
-		System.out.print("Current score: ");
+		System.out.print("Score: ");
 		for (ScoreItem item : othello.getScore().getPlayersScore()) {
 			System.out.print(getPlayerNameFromId(item.getPlayerId()) + " (" + item.getScore() + ") ");
 		}
