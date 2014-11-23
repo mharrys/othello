@@ -21,6 +21,7 @@ public class ClassicNodeSwapperTest {
 				Mockito.when(node.getXCoordinate()).thenReturn(x);
 				Mockito.when(node.getYCoordinate()).thenReturn(y);
 				Mockito.when(node.getOccupantPlayerId()).thenReturn("");
+				Mockito.when(node.isMarked()).thenReturn(false);
 			}
 		}
 		return nodes;
@@ -74,8 +75,10 @@ public class ClassicNodeSwapperTest {
 		for (int i = 0; i < nodes.size(); i++) {
 			Node n = nodes.get(i);
 			if (n.getXCoordinate() == 1 && yCoor.contains(n.getYCoordinate())) {
+				Assert.assertEquals(true, n.isMarked());
 				Assert.assertEquals(playerId, n.getOccupantPlayerId());
 			} else {
+				Assert.assertEquals(false, n.isMarked());
 				Assert.assertEquals("", n.getOccupantPlayerId());
 			}
 		}
