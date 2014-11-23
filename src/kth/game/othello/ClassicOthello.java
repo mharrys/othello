@@ -98,11 +98,9 @@ public class ClassicOthello implements Othello {
 		}
 
 		if (hasValidMove(player.getId())) {
-			String nodeId;
-			for (Node n : board.getNodes()) {
-				if (isMoveValid(player.getId(), n.getId())) {
-					nodeId = n.getId();
-					return move(player.getId(), nodeId);
+			for (Node node : board.getNodes()) {
+				if (isMoveValid(player.getId(), node.getId())) {
+					return move(player.getId(), node.getId());
 				}
 			}
 		}
