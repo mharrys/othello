@@ -1,6 +1,10 @@
 package kth.game.othello.score;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Collections;
 
 /**
  * The responsibility of this class is to control the score for the players in a Othello game. It will notify all
