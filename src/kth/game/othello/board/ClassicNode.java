@@ -1,5 +1,6 @@
 package kth.game.othello.board;
 
+import java.util.Arrays;
 import java.util.Observable;
 
 /**
@@ -27,7 +28,8 @@ public class ClassicNode extends Observable implements Node {
 		this.id = x + "-" + y;
 		this.x = x;
 		this.y = y;
-		unmark();
+		occupantId = null;
+		marked = false;
 	}
 	
 	public ClassicNode(int x, int y, String playerId) {
@@ -68,17 +70,11 @@ public class ClassicNode extends Observable implements Node {
 	 * @param playerId the player to occupy this node
 	 */
 	public void mark(String playerId) {
-		notifyObservers(occupantId);
+		setChanged();
+		notifyObservers(Arrays.asList(occupantId, playerId));
+
 		occupantId = playerId;
 		marked = true;
-	}
-
-	/**
-	 * Sets node state to unmarked.
-	 */
-	public void unmark() {
-		occupantId = null;
-		marked = false;
 	}
 
 }
