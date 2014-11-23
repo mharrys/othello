@@ -2,6 +2,7 @@ package kth.game.othello.score;
 
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 /**
  * The responsibility of this class is to control the score for the players in a Othello game. It will notify all
@@ -9,7 +10,7 @@ import java.util.Observable;
  *
  * @author Mattias Harrysson
  */
-public class OthelloScore extends Observable implements Score {
+public class OthelloScore extends Observable implements Score, Observer {
 
 	private List<ScoreItem> scores;
 
@@ -32,4 +33,8 @@ public class OthelloScore extends Observable implements Score {
 		return 0;
 	}
 
+	@Override
+	public void update(Observable observable, Object o) {
+		// TODO:
+	}
 }

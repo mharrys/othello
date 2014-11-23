@@ -97,14 +97,23 @@ public class NodeCapturer {
 	 * @param board the board with nodes
 	 * @param playerId the moving player id
 	 * @param nodeId the empty node
+	 * @param includeStart include the node where the player made the move to be updated and return
 	 *
 	 * @return list of nodes to be captured surrounding the empty node
 	 */
-	List<Node> getNodesToCapture(Board board, String playerId, String nodeId) {
+	List<Node> getNodesToCapture(Board board, String playerId, String nodeId, boolean includeStart) {
 		List<Node> captures = new ArrayList<Node>();
 
 		final Node startNode = nodeFinder.getNodeFromId(board.getNodes(), nodeId);
-		if (startNode == null || startNode.isMarked()) {
+		if (startNode == null) {
+			return captures;
+		}
+
+		if (includeStart) {
+			captures.add(nodeFinder.getNodeFromId(board.getNodes(), nodeId));
+		}
+
+		if (startNode.isMarked()) {
 			return captures;
 		}
 

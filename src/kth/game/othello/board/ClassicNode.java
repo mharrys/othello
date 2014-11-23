@@ -1,12 +1,15 @@
 package kth.game.othello.board;
 
+import java.util.Observable;
+
 /**
- * Describes a node in a classic 8x8 Othello board.
+ * Describes a node in a classic 8x8 Othello board. It will inform all observers when a new player is assigned to this
+ * node.
  * 
  * @author Henrik Hygerth
  * @author Mattias Harrysson
  */
-public class ClassicNode implements Node {
+public class ClassicNode extends Observable implements Node {
 	
 	private String id;
 	private String occupantId;
@@ -64,7 +67,8 @@ public class ClassicNode implements Node {
 	 *
 	 * @param playerId the player to occupy this node
 	 */
-	private void mark(String playerId) {
+	public void mark(String playerId) {
+		notifyObservers(occupantId);
 		occupantId = playerId;
 		marked = true;
 	}
@@ -72,8 +76,8 @@ public class ClassicNode implements Node {
 	/**
 	 * Sets node state to unmarked.
 	 */
-	private void unmark() {
-		occupantId = "";
+	public void unmark() {
+		occupantId = null;
 		marked = false;
 	}
 
