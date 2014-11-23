@@ -1,9 +1,9 @@
 package kth.game.othello;
 
 import kth.game.othello.board.Board;
-import kth.game.othello.board.BoardFactory;
 import kth.game.othello.board.Node;
 import kth.game.othello.player.Player;
+import kth.game.othello.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,25 +15,24 @@ import java.util.List;
  * @author Henrik Hygerth
  */
 public class ClassicOthello implements Othello {
-	
-	private BoardFactory boardFactory;
+
 	private Board board;
 	private NodeCapturer nodeCapturer;
 	private NodeSwapper nodeSwapper;
 	private PlayerSwitcher playerSwitcher;
+	private Score score;
 
-	/**
-	 * Construct a classic Othello with two players.
-	 *
-	 * @param boardFactory the board factory to use for constructing boards
-	 * @param playerSwitcher the object that holds the responsibility over the players
-	 */
-	public ClassicOthello(BoardFactory boardFactory, NodeCapturer nodeCapturer, NodeSwapper nodeSwapper, PlayerSwitcher playerSwitcher) {
-		this.boardFactory = boardFactory;
+	public ClassicOthello(
+			Board board,
+			NodeCapturer nodeCapturer,
+			NodeSwapper nodeSwapper,
+			PlayerSwitcher playerSwitcher,
+			Score score) {
+		this.board = board;
 		this.nodeCapturer = nodeCapturer;
 		this.nodeSwapper = nodeSwapper;
 		this.playerSwitcher = playerSwitcher;
-		resetBoard();
+		this.score = score;
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public List<Node> getNodesToSwap(String playerId, String nodeId) {
-		return nodeCapturer.getNodesToCapture(board, playerId, nodeId);
+		return nodeCapturer.getNodesToCapture(board, playerId, nodeId, false);
 	}
 
 	@Override
@@ -58,6 +57,11 @@ public class ClassicOthello implements Othello {
 	@Override
 	public List<Player> getPlayers() {
 		return playerSwitcher.getPlayers();
+	}
+
+	@Override
+	public Score getScore() {
+		return score;
 	}
 
 	@Override
@@ -82,7 +86,7 @@ public class ClassicOthello implements Othello {
 
 	@Override
 	public boolean isMoveValid(String playerId, String nodeId) {
-		return !nodeCapturer.getNodesToCapture(board, playerId, nodeId).isEmpty();
+		return !nodeCapturer.getNodesToCapture(board, playerId, nodeId, false).isEmpty();
 	}
 
 	@Override
@@ -94,17 +98,14 @@ public class ClassicOthello implements Othello {
 		}
 
 		if (hasValidMove(player.getId())) {
-			String nodeId;
-			for (Node n : board.getNodes()) {
-				if (isMoveValid(player.getId(), n.getId())) {
-					nodeId = n.getId();
-					return move(player.getId(), nodeId);
+			for (Node node : board.getNodes()) {
+				if (isMoveValid(player.getId(), node.getId())) {
+					return move(player.getId(), node.getId());
 				}
 			}
 		}
 
 		playerSwitcher.switchToNextPlayer();
-
 		return new ArrayList<Node>();
 	}
 
@@ -120,29 +121,21 @@ public class ClassicOthello implements Othello {
 			throw new IllegalArgumentException("Invalid move.");
 		}
 
-		List <Node> nodesToSwap = nodeCapturer.getNodesToCapture(board, playerId, nodeId);
+		List<Node> nodesToSwap = nodeCapturer.getNodesToCapture(board, playerId, nodeId, true);
+		nodeSwapper.swap(nodesToSwap, playerId, nodeId);
 		playerSwitcher.switchToNextPlayer();
-		return nodeSwapper.swap(boardFactory, board, nodesToSwap, playerId, nodeId);
+
+		return nodesToSwap;
 	}
 
 	@Override
 	public void start() {
 		playerSwitcher.setStartingPlayer();
-		resetBoard();
 	}
 
 	@Override
 	public void start(String playerId) {
 		playerSwitcher.setStartingPlayer(playerId);
-		resetBoard();
-	}
-
-	/**
-	 * Resets board to its starting state.
-	 */
-	private void resetBoard() {
-		List<Player> players = this.playerSwitcher.getPlayers();
-		this.board = boardFactory.constructBoard(players.get(0), players.get(1));
 	}
 
 }

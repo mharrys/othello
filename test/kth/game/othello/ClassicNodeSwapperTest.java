@@ -3,19 +3,17 @@ package kth.game.othello;
 import java.util.ArrayList;
 import java.util.List;
 
-import kth.game.othello.board.Board;
-import kth.game.othello.board.BoardFactory;
-import kth.game.othello.board.ClassicBoardFactory;
+import kth.game.othello.board.ClassicNode;
 import kth.game.othello.board.Node;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class NodeSwapperTest {
+public class ClassicNodeSwapperTest {
 
-	private Board createBoard() {
-		List<Node> nodes = new ArrayList<Node>();
+	private List<ClassicNode> createNodes() {
+		List<ClassicNode> nodes = new ArrayList<ClassicNode>();
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
 				Node node = Mockito.mock(Node.class);
@@ -23,11 +21,10 @@ public class NodeSwapperTest {
 				Mockito.when(node.getXCoordinate()).thenReturn(x);
 				Mockito.when(node.getYCoordinate()).thenReturn(y);
 				Mockito.when(node.getOccupantPlayerId()).thenReturn("");
+				Mockito.when(node.isMarked()).thenReturn(false);
 			}
 		}
-		Board board = Mockito.mock(Board.class);
-		Mockito.when(board.getNodes()).thenReturn(nodes);
-		return board;
+		return nodes;
 	}
 
 	private List<Node> createNodesToSwap() {
@@ -56,9 +53,8 @@ public class NodeSwapperTest {
 		return nodesToSwap;
 	}
 	@Test
-	public void testSwapList() {
-		BoardFactory bf = Mockito.mock(BoardFactory.class);
-		Board board = createBoard();
+	public void testSwap() {
+		List<ClassicNode> nodes= createNodes();
 		List<Node> nodesToSwap = createNodesToSwap();
 
 		Node placed = Mockito.mock(Node.class);
@@ -66,41 +62,26 @@ public class NodeSwapperTest {
 		Mockito.when(placed.getXCoordinate()).thenReturn(1);
 		Mockito.when(placed.getYCoordinate()).thenReturn(0);
 
-		NodeFinder nf = new NodeFinder();
-		NodeSwapper ns = new NodeSwapper(nf);
-
-		Assert.assertEquals(4, ns.swap(bf, board, nodesToSwap, "foo", placed.getId()).size());
-	}
-
-	@Test
-	public void testSwapBoard() {
-		BoardFactory bf = new ClassicBoardFactory(8, 8);
-		Board board = createBoard();
-		List<Node> nodesToSwap = createNodesToSwap();
-
-		Node placed = Mockito.mock(Node.class);
-		Mockito.when(placed.getId()).thenReturn("1-0");
-		Mockito.when(placed.getXCoordinate()).thenReturn(1);
-		Mockito.when(placed.getYCoordinate()).thenReturn(0);
-
-		NodeFinder nf = new NodeFinder();
-		NodeSwapper ns = new NodeSwapper(nf);
+		NodeSwapper ns = new ClassicNodeSwapper(nodes);
 
 		String playerId = "foo";
-		ns.swap(bf, board, nodesToSwap, playerId, placed.getId());
+		ns.swap(nodesToSwap, playerId, placed.getId());
 
 		List<Integer> yCoor = new ArrayList<Integer>();
 		yCoor.add(0);
 		yCoor.add(1);
 		yCoor.add(2);
 		yCoor.add(3);
-		for (int i = 0; i < board.getNodes().size(); i++) {
-			Node n = board.getNodes().get(i);
+		for (int i = 0; i < nodes.size(); i++) {
+			Node n = nodes.get(i);
 			if (n.getXCoordinate() == 1 && yCoor.contains(n.getYCoordinate())) {
+				Assert.assertEquals(true, n.isMarked());
 				Assert.assertEquals(playerId, n.getOccupantPlayerId());
 			} else {
+				Assert.assertEquals(false, n.isMarked());
 				Assert.assertEquals("", n.getOccupantPlayerId());
 			}
 		}
 	}
 }
+

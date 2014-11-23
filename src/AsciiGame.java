@@ -1,5 +1,6 @@
 import kth.game.othello.Othello;
-import kth.game.othello.board.Node;
+import kth.game.othello.player.Player;
+import kth.game.othello.score.ScoreItem;
 
 import java.util.Scanner;
 
@@ -63,33 +64,14 @@ public class AsciiGame extends Game {
 
 	@Override
 	protected void onDraw() {
+		printScore();
+		System.out.println();
 		formatter.format(othello.getBoard());
 	}
 
 	@Override
 	protected void onEnd() {
 		System.out.println("**** Othello: Game Ended ****");
-
-		int p1Score = 0;
-		int p2Score = 0;
-		for (Node node : othello.getBoard().getNodes()) {
-			if (node.isMarked()) {
-				if (node.getOccupantPlayerId() == players.get(0).getId()) {
-					p1Score++;
-				} else {
-					p2Score++;
-				}
-			}
-		}
-
-		System.out.print("Result: ");
-		if (p1Score == p2Score) {
-			System.out.println("It is a draw!");
-		} else if (p1Score > p2Score) {
-			System.out.println(players.get(0).getName() + " wins with " + p1Score + " over " + p2Score);
-		} else {
-			System.out.println(players.get(1).getName() + " wins with " + p2Score + " over " + p1Score);
-		}
 	}
 
 	/**
@@ -104,6 +86,34 @@ public class AsciiGame extends Game {
 			reader.next(); // skip
 			return -1;
 		}
+	}
+
+	/**
+	 * Prints current score for all participating players.
+	 */
+	private void printScore() {
+		System.out.print("Score: ");
+		for (ScoreItem item : othello.getScore().getPlayersScore()) {
+			System.out.print(getPlayerNameFromId(item.getPlayerId()) + " (" + item.getScore() + ") ");
+		}
+		System.out.println();
+	}
+
+	/**
+	 * Returns player name from specified player id.
+	 *
+	 * @param playerId the player id to search after
+	 * @return the player name
+	 */
+	private String getPlayerNameFromId(String playerId) {
+		String result = null;
+		for (Player player : othello.getPlayers()) {
+			if (player.getId() == playerId) {
+				result = player.getName();
+				break;
+			}
+		}
+		return result;
 	}
 
 }
