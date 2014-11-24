@@ -3,11 +3,12 @@ package kth.game;
 import kth.game.othello.ClassicOthelloFactory;
 import kth.game.othello.Othello;
 import kth.game.othello.OthelloFactory;
-import kth.game.othello.board.Board;
+import kth.game.othello.board.factory.NodeData;
 import kth.game.othello.player.Player;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * A factory for producing classic ASCII othello games.
@@ -18,47 +19,38 @@ public class AsciiGameFactory implements GameFactory {
 
 	@Override
 	public Game createComputerGame() {
-		OthelloFactory factory = new ClassicOthelloFactory();
-		Othello othello = factory.createComputerGame();
-		BoardFormatter formatter = createBoardFormatter(othello.getBoard(), othello.getPlayers());
-		Scanner reader = createInputReader();
-		return new AsciiGame(othello, formatter, reader);
+		return createGame(createFactory().createComputerGame());
 	}
 
 	@Override
 	public Game createOnePlayerGame() {
-		OthelloFactory factory = new ClassicOthelloFactory();
-		Othello othello = factory.createHumanVersusComputerGame();
-		BoardFormatter formatter = createBoardFormatter(othello.getBoard(), othello.getPlayers());
-		Scanner reader = createInputReader();
-		return new AsciiGame(othello, formatter, reader);
+		return createGame(createFactory().createHumanVersusComputerGame());
 	}
 
 	@Override
 	public Game createTwoPlayerGame() {
-		OthelloFactory factory = new ClassicOthelloFactory();
-		Othello othello = factory.createHumanGame();
-		BoardFormatter formatter = createBoardFormatter(othello.getBoard(), othello.getPlayers());
+		return createGame(createFactory().createHumanGame());
+	}
+
+	@Override
+	public Game createGame(Set<NodeData> nodesData, List<Player> players) {
+		return createGame(createFactory().createGame(nodesData, players));
+	}
+
+	private Game createGame(Othello othello) {
+		BoardFormatter formatter = createBoardFormatter(othello.getPlayers());
 		Scanner reader = createInputReader();
 		return new AsciiGame(othello, formatter, reader);
 	}
 
-	/**
-	 * Creates ASCII board formatter with the specified board and a selected starting player from specified players.
-	 *
-	 * @param board the board to delegate
-	 * @param players the players to select from
-	 * @return ascii board formatter
-	 */
-	private BoardFormatter createBoardFormatter(Board board, List<Player> players) {
+	private OthelloFactory createFactory() {
+		return new ClassicOthelloFactory();
+	}
+
+	private BoardFormatter createBoardFormatter(List<Player> players) {
 		return new AsciiBoardFormatter(players.get(1).getId());
 	}
 
-	/**
-	 * Creates input reader.
-	 *
-	 * @return scanner reading from stdin
-	 */
 	private Scanner createInputReader() {
 		return new Scanner(System.in);
 	}
