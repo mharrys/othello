@@ -27,48 +27,49 @@ public class AsciiBoardFormatter implements BoardFormatter {
 	public void format(Board board) {
 		List<Node> nodes = board.getNodes();
 
-		int rows = 0;
 		int cols = 0;
 		for (Node node : nodes) {
 			if (node.getXCoordinate() > cols) {
 				cols = node.getXCoordinate();
 			}
-
-			if (node.getYCoordinate() > rows) {
-				rows = node.getYCoordinate();
-			}
 		}
 		// adjust for zero based coordinates
-		rows++;
 		cols++;
 
 		System.out.print("  ");
 		for (int i = 0; i < cols; i++) {
 			System.out.print(i + " ");
 		}
-		System.out.println();
 
-		int row = 0;
-		for (int i = 0; i < nodes.size(); i++) {
-			if (i % rows == 0) {
+		int row = -1;
+		int col = 0;
+		for (Node node : nodes) {
+			int x = node.getXCoordinate();
+			int y = node.getYCoordinate();
+
+			if (row != y) {
+				row = y;
+				col = 0;
+				System.out.println();
 				System.out.print(row + " ");
-				row++;
 			}
 
-			Node node = nodes.get(i);
+			while (x > col) {
+				System.out.print("  ");
+				col++;
+			}
+			col++;
+
 			if (!node.isMarked()) {
 				System.out.print('.');
 			} else {
-				System.out.print(node.getOccupantPlayerId() == startingPlayerId ? 'b' : 'w');
+				// TODO: arbitrary number of player colors
+				System.out.print(node.getOccupantPlayerId().equals(startingPlayerId) ? 'b' : 'w');
 			}
 
-			if ((i + 1) % cols == 0) {
-				System.out.print('\n');
-			} else {
-				System.out.print(' ');
-			}
+			System.out.print(' ');
 		}
-		System.out.print('\n');
+		System.out.println();
 	}
 
 }
