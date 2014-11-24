@@ -6,6 +6,7 @@ import java.util.List;
 import kth.game.othello.board.ClassicNode;
 import kth.game.othello.board.Node;
 
+import kth.game.othello.board.NodeSwapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
