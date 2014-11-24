@@ -1,3 +1,7 @@
+package kth.game;
+
+import kth.game.Game;
+
 /**
  * A factory for producing complete othello games.
  *

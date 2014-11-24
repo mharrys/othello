@@ -1,3 +1,5 @@
+package kth.game;
+
 import kth.game.othello.Othello;
 import kth.game.othello.player.Player;
 import kth.game.othello.score.ScoreItem;
