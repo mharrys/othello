@@ -3,6 +3,7 @@ package kth.game.othello;
 import kth.game.othello.board.Board;
 import kth.game.othello.board.Node;
 import kth.game.othello.player.Player;
+import kth.game.othello.player.movestrategy.MoveStrategy;
 import kth.game.othello.score.Score;
 
 import java.util.ArrayList;
@@ -97,12 +98,10 @@ public class ClassicOthello implements Othello {
 			throw new IllegalStateException("Computer is not in turn.");
 		}
 
-		if (hasValidMove(player.getId())) {
-			for (Node node : board.getNodes()) {
-				if (isMoveValid(player.getId(), node.getId())) {
-					return move(player.getId(), node.getId());
-				}
-			}
+		MoveStrategy moveStrategy = player.getMoveStrategy();
+		Node node = moveStrategy.move(player.getId(), this);
+		if (node != null) {
+			return move(player.getId(), node.getId());
 		}
 
 		playerSwitcher.switchToNextPlayer();

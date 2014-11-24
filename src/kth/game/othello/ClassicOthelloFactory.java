@@ -3,6 +3,7 @@ package kth.game.othello;
 import kth.game.othello.board.*;
 import kth.game.othello.player.OthelloPlayer;
 import kth.game.othello.player.Player;
+import kth.game.othello.player.movestrategy.NaiveMoveStrategy;
 import kth.game.othello.score.OthelloScore;
 import kth.game.othello.score.ScoreItem;
 
@@ -76,7 +77,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @return human player
 	 */
 	private OthelloPlayer createHumanPlayer(String name) {
-		return new OthelloPlayer(generateId(), name, Player.Type.HUMAN);
+		return new OthelloPlayer(generateId(), name, Player.Type.HUMAN, null);
 	}
 
 	/**
@@ -86,7 +87,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @return computer player
 	 */
 	private OthelloPlayer createComputerPlayer(String name) {
-		return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER);
+		return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER, new NaiveMoveStrategy());
 	}
 
 
