@@ -31,13 +31,7 @@ public class AsciiGame extends Game {
 
 	@Override
 	protected void onStart() {
-		final String n1 = players.get(0).getName();
-		final String n2 = players.get(1).getName();
 		System.out.println("**** Othello: Game start ****");
-		System.out.println(n1 + " vs " + n2);
-		System.out.println();
-		System.out.println(n1 + ": w (white)");
-		System.out.println(n2 + ": b (black)");
 		System.out.println();
 		System.out.println(othello.getPlayerInTurn().getName() + " is first to move.");
 		System.out.println();
@@ -52,7 +46,6 @@ public class AsciiGame extends Game {
 		int y = getNextInputInt();
 
 		reader.nextLine(); // consume \n
-
 		System.out.println();
 
 		return "" + x + "-" + y;
