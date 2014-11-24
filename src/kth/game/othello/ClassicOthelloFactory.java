@@ -10,6 +10,7 @@ import kth.game.othello.score.ScoreItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -145,6 +146,10 @@ public class ClassicOthelloFactory implements OthelloFactory {
 				nodes.add(new ClassicNode(x, y, occupantPlayerId));
 			}
 		}
+
+		// nodesData can have any order
+		Collections.sort(nodes);
+
 		return nodes;
 	}
 
