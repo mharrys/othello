@@ -1,12 +1,21 @@
 package kth.game.othello;
 
-import kth.game.othello.board.*;
+import kth.game.othello.board.Board;
+import kth.game.othello.board.ClassicBoard;
+import kth.game.othello.board.ClassicNode;
+import kth.game.othello.board.Node;
+import kth.game.othello.board.factory.NodeData;
 import kth.game.othello.player.OthelloPlayer;
 import kth.game.othello.player.Player;
 import kth.game.othello.score.OthelloScore;
+import kth.game.othello.score.Score;
 import kth.game.othello.score.ScoreItem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * A factory for producing classic othello games.
@@ -23,50 +32,53 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	public Othello createComputerGame() {
 		Player player1 = createComputerPlayer(PLAYER1_NAME);
 		Player player2 = createComputerPlayer(PLAYER2_NAME);
-		List<Player> players = new ArrayList<Player>();
-		players.add(player1);
-		players.add(player2);
-		return createGame(players);
+		return createGame(Arrays.asList(player1, player2));
 	}
 
 	@Override
 	public Othello createHumanGame() {
 		Player player1 = createHumanPlayer(PLAYER1_NAME);
 		Player player2 = createHumanPlayer(PLAYER2_NAME);
-		List<Player> players = new ArrayList<Player>();
-		players.add(player1);
-		players.add(player2);
-		return createGame(players);
+		return createGame(Arrays.asList(player1, player2));
 	}
 
 	@Override
 	public Othello createHumanVersusComputerGame() {
 		Player player1 = createHumanPlayer(PLAYER1_NAME);
 		Player player2 = createComputerPlayer(PLAYER2_NAME);
-		List<Player> players = new ArrayList<Player>();
-		players.add(player1);
-		players.add(player2);
-		return createGame(players);
+		return createGame(Arrays.asList(player1, player2));
+	}
+
+	@Override
+	public Othello createGame(Set<NodeData> nodesData, List<Player> players) {
+		return createGame(createClassicNodes(nodesData), players);
 	}
 
 	/**
-	 * Creates Othello game with given players
+	 * Creates Othello game with a default board from given list of players.
 	 * 
-	 * @param players a list of players for the game
+	 * @param players a list of players in the game
 	 * @return othello game
 	 */
 	private Othello createGame(List<Player> players) {
-		List<ClassicNode> nodes = createClassicNodes(players.get(0), players.get(1), 8, 8);
+		return createGame(createClassicNodes(players.get(0), players.get(1), 8, 8), players);
+	}
+
+	/**
+	 * Creates Othello game.
+	 *
+	 * @param nodes a list of nodes to use as board
+	 * @param players a list of players in the game
+	 * @return othello game
+	 */
+	private Othello createGame(List<ClassicNode> nodes, List<Player> players) {
 		Board board = new ClassicBoard((List<Node>) (Object) nodes);
 		NodeFinder nodeFinder = new NodeFinder();
 		NodeCapturer nodeCapturer = new NodeCapturer(nodeFinder);
 		NodeSwapper nodeSwapper = new ClassicNodeSwapper(nodes);
 		PlayerSwitcher playerSwitcher = new PlayerSwitcher(players);
-		OthelloScore othelloScore = new OthelloScore(createScoreItems(players));
-		for (ClassicNode node : nodes) {
-			node.addObserver(othelloScore);
-		}
-		return new ClassicOthello(board, nodeCapturer, nodeSwapper, playerSwitcher, othelloScore);
+		Score score = createScore(nodes, players);
+		return new ClassicOthello(board, nodeCapturer, nodeSwapper, playerSwitcher, score);
 	}
 
 	/**
@@ -88,7 +100,6 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	private OthelloPlayer createComputerPlayer(String name) {
 		return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER);
 	}
-
 
 	/**
 	 * Creates list of classic nodes.
@@ -120,6 +131,27 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	}
 
 	/**
+	 * Creates list of classic nodes.
+	 *
+	 * @param nodesData the nodes to read from
+	 * @return list of classic nodes
+	 */
+	private List<ClassicNode> createClassicNodes(Set<NodeData> nodesData) {
+		List<ClassicNode> nodes = new ArrayList<ClassicNode>();
+		for (NodeData nodeData : nodesData) {
+			int x = nodeData.getXCoordinate();
+			int y = nodeData.getYCoordinate();
+			String occupantPlayerId = nodeData.getOccupantPlayerId();
+			if (occupantPlayerId == null) {
+				nodes.add(new ClassicNode(x, y));
+			} else {
+				nodes.add(new ClassicNode(x, y, occupantPlayerId));
+			}
+		}
+		return nodes;
+	}
+
+	/**
 	 * Creates a list of score items from specified list of players.
 	 *
 	 * @param players a list of players for the game
@@ -127,13 +159,26 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 */
 	private List<ScoreItem> createScoreItems(List<Player> players) {
 		List<ScoreItem> items = new ArrayList<ScoreItem>();
-
 		for (Player player : players) {
 			ScoreItem item = new ScoreItem(player.getId(), 2);
 			items.add(item);
 		}
-
 		return items;
+	}
+
+	/**
+	 * Creates score that observers to all specified nodes and tracks each specified player.
+	 *
+	 * @param nodes the nodes to observe
+	 * @param players the players to track
+	 * @return new score instance
+	 */
+	private Score createScore(List<ClassicNode> nodes, List<Player> players) {
+		OthelloScore othelloScore = new OthelloScore(createScoreItems(players));
+		for (ClassicNode node : nodes) {
+			node.addObserver(othelloScore);
+		}
+		return othelloScore;
 	}
 
 	/**
