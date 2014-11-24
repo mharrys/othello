@@ -1,9 +1,6 @@
 package kth.game.othello;
 
-import kth.game.othello.board.Board;
-import kth.game.othello.board.ClassicBoard;
-import kth.game.othello.board.ClassicNode;
-import kth.game.othello.board.Node;
+import kth.game.othello.board.*;
 import kth.game.othello.board.factory.NodeData;
 import kth.game.othello.player.OthelloPlayer;
 import kth.game.othello.player.Player;
