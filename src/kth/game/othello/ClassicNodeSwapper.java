@@ -2,6 +2,7 @@ package kth.game.othello;
 
 import kth.game.othello.board.ClassicNode;
 import kth.game.othello.board.Node;
+import kth.game.othello.board.NodeSwapper;
 
 import java.util.List;
 

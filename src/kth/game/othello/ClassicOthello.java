@@ -2,6 +2,8 @@ package kth.game.othello;
 
 import kth.game.othello.board.Board;
 import kth.game.othello.board.Node;
+import kth.game.othello.board.NodeCapturer;
+import kth.game.othello.board.NodeSwapper;
 import kth.game.othello.player.Player;
 import kth.game.othello.score.Score;
 

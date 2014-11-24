@@ -1,10 +1,7 @@
-package kth.game.othello;
+package kth.game.othello.board;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import kth.game.othello.board.Board;
-import kth.game.othello.board.Node;
 
 /**
  * This class is responsible for calculating nodes to capture
@@ -22,6 +19,40 @@ public class NodeCapturer {
 	 */
 	public NodeCapturer(NodeFinder nodeFinder) {
 		this.nodeFinder = nodeFinder;
+	}
+
+	/**
+	 * Returns the captured nodes surrounding the specified empty node in all directions which is occupied by the
+	 * opponent player.
+	 *
+	 * @param board the board with nodes
+	 * @param playerId the moving player id
+	 * @param nodeId the empty node
+	 * @param includeStart include the node where the player made the move to be updated and return
+	 *
+	 * @return list of nodes to be captured surrounding the empty node
+	 */
+	public List<Node> getNodesToCapture(Board board, String playerId, String nodeId, boolean includeStart) {
+		List<Node> captures = new ArrayList<Node>();
+
+		final Node startNode = nodeFinder.getNodeFromId(board.getNodes(), nodeId);
+		if (startNode == null) {
+			return captures;
+		}
+
+		if (includeStart) {
+			captures.add(nodeFinder.getNodeFromId(board.getNodes(), nodeId));
+		}
+
+		if (startNode.isMarked()) {
+			return captures;
+		}
+
+		for (Node node : nodeFinder.getAdjacentOpponentNodes(board.getNodes(), playerId, startNode)) {
+			captures.addAll(getNodesToCaptureInDirection(board, playerId, startNode, node));
+		}
+
+		return captures;
 	}
 
 	/**
@@ -88,40 +119,6 @@ public class NodeCapturer {
 			captures.clear();
 			return captures;
 		}
-	}
-
-	/**
-	 * Returns the captured nodes surrounding the specified empty node in all directions which is occupied by the
-	 * opponent player.
-	 *
-	 * @param board the board with nodes
-	 * @param playerId the moving player id
-	 * @param nodeId the empty node
-	 * @param includeStart include the node where the player made the move to be updated and return
-	 *
-	 * @return list of nodes to be captured surrounding the empty node
-	 */
-	List<Node> getNodesToCapture(Board board, String playerId, String nodeId, boolean includeStart) {
-		List<Node> captures = new ArrayList<Node>();
-
-		final Node startNode = nodeFinder.getNodeFromId(board.getNodes(), nodeId);
-		if (startNode == null) {
-			return captures;
-		}
-
-		if (includeStart) {
-			captures.add(nodeFinder.getNodeFromId(board.getNodes(), nodeId));
-		}
-
-		if (startNode.isMarked()) {
-			return captures;
-		}
-
-		for (Node node : nodeFinder.getAdjacentOpponentNodes(board.getNodes(), playerId, startNode)) {
-			captures.addAll(getNodesToCaptureInDirection(board, playerId, startNode, node));
-		}
-
-		return captures;
 	}
 
 }

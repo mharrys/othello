@@ -1,4 +1,4 @@
-package kth.game.othello;
+package kth.game.othello.board;
 
 import java.util.ArrayList;
 import java.util.Iterator;
