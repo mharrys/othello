@@ -1,3 +1,5 @@
+package kth.game;
+
 import kth.game.othello.board.Board;
 
 /**
