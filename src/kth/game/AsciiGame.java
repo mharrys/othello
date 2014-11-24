@@ -59,13 +59,15 @@ public class AsciiGame extends Game {
 
 	@Override
 	protected void onDraw() {
-		printScore();
 		System.out.println();
+		printScore();
+		System.out.print("\n\n");
 		formatter.format(othello.getBoard());
 	}
 
 	@Override
 	protected void onEnd() {
+		System.out.println();
 		System.out.println("**** Othello: Game Ended ****");
 	}
 
@@ -91,7 +93,6 @@ public class AsciiGame extends Game {
 		for (ScoreItem item : othello.getScore().getPlayersScore()) {
 			System.out.print(getPlayerNameFromId(item.getPlayerId()) + " (" + item.getScore() + ") ");
 		}
-		System.out.println();
 	}
 
 	/**
