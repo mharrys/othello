@@ -57,6 +57,7 @@ public class NaiveMoveStrategyTest {
 		Assert.assertNull(ms.move(player2Id, o));
 		Assert.assertEquals("4-2", ms.move(player1Id, o).getId());
 		Mockito.when(o.isMoveValid(player2Id, "3-2")).thenReturn(true);
+		Mockito.when(o.isMoveValid(player1Id, "3-5")).thenReturn(true);
 		Assert.assertEquals("3-2", ms.move(player2Id, o).getId());
 		Assert.assertEquals("4-2", ms.move(player1Id, o).getId());
 	}
