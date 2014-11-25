@@ -38,17 +38,12 @@ public class AsciiGameFactory implements GameFactory {
 	}
 
 	private Game createGame(Othello othello) {
-		BoardFormatter formatter = createBoardFormatter(othello.getPlayers());
 		Scanner reader = createInputReader();
-		return new AsciiGame(othello, formatter, reader);
+		return new AsciiGame(othello, reader);
 	}
 
 	private OthelloFactory createFactory() {
 		return new ClassicOthelloFactory();
-	}
-
-	private BoardFormatter createBoardFormatter(List<Player> players) {
-		return new AsciiBoardFormatter(players.get(1).getId());
 	}
 
 	private Scanner createInputReader() {

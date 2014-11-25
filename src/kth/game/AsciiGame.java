@@ -13,19 +13,16 @@ import java.util.Scanner;
  */
 public class AsciiGame extends Game {
 
-	private BoardFormatter formatter;
 	private Scanner reader;
 
 	/**
-	 * Constructs a ASCII game loop from specified Othello game, board formatter and input reader.
+	 * Constructs a Othello game loop using ASCII for the visual presentation.
 	 *
 	 * @param othello the Othello game
-	 * @param formatter the board formatter to use
 	 * @param reader the human input reader
 	 */
-	public AsciiGame(Othello othello, BoardFormatter formatter, Scanner reader) {
+	public AsciiGame(Othello othello, Scanner reader) {
 		super(othello);
-		this.formatter = formatter;
 		this.reader = reader;
 	}
 
@@ -62,7 +59,8 @@ public class AsciiGame extends Game {
 		System.out.println();
 		printScore();
 		System.out.print("\n\n");
-		formatter.format(othello.getBoard());
+
+		System.out.println(othello.getBoard());
 	}
 
 	@Override

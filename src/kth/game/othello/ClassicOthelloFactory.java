@@ -8,12 +8,7 @@ import kth.game.othello.score.OthelloScore;
 import kth.game.othello.score.Score;
 import kth.game.othello.score.ScoreItem;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * A factory for producing classic othello games.
@@ -70,7 +65,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @return othello game
 	 */
 	private Othello createGame(List<ClassicNode> nodes, List<Player> players) {
-		Board board = new ClassicBoard((List<Node>) (Object) nodes);
+		Board board = createBoard(nodes, players);
 		NodeFinder nodeFinder = new NodeFinder();
 		NodeCapturer nodeCapturer = new NodeCapturer(nodeFinder);
 		NodeSwapper nodeSwapper = new ClassicNodeSwapper(nodes);
@@ -151,6 +146,22 @@ public class ClassicOthelloFactory implements OthelloFactory {
 		Collections.sort(nodes);
 
 		return nodes;
+	}
+
+	/**
+	 * Creates a board from a list of nodes and players.
+	 *
+	 * @param nodes the playing field
+	 * @param players the players
+	 * @return the board
+	 */
+	private Board createBoard(List<ClassicNode> nodes, List<Player> players) {
+		HashMap<String, Character> colors = new HashMap<String, Character>();
+		for (int i = 0; i < players.size(); i++) {
+			Player player = players.get(i);
+			colors.put(player.getId(), (char) (97 + i));
+		}
+		return new ClassicBoard((List<Node>) (Object) nodes, colors);
 	}
 
 	/**
