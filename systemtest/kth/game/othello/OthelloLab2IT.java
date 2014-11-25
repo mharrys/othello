@@ -1,30 +1,41 @@
 package kth.game.othello;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 
+import kth.game.othello.player.*;
+import kth.game.othello.player.movestrategy.*;
 import kth.game.othello.score.*;
 import org.junit.Assert;
 import org.junit.Test;
 
 import kth.game.othello.board.factory.Diamond;
-import kth.game.othello.player.Player;
 import kth.game.othello.player.Player.Type;
-import kth.game.othello.player.movestrategy.MoveStrategy;
-
 
 public class OthelloLab2IT {
 
+	private String generateId() {
+		return UUID.randomUUID().toString();
+	}
+
 	private MoveStrategy getNewMoveStrategy() {
-		return null;
+		return new RandomMoveStrategy();
 	}
 
 	private OthelloFactory getOthelloFactory() {
-		return null;
+		return new ClassicOthelloFactory();
 	}
 
-    private Player createComputer(String name) { return null; }
+    private Player createComputer(String name) {
+	    return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER, new NaiveMoveStrategy());
+    }
 
-    private Player createHuman(String name) { return null; }
+    private Player createHuman(String name) {
+	    return new OthelloPlayer(generateId(), name, Player.Type.HUMAN, null);
+    }
 
 	private void makeNumberOfComputerMoves(int numberOfMoves, Othello othello) {
 		for (int i = 0; i < numberOfMoves; i++) {
@@ -81,7 +92,6 @@ public class OthelloLab2IT {
 
 		Assert.assertFalse(othello.isActive());
 	}
-
 
 	@Test
 	public void updatesScore() {
