@@ -36,6 +36,7 @@ public class AsciiGame extends Game {
 
 	@Override
 	protected String onHumanMove() {
+		System.out.println();
 		System.out.println("Enter move");
 		System.out.print("> ");
 
@@ -50,8 +51,7 @@ public class AsciiGame extends Game {
 
 	@Override
 	protected void onError(String message) {
-		System.out.println(message);
-		System.out.println();
+		System.out.println("Error: " + message);
 	}
 
 	@Override
