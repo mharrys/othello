@@ -17,10 +17,11 @@ public class ClassicNodeSwapper implements NodeSwapper {
 
 	@Override
 	public void swap(List<Node> nodesToSwap, String playerId, String nodeId) {
-		for (ClassicNode node : nodes) {
-			for (Node nodeToSwap : nodesToSwap) {
+		for (Node nodeToSwap : nodesToSwap) {
+			for (ClassicNode node : nodes) {
 				if (node.getId().equals(nodeToSwap.getId())) {
 					node.mark(playerId);
+					break;
 				}
 			}
 		}
