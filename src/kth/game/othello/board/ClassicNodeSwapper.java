@@ -1,4 +1,4 @@
-package kth.game.othello;
+package kth.game.othello.board;
 
 import kth.game.othello.board.ClassicNode;
 import kth.game.othello.board.Node;
