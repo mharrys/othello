@@ -3,6 +3,8 @@ package kth.game.othello;
 import kth.game.othello.board.*;
 import kth.game.othello.player.OthelloPlayer;
 import kth.game.othello.player.Player;
+import kth.game.othello.player.movestrategy.AggressiveMoveStrategy;
+import kth.game.othello.player.movestrategy.MoveStrategy;
 import kth.game.othello.player.movestrategy.NaiveMoveStrategy;
 import kth.game.othello.score.OthelloScore;
 import kth.game.othello.score.ScoreItem;
@@ -22,8 +24,8 @@ public class ClassicOthelloFactory implements OthelloFactory {
 
 	@Override
 	public Othello createComputerGame() {
-		Player player1 = createComputerPlayer(PLAYER1_NAME);
-		Player player2 = createComputerPlayer(PLAYER2_NAME);
+		Player player1 = createComputerPlayer(PLAYER1_NAME, new NaiveMoveStrategy());
+		Player player2 = createComputerPlayer(PLAYER2_NAME, new AggressiveMoveStrategy());
 		List<Player> players = new ArrayList<Player>();
 		players.add(player1);
 		players.add(player2);
@@ -43,7 +45,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	@Override
 	public Othello createHumanVersusComputerGame() {
 		Player player1 = createHumanPlayer(PLAYER1_NAME);
-		Player player2 = createComputerPlayer(PLAYER2_NAME);
+		Player player2 = createComputerPlayer(PLAYER2_NAME, new AggressiveMoveStrategy());
 		List<Player> players = new ArrayList<Player>();
 		players.add(player1);
 		players.add(player2);
@@ -86,8 +88,8 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param name the name of the player
 	 * @return computer player
 	 */
-	private OthelloPlayer createComputerPlayer(String name) {
-		return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER, new NaiveMoveStrategy());
+	private OthelloPlayer createComputerPlayer(String name, MoveStrategy moveStrategy) {
+		return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER, moveStrategy);
 	}
 
 
