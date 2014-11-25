@@ -3,7 +3,8 @@ package kth.demo;
 import kth.game.AsciiGameFactory;
 import kth.game.Game;
 import kth.game.GameFactory;
-import kth.game.othello.board.factory.*;
+import kth.game.othello.board.factory.Diamond;
+import kth.game.othello.board.factory.NodeData;
 import kth.game.othello.player.OthelloPlayer;
 import kth.game.othello.player.Player;
 

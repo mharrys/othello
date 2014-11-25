@@ -1,6 +1,7 @@
 package kth.game.othello.board;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Describes a classic 8x8 Othello board.
