@@ -10,6 +10,8 @@ import java.util.List;
 
 /**
  * Starts a human versus human game, makes four moves for each player and displays the score.
+ *
+ * @author Mattias Harrysson
  */
 public class Demo5 {
 
