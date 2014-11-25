@@ -29,13 +29,13 @@ public class OthelloLab2IT {
 		return new ClassicOthelloFactory();
 	}
 
-    private Player createComputer(String name) {
-	    return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER, new NaiveMoveStrategy());
-    }
+	private Player createComputer(String name) {
+		return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER, new NaiveMoveStrategy());
+	}
 
-    private Player createHuman(String name) {
-	    return new OthelloPlayer(generateId(), name, Player.Type.HUMAN, null);
-    }
+	private Player createHuman(String name) {
+		return new OthelloPlayer(generateId(), name, Player.Type.HUMAN, null);
+	}
 
 	private void makeNumberOfComputerMoves(int numberOfMoves, Othello othello) {
 		for (int i = 0; i < numberOfMoves; i++) {
@@ -67,7 +67,7 @@ public class OthelloLab2IT {
 		players.add(createComputer("black"));
 		players.add(createComputer("white"));
 		players.add(createComputer("orange"));
-        Diamond diamond = new Diamond();
+		Diamond diamond = new Diamond();
 		Othello othello = getOthelloFactory().createGame(diamond.getNodes(11, players), players);
 		othello.start();
 		while (othello.isActive()) {
