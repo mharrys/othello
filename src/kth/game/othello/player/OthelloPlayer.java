@@ -1,27 +1,31 @@
 package kth.game.othello.player;
 
+import kth.game.othello.player.movestrategy.MoveStrategy;
+
 /**
  * Describes a Othello player.
  *
  * @author Mattias Harrysson
+ * @author Henrik Hygerth
  */
 public class OthelloPlayer implements Player {
 
 	private String id;
 	private String name;
 	private Type type;
+	private MoveStrategy moveStrategy;
 
 	/**
-	 * Constructs a Othello player with specified id, name and type.
-	 *
 	 * @param id the player id
 	 * @param name the player name
 	 * @param type the type of player
+	 * @param moveStrategy the move strategy to use
 	 */
-	public OthelloPlayer(String id, String name, Type type) {
+	public OthelloPlayer(String id, String name, Type type, MoveStrategy moveStrategy) {
 		this.id = id;
 		this.name = name;
 		this.type = type;
+		this.moveStrategy = moveStrategy;
 	}
 
 	@Override
@@ -37,6 +41,16 @@ public class OthelloPlayer implements Player {
 	@Override
 	public Type getType() {
 		return type;
+	}
+
+	@Override
+	public MoveStrategy getMoveStrategy() {
+		return moveStrategy;
+	}
+
+	@Override
+	public void setMoveStrategy(MoveStrategy moveStrategy) {
+		this.moveStrategy = moveStrategy;
 	}
 
 }

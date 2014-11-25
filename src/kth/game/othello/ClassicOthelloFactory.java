@@ -11,6 +11,9 @@ import kth.game.othello.board.NodeSwapper;
 import kth.game.othello.board.factory.NodeData;
 import kth.game.othello.player.OthelloPlayer;
 import kth.game.othello.player.Player;
+import kth.game.othello.player.movestrategy.MoveStrategy;
+import kth.game.othello.player.movestrategy.NaiveMoveStrategy;
+import kth.game.othello.player.movestrategy.RandomMoveStrategy;
 import kth.game.othello.score.OthelloScore;
 import kth.game.othello.score.Score;
 import kth.game.othello.score.ScoreItem;
@@ -30,8 +33,8 @@ public class ClassicOthelloFactory implements OthelloFactory {
 
 	@Override
 	public Othello createComputerGame() {
-		Player player1 = createComputerPlayer(PLAYER1_NAME);
-		Player player2 = createComputerPlayer(PLAYER2_NAME);
+		Player player1 = createComputerPlayer(PLAYER1_NAME, new NaiveMoveStrategy());
+		Player player2 = createComputerPlayer(PLAYER2_NAME, new RandomMoveStrategy());
 		return createGame(Arrays.asList(player1, player2));
 	}
 
@@ -45,7 +48,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	@Override
 	public Othello createHumanVersusComputerGame() {
 		Player player1 = createHumanPlayer(PLAYER1_NAME);
-		Player player2 = createComputerPlayer(PLAYER2_NAME);
+		Player player2 = createComputerPlayer(PLAYER2_NAME, new RandomMoveStrategy());
 		return createGame(Arrays.asList(player1, player2));
 	}
 
@@ -88,7 +91,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @return human player
 	 */
 	private OthelloPlayer createHumanPlayer(String name) {
-		return new OthelloPlayer(generateId(), name, Player.Type.HUMAN);
+		return new OthelloPlayer(generateId(), name, Player.Type.HUMAN, null);
 	}
 
 	/**
@@ -97,8 +100,8 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param name the name of the player
 	 * @return computer player
 	 */
-	private OthelloPlayer createComputerPlayer(String name) {
-		return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER);
+	private OthelloPlayer createComputerPlayer(String name, MoveStrategy moveStrategy) {
+		return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER, moveStrategy);
 	}
 
 	/**

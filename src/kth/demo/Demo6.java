@@ -7,6 +7,7 @@ import kth.game.othello.board.factory.Diamond;
 import kth.game.othello.board.factory.NodeData;
 import kth.game.othello.player.OthelloPlayer;
 import kth.game.othello.player.Player;
+import kth.game.othello.player.movestrategy.RandomMoveStrategy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,9 +24,9 @@ public class Demo6 {
 	 * Game entry point.
 	 */
 	public static void main(String[] args) {
-		Player player1 = new OthelloPlayer("p1", "Player 1", Player.Type.COMPUTER);
-		Player player2 = new OthelloPlayer("p2", "Player 2", Player.Type.COMPUTER);
-		Player player3 = new OthelloPlayer("p3", "Player 3", Player.Type.COMPUTER);
+		Player player1 = new OthelloPlayer("p1", "Player 1", Player.Type.COMPUTER, new RandomMoveStrategy());
+		Player player2 = new OthelloPlayer("p2", "Player 2", Player.Type.COMPUTER, new RandomMoveStrategy());
+		Player player3 = new OthelloPlayer("p3", "Player 3", Player.Type.COMPUTER, new RandomMoveStrategy());
 		List<Player> players = Arrays.asList(player1, player2, player3);
 
 		Diamond diamond = new Diamond();
