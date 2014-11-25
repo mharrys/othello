@@ -1,8 +1,8 @@
 package kth.game.othello;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+import kth.game.othello.score.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -81,4 +81,30 @@ public class OthelloLab2IT {
 
 		Assert.assertFalse(othello.isActive());
 	}
+
+
+	@Test
+	public void updatesScore() {
+		List<ScoreItem> scores = new LinkedList<ScoreItem>();
+
+		scores.add(new ScoreItem("p1", 3));
+		scores.add(new ScoreItem("p2", 5));
+		scores.add(new ScoreItem("p3", 2));
+
+		OthelloScore score = new OthelloScore(scores);
+
+		score.update(null, Arrays.asList(null, "p2"));
+		score.update(null, Arrays.asList("p1", "p3"));
+
+		List<ScoreItem> currentScores = score.getPlayersScore();
+
+		Assert.assertEquals("p2", currentScores.get(0).getPlayerId());
+		Assert.assertEquals("p3", currentScores.get(1).getPlayerId());
+		Assert.assertEquals("p1", currentScores.get(2).getPlayerId());
+
+		Assert.assertEquals(6, currentScores.get(0).getScore());
+		Assert.assertEquals(3, currentScores.get(1).getScore());
+		Assert.assertEquals(2, currentScores.get(2).getScore());
+	}
+
 }

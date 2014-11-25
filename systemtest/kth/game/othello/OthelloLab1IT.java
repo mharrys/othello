@@ -3,17 +3,11 @@ package kth.game.othello;
 import kth.game.othello.board.Node;
 import kth.game.othello.player.Player;
 import kth.game.othello.player.Player.Type;
-import kth.game.othello.score.OthelloScore;
-import kth.game.othello.score.ScoreItem;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
-public class OthelloIT {
+public class OthelloLab1IT {
 
 	private Object getNumberOfOccupiedNodes(Othello othello) {
 		int occupiedNodesCounter = 0;
@@ -84,30 +78,6 @@ public class OthelloIT {
 			Assert.assertEquals(Type.COMPUTER, othello.getPlayerInTurn().getType());
 			othello.move();
 		}
-	}
-
-	@Test
-	public void updatesScore() {
-		List<ScoreItem> scores = new LinkedList<ScoreItem>();
-
-		scores.add(new ScoreItem("p1", 3));
-		scores.add(new ScoreItem("p2", 5));
-		scores.add(new ScoreItem("p3", 2));
-
-		OthelloScore score = new OthelloScore(scores);
-
-		score.update(null, Arrays.asList(null, "p2"));
-		score.update(null, Arrays.asList("p1", "p3"));
-
-		List<ScoreItem> currentScores = score.getPlayersScore();
-
-		Assert.assertEquals("p2", currentScores.get(0).getPlayerId());
-		Assert.assertEquals("p3", currentScores.get(1).getPlayerId());
-		Assert.assertEquals("p1", currentScores.get(2).getPlayerId());
-
-		Assert.assertEquals(6, currentScores.get(0).getScore());
-		Assert.assertEquals(3, currentScores.get(1).getScore());
-		Assert.assertEquals(2, currentScores.get(2).getScore());
 	}
 
 }
