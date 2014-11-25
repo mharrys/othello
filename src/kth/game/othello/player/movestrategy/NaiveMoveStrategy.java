@@ -11,11 +11,9 @@ import kth.game.othello.board.Node;
  */
 public class NaiveMoveStrategy implements MoveStrategy {
 
-	private String name = "NaiveMoveStrategy";
-
 	@Override
 	public String getName() {
-		return name;
+		return "NaiveMoveStrategy";
 	}
 
 	@Override

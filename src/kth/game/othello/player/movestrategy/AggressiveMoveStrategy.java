@@ -11,11 +11,9 @@ import kth.game.othello.board.Node;
  */
 public class AggressiveMoveStrategy implements MoveStrategy {
 
-	private String name = "AggressiveMoveStrategy";
-
 	@Override
 	public String getName() {
-		return name;
+		return "AggressiveMoveStrategy";
 	}
 
 	@Override
