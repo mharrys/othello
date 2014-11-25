@@ -183,7 +183,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	private List<ScoreItem> createScoreItems(List<Player> players) {
 		List<ScoreItem> items = new ArrayList<ScoreItem>();
 		for (Player player : players) {
-			ScoreItem item = new ScoreItem(player.getId(), 2);
+			ScoreItem item = new ScoreItem(player.getId(), players.size());
 			items.add(item);
 		}
 		return items;
