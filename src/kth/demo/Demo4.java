@@ -13,7 +13,7 @@ import kth.game.othello.player.movestrategy.NaiveMoveStrategy;
 import kth.game.othello.player.movestrategy.RandomMoveStrategy;
 
 /**
- * Setup and run a game between two computers and change the strategy for one player after ten with each player.
+ * Setup and run a game between two computers and change the strategy for one player after ten moves with each player.
  *
  * @author Henrik Hygerth
  */
