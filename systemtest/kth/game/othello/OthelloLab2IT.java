@@ -57,7 +57,7 @@ public class OthelloLab2IT {
 		Othello othello = getOthelloFactory().createComputerGame();
 		String playerId = othello.getPlayers().get(1).getId();
 		othello.start(playerId);
-		othello.move(playerId, othello.getBoard().getNode(5, 3).getId());
+		othello.move(playerId, othello.getBoard().getNode(2, 3).getId());
 		Assert.assertEquals(4, othello.getScore().getPoints(playerId));
 	}
 
