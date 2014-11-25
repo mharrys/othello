@@ -16,11 +16,10 @@ public class OthelloPlayer implements Player {
 	private MoveStrategy moveStrategy;
 
 	/**
-	 * Constructs a Othello player with specified id, name and type.
-	 *
 	 * @param id the player id
 	 * @param name the player name
 	 * @param type the type of player
+	 * @param moveStrategy the move strategy to use
 	 */
 	public OthelloPlayer(String id, String name, Type type, MoveStrategy moveStrategy) {
 		this.id = id;
