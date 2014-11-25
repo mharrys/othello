@@ -38,15 +38,15 @@ public class AsciiGameFactory implements GameFactory {
 	}
 
 	private Game createGame(Othello othello) {
-		Scanner reader = createInputReader();
-		return new AsciiGame(othello, reader);
+		Scanner scanner = createInputScanner();
+		return new AsciiGame(othello, scanner);
 	}
 
 	private OthelloFactory createFactory() {
 		return new ClassicOthelloFactory();
 	}
 
-	private Scanner createInputReader() {
+	private Scanner createInputScanner() {
 		return new Scanner(System.in);
 	}
 

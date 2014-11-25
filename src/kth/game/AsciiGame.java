@@ -13,17 +13,17 @@ import java.util.Scanner;
  */
 public class AsciiGame extends Game {
 
-	private Scanner reader;
+	private Scanner scanner;
 
 	/**
 	 * Constructs a Othello game loop using ASCII for the visual presentation.
 	 *
 	 * @param othello the Othello game
-	 * @param reader the human input reader
+	 * @param scanner the human input scanner
 	 */
-	public AsciiGame(Othello othello, Scanner reader) {
+	public AsciiGame(Othello othello, Scanner scanner) {
 		super(othello);
-		this.reader = reader;
+		this.scanner = scanner;
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class AsciiGame extends Game {
 		int x = getNextInputInt();
 		int y = getNextInputInt();
 
-		reader.nextLine(); // consume \n
+		scanner.nextLine(); // consume \n
 		System.out.println();
 
 		return "" + x + "-" + y;
@@ -70,15 +70,15 @@ public class AsciiGame extends Game {
 	}
 
 	/**
-	 * Returns next integer from input reader.
+	 * Returns next integer from input scanner.
 	 *
 	 * @return next input integer, or -1 if invalid input
 	 */
 	private int getNextInputInt() {
-		if (reader.hasNextInt()) {
-			return reader.nextInt();
+		if (scanner.hasNextInt()) {
+			return scanner.nextInt();
 		} else {
-			reader.next(); // skip
+			scanner.next(); // skip
 			return -1;
 		}
 	}
