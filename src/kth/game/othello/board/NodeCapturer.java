@@ -96,12 +96,19 @@ public class NodeCapturer {
 
 		boolean validCapture = false;
 		while (x >= 0 && y >= 0 && x < cols && y < rows) {
-			Node n = board.getNode(x, y);
+			Node n;
+			try {
+				n = board.getNode(x, y);
+			} catch (IllegalArgumentException e) {
+				// there can exist "gaps" in the board, it should be treated the same way as hitting the end of the
+				// board and not be considered an error
+				break;
+			}
 
 			if (!n.isMarked()) {
 				// we hit a unmarked node before finding a node which was occupied by one of the moving players
 				break;
-			} else if (n.getOccupantPlayerId().equals(direction.getOccupantPlayerId())) {
+			} else if (!n.getOccupantPlayerId().equals(playerId)) {
 				captures.add(n);
 			} else if (n.getOccupantPlayerId().equals(playerId)) {
 				validCapture = true;

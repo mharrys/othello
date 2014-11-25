@@ -13,31 +13,22 @@ import java.util.Scanner;
  */
 public class AsciiGame extends Game {
 
-	private BoardFormatter formatter;
-	private Scanner reader;
+	private Scanner scanner;
 
 	/**
-	 * Constructs a ASCII game loop from specified Othello game, board formatter and input reader.
+	 * Constructs a Othello game loop using ASCII for the visual presentation.
 	 *
 	 * @param othello the Othello game
-	 * @param formatter the board formatter to use
-	 * @param reader the human input reader
+	 * @param scanner the human input scanner
 	 */
-	public AsciiGame(Othello othello, BoardFormatter formatter, Scanner reader) {
+	public AsciiGame(Othello othello, Scanner scanner) {
 		super(othello);
-		this.formatter = formatter;
-		this.reader = reader;
+		this.scanner = scanner;
 	}
 
 	@Override
 	protected void onStart() {
-		final String n1 = players.get(0).getName();
-		final String n2 = players.get(1).getName();
 		System.out.println("**** Othello: Game start ****");
-		System.out.println(n1 + " vs " + n2);
-		System.out.println();
-		System.out.println(n1 + ": w (white)");
-		System.out.println(n2 + ": b (black)");
 		System.out.println();
 		System.out.println(othello.getPlayerInTurn().getName() + " is first to move.");
 		System.out.println();
@@ -45,14 +36,14 @@ public class AsciiGame extends Game {
 
 	@Override
 	protected String onHumanMove() {
+		System.out.println();
 		System.out.println("Enter move");
 		System.out.print("> ");
 
 		int x = getNextInputInt();
 		int y = getNextInputInt();
 
-		reader.nextLine(); // consume \n
-
+		scanner.nextLine(); // consume \n
 		System.out.println();
 
 		return "" + x + "-" + y;
@@ -60,32 +51,34 @@ public class AsciiGame extends Game {
 
 	@Override
 	protected void onError(String message) {
-		System.out.println(message);
-		System.out.println();
+		System.out.println("Error: " + message);
 	}
 
 	@Override
 	protected void onDraw() {
-		printScore();
 		System.out.println();
-		formatter.format(othello.getBoard());
+		printScore();
+		System.out.print("\n\n");
+
+		System.out.println(othello.getBoard());
 	}
 
 	@Override
 	protected void onEnd() {
+		System.out.println();
 		System.out.println("**** Othello: Game Ended ****");
 	}
 
 	/**
-	 * Returns next integer from input reader.
+	 * Returns next integer from input scanner.
 	 *
 	 * @return next input integer, or -1 if invalid input
 	 */
 	private int getNextInputInt() {
-		if (reader.hasNextInt()) {
-			return reader.nextInt();
+		if (scanner.hasNextInt()) {
+			return scanner.nextInt();
 		} else {
-			reader.next(); // skip
+			scanner.next(); // skip
 			return -1;
 		}
 	}
@@ -98,7 +91,6 @@ public class AsciiGame extends Game {
 		for (ScoreItem item : othello.getScore().getPlayersScore()) {
 			System.out.print(getPlayerNameFromId(item.getPlayerId()) + " (" + item.getScore() + ") ");
 		}
-		System.out.println();
 	}
 
 	/**
