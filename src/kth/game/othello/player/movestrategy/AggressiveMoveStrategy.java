@@ -3,6 +3,12 @@ package kth.game.othello.player.movestrategy;
 import kth.game.othello.Othello;
 import kth.game.othello.board.Node;
 
+/**
+ * This move strategy will make moves that captures as many opponent nodes as possible in one move.
+ *
+ * @author Henrik Hygerth
+ *
+ */
 public class AggressiveMoveStrategy implements MoveStrategy {
 
 	private String name = "AggressiveMoveStrategy";

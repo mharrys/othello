@@ -4,7 +4,7 @@ import kth.game.othello.Othello;
 import kth.game.othello.board.Node;
 
 /**
- * This class is responsible for providing players with an naive move strategy
+ * This move strategy will make the first valid move it can find for a player.
  * 
  * @author Henrik Hygerth
  *
