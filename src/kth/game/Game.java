@@ -1,3 +1,5 @@
+package kth.game;
+
 import kth.game.othello.Othello;
 import kth.game.othello.player.Player;
 
@@ -28,11 +30,9 @@ abstract public class Game {
 	 */
 	public void run() {
 		othello.start(players.get(1).getId());
-
 		onStart();
 		while (othello.isActive()) {
 			onDraw();
-
 			Player movingPlayer = othello.getPlayerInTurn();
 			if (movingPlayer.getType() == Player.Type.COMPUTER) {
 				othello.move();
@@ -44,7 +44,6 @@ abstract public class Game {
 				}
 			}
 		}
-
 		onDraw();
 		onEnd();
 	}

@@ -1,6 +1,4 @@
-package kth.game.othello;
-
-import kth.game.othello.board.Node;
+package kth.game.othello.board;
 
 import java.util.List;
 

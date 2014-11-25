@@ -1,10 +1,8 @@
-package kth.game.othello;
+package kth.game.othello.board;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import kth.game.othello.board.Node;
 
 /**
  * This class is responsible for finding nodes.

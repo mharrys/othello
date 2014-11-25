@@ -3,8 +3,7 @@ package kth.game.othello;
 import java.util.ArrayList;
 import java.util.List;
 
-import kth.game.othello.board.ClassicNode;
-import kth.game.othello.board.Node;
+import kth.game.othello.board.*;
 
 import org.junit.Assert;
 import org.junit.Test;

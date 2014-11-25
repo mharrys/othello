@@ -1,7 +1,4 @@
-package kth.game.othello;
-
-import kth.game.othello.board.ClassicNode;
-import kth.game.othello.board.Node;
+package kth.game.othello.board;
 
 import java.util.List;
 
@@ -20,10 +17,11 @@ public class ClassicNodeSwapper implements NodeSwapper {
 
 	@Override
 	public void swap(List<Node> nodesToSwap, String playerId, String nodeId) {
-		for (ClassicNode node : nodes) {
-			for (Node nodeToSwap : nodesToSwap) {
+		for (Node nodeToSwap : nodesToSwap) {
+			for (ClassicNode node : nodes) {
 				if (node.getId().equals(nodeToSwap.getId())) {
 					node.mark(playerId);
+					break;
 				}
 			}
 		}

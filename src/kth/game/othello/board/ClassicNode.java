@@ -10,7 +10,7 @@ import java.util.Observable;
  * @author Henrik Hygerth
  * @author Mattias Harrysson
  */
-public class ClassicNode extends Observable implements Node {
+public class ClassicNode extends Observable implements Node, Comparable<Node> {
 	
 	private String id;
 	private String occupantId;
@@ -62,6 +62,20 @@ public class ClassicNode extends Observable implements Node {
 	@Override
 	public boolean isMarked() {
 		return marked;
+	}
+
+	@Override
+	public int compareTo(Node node) {
+		// row-major comparison
+		final int x2 = node.getXCoordinate();
+		final int y2 = node.getYCoordinate();
+		if (x == x2 && y == y2) {
+			return 0;
+		} else if (y > y2 || (y == y2 && x > x2)) {
+			return 1;
+		} else {
+			return -1;
+		}
 	}
 
 	/**
