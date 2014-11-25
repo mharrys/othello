@@ -108,7 +108,7 @@ public class NodeCapturer {
 			if (!n.isMarked()) {
 				// we hit a unmarked node before finding a node which was occupied by one of the moving players
 				break;
-			} else if (n.getOccupantPlayerId().equals(direction.getOccupantPlayerId())) {
+			} else if (!n.getOccupantPlayerId().equals(playerId)) {
 				captures.add(n);
 			} else if (n.getOccupantPlayerId().equals(playerId)) {
 				validCapture = true;
