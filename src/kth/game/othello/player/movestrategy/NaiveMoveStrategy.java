@@ -7,7 +7,6 @@ import kth.game.othello.board.Node;
  * This move strategy will make the first valid move it can find for a player.
  * 
  * @author Henrik Hygerth
- *
  */
 public class NaiveMoveStrategy implements MoveStrategy {
 
