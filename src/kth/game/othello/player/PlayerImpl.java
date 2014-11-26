@@ -3,7 +3,7 @@ package kth.game.othello.player;
 import kth.game.othello.player.movestrategy.MoveStrategy;
 
 /**
- * Describes a Othello player.
+ * Describes a player for a turn-based game.
  *
  * @author Mattias Harrysson
  * @author Henrik Hygerth
