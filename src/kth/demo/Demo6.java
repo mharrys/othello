@@ -21,7 +21,7 @@ import java.util.Set;
 public class Demo6 {
 
 	/**
-	 * Game entry point.
+	 * Demo entry point.
 	 */
 	public static void main(String[] args) {
 		Player player1 = new PlayerImpl("p1", "Player 1", Player.Type.COMPUTER, new RandomMoveStrategy());

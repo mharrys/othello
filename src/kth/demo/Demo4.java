@@ -20,7 +20,7 @@ import kth.game.othello.player.movestrategy.RandomMoveStrategy;
 public class Demo4 {
 
 	/**
-	 * Game entry point.
+	 * Demo entry point.
 	 */
 	public static void main(String[] args) {
 		Othello othello = new OthelloFactoryImpl().createComputerGame();

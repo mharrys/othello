@@ -12,7 +12,7 @@ import kth.game.GameFactory;
 public class Demo1 {
 
 	/**
-	 * Game entry point.
+	 * Demo entry point.
 	 */
 	public static void main(String[] args) {
 		GameFactory factory = new AsciiGameFactory();

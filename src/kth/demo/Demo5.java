@@ -16,7 +16,7 @@ import java.util.List;
 public class Demo5 {
 
 	/**
-	 * Game entry point.
+	 * Demo entry point.
 	 */
 	public static void main(String[] args) {
 		Othello othello = new OthelloFactoryImpl().createHumanGame();
