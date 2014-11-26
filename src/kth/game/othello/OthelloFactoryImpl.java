@@ -111,13 +111,13 @@ public class OthelloFactoryImpl implements OthelloFactory {
 	}
 
 	/**
-	 * Creates list of classic nodes.
+	 * Creates list of nodes.
 	 *
 	 * @param player1 the first player
 	 * @param player2 the second player
 	 * @param rows the number of rows
 	 * @param cols the number of columns
-	 * @return list of classic nodes
+	 * @return list of nodes
 	 */
 	private List<NodeImpl> createNodes(Player player1, Player player2, int rows, int cols) {
 		List<NodeImpl> nodes = new ArrayList<NodeImpl>();
@@ -140,10 +140,10 @@ public class OthelloFactoryImpl implements OthelloFactory {
 	}
 
 	/**
-	 * Creates list of classic nodes.
+	 * Creates list of nodes.
 	 *
 	 * @param nodesData the nodes to read from
-	 * @return list of classic nodes
+	 * @return list of nodes
 	 */
 	private List<NodeImpl> createNodes(Set<NodeData> nodesData) {
 		List<NodeImpl> nodes = new ArrayList<NodeImpl>();
