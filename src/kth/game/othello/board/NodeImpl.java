@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Observable;
 
 /**
- * Describes a node in a classic 8x8 Othello board. It will inform all observers when a new player is assigned to this
+ * Describes a node in a Othello board. It will inform all observers when a new player is assigned to this
  * node.
  * 
  * @author Henrik Hygerth
@@ -19,8 +19,8 @@ public class NodeImpl extends Observable implements Node, Comparable<Node> {
 	private boolean marked;
 	
 	/**
-	 * Construct a node in a classic Othello board
-	 * 
+	 * Construct a empty node.
+	 *
 	 * @param x the x-coordinate on the board
 	 * @param y the y-coordinate on the board
 	 */
@@ -31,7 +31,14 @@ public class NodeImpl extends Observable implements Node, Comparable<Node> {
 		occupantId = null;
 		marked = false;
 	}
-	
+
+	/**
+	 * Construct a node occupied by a player.
+	 *
+	 * @param x the x-coordinate on the board
+	 * @param y the y-coordinate on the board
+	 * @param playerId the occupying player id
+	 */
 	public NodeImpl(int x, int y, String playerId) {
 		this.id = x + "-" + y;
 		this.x = x;
@@ -79,7 +86,8 @@ public class NodeImpl extends Observable implements Node, Comparable<Node> {
 	}
 
 	/**
-	 * Sets node state to marked by specified playerId.
+	 * Sets node state to be occupied by specified player id. Observers will be notified of this change and receive the
+	 * previous player id (if any, or else null) and the current occupying player id.
 	 *
 	 * @param playerId the player to occupy this node
 	 */
