@@ -11,7 +11,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
- * A factory for producing classic ASCII othello games.
+ * A factory for producing ASCII Othello games.
  *
  * @author Mattias Harrysson
  */

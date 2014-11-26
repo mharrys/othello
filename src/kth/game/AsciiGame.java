@@ -16,8 +16,6 @@ public class AsciiGame extends Game {
 	private Scanner scanner;
 
 	/**
-	 * Constructs a Othello game loop using ASCII for the visual presentation.
-	 *
 	 * @param othello the Othello game
 	 * @param scanner the human input scanner
 	 */

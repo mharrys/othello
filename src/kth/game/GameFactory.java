@@ -14,23 +14,23 @@ import java.util.Set;
 public interface GameFactory {
 
 	/**
-	 * Creates a complete Othello game with two computers.
+	 * Creates a Othello game with two computers.
 	 *
-	 * @return complete Othello game
+	 * @return Othello game
 	 */
 	public Game createComputerGame();
 
 	/**
-	 * Creates a complete Othello game with one computer playing against one human.
+	 * Creates a Othello game with one computer playing against one human.
 	 *
-	 * @return complete Othello game
+	 * @return Othello game
 	 */
 	public Game createOnePlayerGame();
 
 	/**
-	 * Creates a complete Othello game with two humans.
+	 * Creates a Othello game with two humans.
 	 *
-	 * @return complete Othello game
+	 * @return Othello game
 	 */
 	public Game createTwoPlayerGame();
 
@@ -39,7 +39,7 @@ public interface GameFactory {
 	 *
 	 * @param nodes the nodes in the board
 	 * @param players the participating players
-	 * @return custom Othello game
+	 * @return Othello game
 	 */
 	public Game createGame(Set<NodeData> nodes, List<Player> players);
 

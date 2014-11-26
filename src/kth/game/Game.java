@@ -6,7 +6,7 @@ import kth.game.othello.player.Player;
 import java.util.List;
 
 /**
- * This class enforces a Othello game loop.
+ * The responsibility of this class is to enforce a Othello game loop.
  *
  * @author Mattias Harrysson
  */
@@ -16,9 +16,7 @@ abstract public class Game {
 	protected List<Player> players;
 
 	/**
-	 * Constructs a Othello game.
-	 *
-	 * @param othello the Othello game to use
+	 * @param othello the Othello game
 	 */
 	public Game(Othello othello) {
 		this.othello = othello;
@@ -26,7 +24,7 @@ abstract public class Game {
 	}
 
 	/**
-	 * Start and runs the game until no more moves can be made.
+	 * Runs the game until no more moves can be made.
 	 */
 	public void run() {
 		othello.start(players.get(1).getId());
