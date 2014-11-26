@@ -45,6 +45,7 @@ public class Demo4 {
 			// Select a strategy at random
 			index = rand.nextInt(moveStrategies.size());
 			player.setMoveStrategy(moveStrategies.get(index));
+			System.out.println(player.getName() + " is now using " + moveStrategies.get(index).getName());
 		}
 	}
 
