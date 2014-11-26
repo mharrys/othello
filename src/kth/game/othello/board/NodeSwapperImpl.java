@@ -11,6 +11,9 @@ public class NodeSwapperImpl implements NodeSwapper {
 
 	private List<NodeImpl> nodes;
 
+	/**
+	 * @param nodes the domain of nodes to perform swapping operations on
+	 */
 	public NodeSwapperImpl(List<NodeImpl> nodes) {
 		this.nodes = nodes;
 	}
