@@ -12,11 +12,14 @@ import java.util.Collections;
  *
  * @author Mattias Harrysson
  */
-public class OthelloScore extends Observable implements Score, Observer {
+public class ScoreImpl extends Observable implements Score, Observer {
 
 	private List<ScoreItem> scores;
 
-	public OthelloScore(List<ScoreItem> scores) {
+	/**
+	 * @param scores the list of score items to track
+	 */
+	public ScoreImpl(List<ScoreItem> scores) {
 		this.scores = scores;
 		updateOrder();
 	}
@@ -56,6 +59,12 @@ public class OthelloScore extends Observable implements Score, Observer {
 		updateOrder();
 	}
 
+	/**
+	 * Updates the score for a node.
+	 *
+	 * @param prevPlayerId previous player id occupying the node
+	 * @param nextPlayerId next player id to occupy the node
+	 */
 	private void updateScore(String prevPlayerId, String nextPlayerId) {
 		for (int i = 0; i <  scores.size(); i++) {
 			ScoreItem item = scores.get(i);
@@ -69,8 +78,10 @@ public class OthelloScore extends Observable implements Score, Observer {
 		}
 	}
 
+	/**
+	 * Sorts score list in descending order.
+	 */
 	private void updateOrder() {
-		// highest score first
 		Collections.sort(scores, Collections.reverseOrder());
 	}
 
