@@ -8,7 +8,7 @@ import kth.game.othello.player.movestrategy.MoveStrategy;
  * @author Mattias Harrysson
  * @author Henrik Hygerth
  */
-public class OthelloPlayer implements Player {
+public class PlayerImpl implements Player {
 
 	private String id;
 	private String name;
@@ -21,7 +21,7 @@ public class OthelloPlayer implements Player {
 	 * @param type the type of player
 	 * @param moveStrategy the move strategy to use
 	 */
-	public OthelloPlayer(String id, String name, Type type, MoveStrategy moveStrategy) {
+	public PlayerImpl(String id, String name, Type type, MoveStrategy moveStrategy) {
 		this.id = id;
 		this.name = name;
 		this.type = type;

@@ -1,6 +1,6 @@
 package kth.game;
 
-import kth.game.othello.ClassicOthelloFactory;
+import kth.game.othello.OthelloFactoryImpl;
 import kth.game.othello.Othello;
 import kth.game.othello.OthelloFactory;
 import kth.game.othello.board.factory.NodeData;
@@ -43,7 +43,7 @@ public class AsciiGameFactory implements GameFactory {
 	}
 
 	private OthelloFactory createFactory() {
-		return new ClassicOthelloFactory();
+		return new OthelloFactoryImpl();
 	}
 
 	private Scanner createInputScanner() {

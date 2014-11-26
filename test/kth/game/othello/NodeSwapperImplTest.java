@@ -9,10 +9,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class ClassicNodeSwapperTest {
+public class NodeSwapperImplTest {
 
-	private List<ClassicNode> createNodes() {
-		List<ClassicNode> nodes = new ArrayList<ClassicNode>();
+	private List<NodeImpl> createNodes() {
+		List<NodeImpl> nodes = new ArrayList<NodeImpl>();
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
 				Node node = Mockito.mock(Node.class);
@@ -53,7 +53,7 @@ public class ClassicNodeSwapperTest {
 	}
 	@Test
 	public void testSwap() {
-		List<ClassicNode> nodes= createNodes();
+		List<NodeImpl> nodes= createNodes();
 		List<Node> nodesToSwap = createNodesToSwap();
 
 		Node placed = Mockito.mock(Node.class);
@@ -61,7 +61,7 @@ public class ClassicNodeSwapperTest {
 		Mockito.when(placed.getXCoordinate()).thenReturn(1);
 		Mockito.when(placed.getYCoordinate()).thenReturn(0);
 
-		NodeSwapper ns = new ClassicNodeSwapper(nodes);
+		NodeSwapper ns = new NodeSwapperImpl(nodes);
 
 		String playerId = "foo";
 		ns.swap(nodesToSwap, playerId, placed.getId());

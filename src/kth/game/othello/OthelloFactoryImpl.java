@@ -1,15 +1,15 @@
 package kth.game.othello;
 
 import kth.game.othello.board.Board;
-import kth.game.othello.board.ClassicBoard;
-import kth.game.othello.board.ClassicNode;
-import kth.game.othello.board.ClassicNodeSwapper;
+import kth.game.othello.board.BoardImpl;
+import kth.game.othello.board.NodeImpl;
+import kth.game.othello.board.NodeSwapperImpl;
 import kth.game.othello.board.Node;
 import kth.game.othello.board.NodeCapturer;
 import kth.game.othello.board.NodeFinder;
 import kth.game.othello.board.NodeSwapper;
 import kth.game.othello.board.factory.NodeData;
-import kth.game.othello.player.OthelloPlayer;
+import kth.game.othello.player.PlayerImpl;
 import kth.game.othello.player.Player;
 import kth.game.othello.player.movestrategy.MoveStrategy;
 import kth.game.othello.player.movestrategy.NaiveMoveStrategy;
@@ -18,7 +18,13 @@ import kth.game.othello.score.OthelloScore;
 import kth.game.othello.score.Score;
 import kth.game.othello.score.ScoreItem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * A factory for producing classic othello games.
@@ -26,7 +32,7 @@ import java.util.*;
  * @author Mattias Harrysson
  * @author Henrik Hygerth
  */
-public class ClassicOthelloFactory implements OthelloFactory {
+public class OthelloFactoryImpl implements OthelloFactory {
 
 	private static final String PLAYER1_NAME = "Player 1";
 	private static final String PLAYER2_NAME = "Player 2";
@@ -54,7 +60,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 
 	@Override
 	public Othello createGame(Set<NodeData> nodesData, List<Player> players) {
-		return createGame(createClassicNodes(nodesData), players);
+		return createGame(createNodes(nodesData), players);
 	}
 
 	/**
@@ -64,7 +70,7 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @return othello game
 	 */
 	private Othello createGame(List<Player> players) {
-		return createGame(createClassicNodes(players.get(0), players.get(1), 8, 8), players);
+		return createGame(createNodes(players.get(0), players.get(1), 8, 8), players);
 	}
 
 	/**
@@ -74,14 +80,14 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param players a list of players in the game
 	 * @return othello game
 	 */
-	private Othello createGame(List<ClassicNode> nodes, List<Player> players) {
+	private Othello createGame(List<NodeImpl> nodes, List<Player> players) {
 		Board board = createBoard(nodes, players);
 		NodeFinder nodeFinder = new NodeFinder();
 		NodeCapturer nodeCapturer = new NodeCapturer(nodeFinder);
-		NodeSwapper nodeSwapper = new ClassicNodeSwapper(nodes);
+		NodeSwapper nodeSwapper = new NodeSwapperImpl(nodes);
 		PlayerSwitcher playerSwitcher = new PlayerSwitcher(players);
 		Score score = createScore(nodes, players);
-		return new ClassicOthello(board, nodeCapturer, nodeSwapper, playerSwitcher, score);
+		return new OthelloImpl(board, nodeCapturer, nodeSwapper, playerSwitcher, score);
 	}
 
 	/**
@@ -90,8 +96,8 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param name the name of the player
 	 * @return human player
 	 */
-	private OthelloPlayer createHumanPlayer(String name) {
-		return new OthelloPlayer(generateId(), name, Player.Type.HUMAN, null);
+	private PlayerImpl createHumanPlayer(String name) {
+		return new PlayerImpl(generateId(), name, Player.Type.HUMAN, null);
 	}
 
 	/**
@@ -100,8 +106,8 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param name the name of the player
 	 * @return computer player
 	 */
-	private OthelloPlayer createComputerPlayer(String name, MoveStrategy moveStrategy) {
-		return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER, moveStrategy);
+	private PlayerImpl createComputerPlayer(String name, MoveStrategy moveStrategy) {
+		return new PlayerImpl(generateId(), name, Player.Type.COMPUTER, moveStrategy);
 	}
 
 	/**
@@ -113,20 +119,20 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param cols the number of columns
 	 * @return list of classic nodes
 	 */
-	private List<ClassicNode> createClassicNodes(Player player1, Player player2, int rows, int cols) {
-		List<ClassicNode> nodes = new ArrayList<ClassicNode>();
+	private List<NodeImpl> createNodes(Player player1, Player player2, int rows, int cols) {
+		List<NodeImpl> nodes = new ArrayList<NodeImpl>();
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				if (i == 3 && j == 3) {
-					nodes.add(new ClassicNode(j, i, player1.getId()));
+					nodes.add(new NodeImpl(j, i, player1.getId()));
 				} else if (i == 3 && j == 4) {
-					nodes.add(new ClassicNode(j, i, player2.getId()));
+					nodes.add(new NodeImpl(j, i, player2.getId()));
 				} else if (i == 4 && j == 3) {
-					nodes.add(new ClassicNode(j, i, player2.getId()));
+					nodes.add(new NodeImpl(j, i, player2.getId()));
 				} else if (i == 4 && j == 4) {
-					nodes.add(new ClassicNode(j, i, player1.getId()));
+					nodes.add(new NodeImpl(j, i, player1.getId()));
 				} else {
-					nodes.add(new ClassicNode(j, i));
+					nodes.add(new NodeImpl(j, i));
 				}
 			}
 		}
@@ -139,16 +145,16 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param nodesData the nodes to read from
 	 * @return list of classic nodes
 	 */
-	private List<ClassicNode> createClassicNodes(Set<NodeData> nodesData) {
-		List<ClassicNode> nodes = new ArrayList<ClassicNode>();
+	private List<NodeImpl> createNodes(Set<NodeData> nodesData) {
+		List<NodeImpl> nodes = new ArrayList<NodeImpl>();
 		for (NodeData nodeData : nodesData) {
 			int x = nodeData.getXCoordinate();
 			int y = nodeData.getYCoordinate();
 			String occupantPlayerId = nodeData.getOccupantPlayerId();
 			if (occupantPlayerId == null) {
-				nodes.add(new ClassicNode(x, y));
+				nodes.add(new NodeImpl(x, y));
 			} else {
-				nodes.add(new ClassicNode(x, y, occupantPlayerId));
+				nodes.add(new NodeImpl(x, y, occupantPlayerId));
 			}
 		}
 
@@ -165,13 +171,13 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param players the players
 	 * @return the board
 	 */
-	private Board createBoard(List<ClassicNode> nodes, List<Player> players) {
+	private Board createBoard(List<NodeImpl> nodes, List<Player> players) {
 		HashMap<String, Character> colors = new HashMap<String, Character>();
 		for (int i = 0; i < players.size(); i++) {
 			Player player = players.get(i);
 			colors.put(player.getId(), (char) (97 + i));
 		}
-		return new ClassicBoard((List<Node>) (Object) nodes, colors);
+		return new BoardImpl((List<Node>) (Object) nodes, colors);
 	}
 
 	/**
@@ -196,9 +202,9 @@ public class ClassicOthelloFactory implements OthelloFactory {
 	 * @param players the players to track
 	 * @return new score instance
 	 */
-	private Score createScore(List<ClassicNode> nodes, List<Player> players) {
+	private Score createScore(List<NodeImpl> nodes, List<Player> players) {
 		OthelloScore othelloScore = new OthelloScore(createScoreItems(players));
-		for (ClassicNode node : nodes) {
+		for (NodeImpl node : nodes) {
 			node.addObserver(othelloScore);
 		}
 		return othelloScore;

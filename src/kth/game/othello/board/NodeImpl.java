@@ -10,7 +10,7 @@ import java.util.Observable;
  * @author Henrik Hygerth
  * @author Mattias Harrysson
  */
-public class ClassicNode extends Observable implements Node, Comparable<Node> {
+public class NodeImpl extends Observable implements Node, Comparable<Node> {
 	
 	private String id;
 	private String occupantId;
@@ -24,7 +24,7 @@ public class ClassicNode extends Observable implements Node, Comparable<Node> {
 	 * @param x the x-coordinate on the board
 	 * @param y the y-coordinate on the board
 	 */
-	public ClassicNode(int x, int y) {
+	public NodeImpl(int x, int y) {
 		this.id = x + "-" + y;
 		this.x = x;
 		this.y = y;
@@ -32,7 +32,7 @@ public class ClassicNode extends Observable implements Node, Comparable<Node> {
 		marked = false;
 	}
 	
-	public ClassicNode(int x, int y, String playerId) {
+	public NodeImpl(int x, int y, String playerId) {
 		this.id = x + "-" + y;
 		this.x = x;
 		this.y = y;

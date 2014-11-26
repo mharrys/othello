@@ -9,7 +9,7 @@ import java.util.List;
  * @author Henrik Hygerth
  * @author Mattias Harrysson
  */
-public class ClassicBoard implements Board {
+public class BoardImpl implements Board {
 
 	private List<Node> nodes;
 	private HashMap<String, Character> colors;
@@ -21,7 +21,7 @@ public class ClassicBoard implements Board {
 	 * @param nodes list of nodes for the board
 	 * @param colors hash map with player id mapped to colors
 	 */
-	public ClassicBoard(List<Node> nodes, HashMap<String, Character> colors) {
+	public BoardImpl(List<Node> nodes, HashMap<String, Character> colors) {
 		this.nodes = nodes;
 		this.colors = colors;
 		computeNumCols();

@@ -1,6 +1,6 @@
 package kth.demo;
 
-import kth.game.othello.ClassicOthelloFactory;
+import kth.game.othello.OthelloFactoryImpl;
 import kth.game.othello.Othello;
 import kth.game.othello.board.Node;
 import kth.game.othello.player.Player;
@@ -19,7 +19,7 @@ public class Demo5 {
 	 * Game entry point.
 	 */
 	public static void main(String[] args) {
-		Othello othello = new ClassicOthelloFactory().createHumanGame();
+		Othello othello = new OthelloFactoryImpl().createHumanGame();
 
 		List<Player> players = othello.getPlayers();
 		othello.start(players.get(0).getId());

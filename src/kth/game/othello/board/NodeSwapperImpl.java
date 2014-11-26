@@ -7,18 +7,18 @@ import java.util.List;
  *
  * @author Mattias Harrysson
  */
-public class ClassicNodeSwapper implements NodeSwapper {
+public class NodeSwapperImpl implements NodeSwapper {
 
-	private List<ClassicNode> nodes;
+	private List<NodeImpl> nodes;
 
-	public ClassicNodeSwapper(List<ClassicNode> nodes) {
+	public NodeSwapperImpl(List<NodeImpl> nodes) {
 		this.nodes = nodes;
 	}
 
 	@Override
 	public void swap(List<Node> nodesToSwap, String playerId, String nodeId) {
 		for (Node nodeToSwap : nodesToSwap) {
-			for (ClassicNode node : nodes) {
+			for (NodeImpl node : nodes) {
 				if (node.getId().equals(nodeToSwap.getId())) {
 					node.mark(playerId);
 					break;

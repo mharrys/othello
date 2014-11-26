@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import kth.game.othello.ClassicOthelloFactory;
+import kth.game.othello.OthelloFactoryImpl;
 import kth.game.othello.Othello;
 import kth.game.othello.player.Player;
 import kth.game.othello.player.movestrategy.AggressiveMoveStrategy;
@@ -23,7 +23,7 @@ public class Demo4 {
 	 * Game entry point.
 	 */
 	public static void main(String[] args) {
-		Othello othello = new ClassicOthelloFactory().createComputerGame();
+		Othello othello = new OthelloFactoryImpl().createComputerGame();
 		List<Player> players = othello.getPlayers();
 		List<MoveStrategy> moveStrategies = new ArrayList<MoveStrategy>();
 		moveStrategies.add(new NaiveMoveStrategy());

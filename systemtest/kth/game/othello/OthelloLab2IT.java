@@ -26,15 +26,15 @@ public class OthelloLab2IT {
 	}
 
 	private OthelloFactory getOthelloFactory() {
-		return new ClassicOthelloFactory();
+		return new OthelloFactoryImpl();
 	}
 
 	private Player createComputer(String name) {
-		return new OthelloPlayer(generateId(), name, Player.Type.COMPUTER, new NaiveMoveStrategy());
+		return new PlayerImpl(generateId(), name, Player.Type.COMPUTER, new NaiveMoveStrategy());
 	}
 
 	private Player createHuman(String name) {
-		return new OthelloPlayer(generateId(), name, Player.Type.HUMAN, null);
+		return new PlayerImpl(generateId(), name, Player.Type.HUMAN, null);
 	}
 
 	private void makeNumberOfComputerMoves(int numberOfMoves, Othello othello) {

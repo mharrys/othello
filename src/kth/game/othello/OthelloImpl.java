@@ -17,7 +17,7 @@ import java.util.List;
  * @author Mattias Harrysson
  * @author Henrik Hygerth
  */
-public class ClassicOthello implements Othello {
+public class OthelloImpl implements Othello {
 
 	private Board board;
 	private NodeCapturer nodeCapturer;
@@ -25,7 +25,7 @@ public class ClassicOthello implements Othello {
 	private PlayerSwitcher playerSwitcher;
 	private Score score;
 
-	public ClassicOthello(
+	public OthelloImpl(
 			Board board,
 			NodeCapturer nodeCapturer,
 			NodeSwapper nodeSwapper,
