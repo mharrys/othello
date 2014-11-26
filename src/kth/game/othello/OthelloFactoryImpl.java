@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * A factory for producing classic othello games.
+ * A factory for producing Othello games.
  *
  * @author Mattias Harrysson
  * @author Henrik Hygerth
@@ -173,6 +173,7 @@ public class OthelloFactoryImpl implements OthelloFactory {
 	 */
 	private Board createBoard(List<NodeImpl> nodes, List<Player> players) {
 		HashMap<String, Character> colors = new HashMap<String, Character>();
+		// assign a ASCII char for each player to use in the board string representation
 		for (int i = 0; i < players.size(); i++) {
 			Player player = players.get(i);
 			colors.put(player.getId(), (char) (97 + i));
