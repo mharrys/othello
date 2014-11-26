@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Describes a classic 8x8 Othello board.
+ * Describes a Othello board.
  * 
  * @author Henrik Hygerth
  * @author Mattias Harrysson
@@ -16,8 +16,8 @@ public class BoardImpl implements Board {
 	private int cols;
 	
 	/**
-	 * Construct a classic 8x8 Othello board.
-	 * 
+	 * There must be one color assigned for each player if the string representation is to be used.
+	 *
 	 * @param nodes list of nodes for the board
 	 * @param colors hash map with player id mapped to colors
 	 */
