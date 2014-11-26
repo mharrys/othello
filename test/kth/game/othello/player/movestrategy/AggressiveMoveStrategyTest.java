@@ -78,4 +78,5 @@ public class AggressiveMoveStrategyTest {
 		Mockito.when(o.getNodesToSwap(player2Id, "5-3")).thenReturn(nodesToSwap3);
 		Assert.assertEquals("4-6", ms.move(player2Id, o).getId());
 	}
+	
 }
