@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author Tomas Ekholm
+ */
 public class Castle {
 
 	private Square square;

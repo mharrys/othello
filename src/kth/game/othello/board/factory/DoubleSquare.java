@@ -5,6 +5,9 @@ import kth.game.othello.player.Player;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author Tomas Ekholm
+ */
 public class DoubleSquare {
 
 	private Square square;
