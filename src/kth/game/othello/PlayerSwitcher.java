@@ -6,7 +6,7 @@ import java.util.Random;
 import kth.game.othello.player.Player;
 
 /**
- * This class is responsible for the players in the game
+ * This class is responsible for tracking the player in turn for a turn-based game.
  * 
  * @author Henrik Hygerth
  */
@@ -17,8 +17,6 @@ public class PlayerSwitcher {
 	private int playerInTurn;
 
 	/**
-	 * Constructs player switcher from specified list of players.
-	 *
 	 * @param players the list of players included in the game
 	 */
 	public PlayerSwitcher(List<Player> players) {
@@ -28,7 +26,7 @@ public class PlayerSwitcher {
 	}
 
 	/**
-	 * Get the player in turn
+	 * Returns the player in turn.
 	 * 
 	 * @return the player in turn
 	 */
@@ -37,7 +35,7 @@ public class PlayerSwitcher {
 	}
 
 	/**
-	 * Get all the players in the game
+	 * Returns all players in the game.
 	 * 
 	 * @return the list of players
 	 */
@@ -47,7 +45,7 @@ public class PlayerSwitcher {
 
 
 	/**
-	 * Randomly selects a player in turn
+	 * Randomly selects a player in turn.
 	 */
 	public void setStartingPlayer() {
 		Random random = new Random();
@@ -56,7 +54,7 @@ public class PlayerSwitcher {
 	}
 
 	/**
-	 * Sets a specific player in turn
+	 * Sets a specific player in turn.
 	 * 
 	 * @param playerId the id of the desired player
 	 */
