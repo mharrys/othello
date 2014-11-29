@@ -28,6 +28,16 @@ public class BoardImpl implements Board {
 	}
 
 	@Override
+	public int getMaxX() {
+		return cols;
+	}
+
+	@Override
+	public int getMaxY() {
+		return 0;
+	}
+
+	@Override
 	public Node getNode(int x, int y) throws IllegalArgumentException {
 		for (Node node : nodes) {
 			if (node.getXCoordinate() == x && node.getYCoordinate() == y) {
@@ -40,6 +50,11 @@ public class BoardImpl implements Board {
 	@Override
 	public List<Node> getNodes() {
 		return nodes;
+	}
+
+	@Override
+	public boolean hasNode(int x, int y) {
+		return false;
 	}
 
 	@Override
