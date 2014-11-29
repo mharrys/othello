@@ -68,20 +68,8 @@ public class NodeCapturer {
 	public List<Node> getNodesToCaptureInDirection(Board board, String playerId, Node from, Node direction) {
 		List<Node> captures = new ArrayList<Node>();
 
-		int rows = 0;
-		int cols = 0;
-		for (Node node : board.getNodes()) {
-			if (node.getXCoordinate() > cols) {
-				cols = node.getXCoordinate();
-			}
-
-			if (node.getYCoordinate() > rows) {
-				rows = node.getYCoordinate();
-			}
-		}
-		// adjust for zero based coordinates
-		rows++;
-		cols++;
+		int maxX = board.getMaxX();
+		int maxY = board.getMaxY();
 
 		int x = from.getXCoordinate();
 		int y = from.getYCoordinate();
@@ -95,7 +83,7 @@ public class NodeCapturer {
 		y += stepY;
 
 		boolean validCapture = false;
-		while (x >= 0 && y >= 0 && x < cols && y < rows) {
+		while (x >= 0 && y >= 0 && x < maxX && y < maxY) {
 			Node n;
 			try {
 				n = board.getNode(x, y);
