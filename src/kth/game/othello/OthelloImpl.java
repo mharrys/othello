@@ -20,6 +20,7 @@ import java.util.Observer;
  */
 public class OthelloImpl implements Othello {
 
+	private String id;
 	private Board board;
 	private NodeCapturer nodeCapturer;
 	private NodeSwapper nodeSwapper;
@@ -27,11 +28,13 @@ public class OthelloImpl implements Othello {
 	private Score score;
 
 	public OthelloImpl(
+			String id,
 			Board board,
 			NodeCapturer nodeCapturer,
 			NodeSwapper nodeSwapper,
 			PlayerSwitcher playerSwitcher,
 			Score score) {
+		this.id = id;
 		this.board = board;
 		this.nodeCapturer = nodeCapturer;
 		this.nodeSwapper = nodeSwapper;
@@ -56,7 +59,7 @@ public class OthelloImpl implements Othello {
 
 	@Override
 	public String getId() {
-		return null;
+		return id;
 	}
 
 	@Override
