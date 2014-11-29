@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 public class OthelloLab3IT {
 
@@ -25,6 +27,41 @@ public class OthelloLab3IT {
 			}
 		}
 		throw new IllegalStateException();
+	}
+
+	private class GameFinishedObserver implements Observer {
+		private int callbacks = 0;
+
+		public GameFinishedObserver() {
+			this.callbacks = 0;
+		}
+
+		@Override
+		public void update(Observable observable, Object o) {
+			System.out.println("foo");
+			callbacks++;
+		}
+
+		public int getCallbacks() {
+			return callbacks;
+		}
+	}
+
+	private class MoveObserver implements Observer {
+		private List<List<Node>> moves;
+
+		public MoveObserver() {
+			moves = new LinkedList<List<Node>>();
+		}
+
+		@Override
+		public void update(Observable observable, Object o) {
+			moves.add((List<Node>) o);
+		}
+
+		public List<List<Node>> getMoves() {
+			return moves;
+		}
 	}
 
 	@Test
@@ -90,6 +127,41 @@ public class OthelloLab3IT {
 		Score score = othello.getScore();
 		for (ScoreItem item : score.getPlayersScore()) {
 			Assert.assertEquals(item.getScore(), players.size());
+		}
+	}
+
+	@Test
+	public void studyCallbackAfterGameEndedTest() {
+		Othello othello = getOthelloFactory().createComputerGame();
+
+		GameFinishedObserver finishedObserver = new GameFinishedObserver();
+		othello.addGameFinishedObserver(finishedObserver);
+
+		othello.start(othello.getPlayers().get(0).getId());
+		while (othello.isActive()) {
+			Assert.assertEquals(0, finishedObserver.getCallbacks());
+			othello.move();
+		}
+		Assert.assertEquals(1, finishedObserver.getCallbacks());
+	}
+
+	@Test
+	public void studyCallbackWhenMoveTest() {
+		Othello othello = getOthelloFactory().createComputerGame();
+
+		MoveObserver moveObserver = new MoveObserver();
+		othello.addMoveObserver(moveObserver);
+
+		List<List<Node>> moves = new LinkedList<List<Node>>();
+
+		othello.start();
+		while (othello.isActive()) {
+			moves.add(othello.move());
+		}
+
+		List<List<Node>> observedMoves = moveObserver.getMoves();
+		for (int i = 0; i < moves.size(); i++) {
+			Assert.assertEquals(moves.get(i), observedMoves.get(i));
 		}
 	}
 
