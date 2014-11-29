@@ -13,8 +13,8 @@ public class BoardImpl implements Board {
 
 	private List<Node> nodes;
 	private HashMap<String, Character> colors;
-	private int cols;
-	private int rows;
+	private int maxX;
+	private int maxY;
 	
 	/**
 	 * There must be one color assigned for each player if the string representation is to be used.
@@ -30,12 +30,12 @@ public class BoardImpl implements Board {
 
 	@Override
 	public int getMaxX() {
-		return cols;
+		return maxX;
 	}
 
 	@Override
 	public int getMaxY() {
-		return rows;
+		return maxY;
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class BoardImpl implements Board {
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("  ");
-		for (int i = 0; i < cols; i++) {
+		for (int i = 0; i < maxX; i++) {
 			builder.append(i + " ");
 		}
 
@@ -99,16 +99,16 @@ public class BoardImpl implements Board {
 
 	private void computeMaxCoordinates() {
 		for (Node node : nodes) {
-			if (node.getXCoordinate() > cols) {
-				cols = node.getXCoordinate();
+			if (node.getXCoordinate() > maxX) {
+				maxX = node.getXCoordinate();
 			}
-			if (node.getYCoordinate() > rows) {
-				rows = node.getYCoordinate();
+			if (node.getYCoordinate() > maxY) {
+				maxY = node.getYCoordinate();
 			}
 		}
 		// adjust for zero based coordinates
-		cols++;
-		rows++;
+		maxX++;
+		maxY++;
 	}
 
 }
