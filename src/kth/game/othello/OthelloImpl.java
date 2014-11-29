@@ -27,6 +27,7 @@ public class OthelloImpl implements Othello {
 	private NodeSwapper nodeSwapper;
 	private PlayerSwitcher playerSwitcher;
 	private Score score;
+	private MoveHistory moveHistory;
 	private List<Observer> gameFinishedObservers;
 	private List<Observer> moveObservers;
 
@@ -36,13 +37,15 @@ public class OthelloImpl implements Othello {
 			NodeCapturer nodeCapturer,
 			NodeSwapper nodeSwapper,
 			PlayerSwitcher playerSwitcher,
-			Score score) {
+			Score score,
+			MoveHistory moveHistory) {
 		this.id = id;
 		this.board = board;
 		this.nodeCapturer = nodeCapturer;
 		this.nodeSwapper = nodeSwapper;
 		this.playerSwitcher = playerSwitcher;
 		this.score = score;
+		this.moveHistory = moveHistory;
 		gameFinishedObservers = new LinkedList<Observer>();
 		moveObservers = new LinkedList<Observer>();
 	}
@@ -130,8 +133,12 @@ public class OthelloImpl implements Othello {
 			return move(player.getId(), node.getId());
 		}
 
+		List<Node> nodesToSwap = new ArrayList<Node>();
+		// even though no swaps could be made we still count this as a move
+		moveHistory.pushNewMoves(nodesToSwap);
 		playerSwitcher.switchToNextPlayer();
-		return new ArrayList<Node>();
+
+		return nodesToSwap;
 	}
 
 	@Override
@@ -147,6 +154,7 @@ public class OthelloImpl implements Othello {
 		}
 
 		List<Node> nodesToSwap = nodeCapturer.getNodesToCapture(board, playerId, nodeId, true);
+		moveHistory.pushNewMoves(nodesToSwap);
 		nodeSwapper.swap(nodesToSwap, playerId, nodeId);
 		playerSwitcher.switchToNextPlayer();
 
@@ -165,7 +173,9 @@ public class OthelloImpl implements Othello {
 
 	@Override
 	public void undo() {
-
+		if (moveHistory.hasMoves()) {
+			nodeSwapper.copy(moveHistory.popLastMoves());
+		}
 	}
 
 }

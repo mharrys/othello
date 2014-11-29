@@ -88,7 +88,8 @@ public class OthelloFactoryImpl implements OthelloFactory {
 		NodeSwapper nodeSwapper = new NodeSwapperImpl(nodes);
 		PlayerSwitcher playerSwitcher = new PlayerSwitcher(players);
 		Score score = createScore(nodes, players);
-		return new OthelloImpl(id, board, nodeCapturer, nodeSwapper, playerSwitcher, score);
+		MoveHistory moveHistory = new MoveHistory();
+		return new OthelloImpl(id, board, nodeCapturer, nodeSwapper, playerSwitcher, score, moveHistory);
 	}
 
 	/**
