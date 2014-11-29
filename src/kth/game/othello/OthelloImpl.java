@@ -9,6 +9,7 @@ import kth.game.othello.player.movestrategy.MoveStrategy;
 import kth.game.othello.score.Score;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observer;
 
@@ -26,6 +27,8 @@ public class OthelloImpl implements Othello {
 	private NodeSwapper nodeSwapper;
 	private PlayerSwitcher playerSwitcher;
 	private Score score;
+	private List<Observer> gameFinishedObservers;
+	private List<Observer> moveObservers;
 
 	public OthelloImpl(
 			String id,
@@ -40,16 +43,18 @@ public class OthelloImpl implements Othello {
 		this.nodeSwapper = nodeSwapper;
 		this.playerSwitcher = playerSwitcher;
 		this.score = score;
+		gameFinishedObservers = new LinkedList<Observer>();
+		moveObservers = new LinkedList<Observer>();
 	}
 
 	@Override
 	public void addGameFinishedObserver(Observer observer) {
-
+		gameFinishedObservers.add(observer);
 	}
 
 	@Override
 	public void addMoveObserver(Observer observer) {
-
+		moveObservers.add(observer);
 	}
 
 	@Override
