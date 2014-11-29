@@ -14,6 +14,7 @@ public class BoardImpl implements Board {
 	private List<Node> nodes;
 	private HashMap<String, Character> colors;
 	private int cols;
+	private int rows;
 	
 	/**
 	 * There must be one color assigned for each player if the string representation is to be used.
@@ -24,7 +25,7 @@ public class BoardImpl implements Board {
 	public BoardImpl(List<Node> nodes, HashMap<String, Character> colors) {
 		this.nodes = nodes;
 		this.colors = colors;
-		computeNumCols();
+		computeMaxCoordinates();
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class BoardImpl implements Board {
 
 	@Override
 	public int getMaxY() {
-		return 0;
+		return rows;
 	}
 
 	@Override
@@ -96,14 +97,18 @@ public class BoardImpl implements Board {
 		return builder.toString();
 	}
 
-	private void computeNumCols() {
+	private void computeMaxCoordinates() {
 		for (Node node : nodes) {
 			if (node.getXCoordinate() > cols) {
 				cols = node.getXCoordinate();
 			}
+			if (node.getYCoordinate() > rows) {
+				rows = node.getYCoordinate();
+			}
 		}
 		// adjust for zero based coordinates
 		cols++;
+		rows++;
 	}
 
 }
