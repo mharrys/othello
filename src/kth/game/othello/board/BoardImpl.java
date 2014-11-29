@@ -55,7 +55,12 @@ public class BoardImpl implements Board {
 
 	@Override
 	public boolean hasNode(int x, int y) {
-		return false;
+		try {
+			getNode(x, y);
+			return true; // found if no exception is thrown
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
 	}
 
 	@Override
