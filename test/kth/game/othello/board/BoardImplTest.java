@@ -47,7 +47,7 @@ public class BoardImplTest {
 			}
 		}
 
-		BoardImpl board = new BoardImpl(nodes, null);
+		Board board = new BoardImpl(nodes, null);
 
 		Assert.assertEquals(board.getNode(0, 0).getId(), n1.getId());
 		Assert.assertEquals(board.getNode(2, 4).getId(), n2.getId());
@@ -66,7 +66,7 @@ public class BoardImplTest {
 			}
 		}
 
-		BoardImpl board = new BoardImpl(nodes, null);
+		Board board = new BoardImpl(nodes, null);
 		board.getNode(8, 3);
 	}
 
