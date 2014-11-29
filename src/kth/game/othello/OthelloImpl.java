@@ -135,7 +135,7 @@ public class OthelloImpl implements Othello {
 
 		List<Node> nodesToSwap = new ArrayList<Node>();
 		// even though no swaps could be made we still count this as a move
-		registerMove(nodesToSwap);
+		registerMove(nodesToSwap, null, null);
 
 		return nodesToSwap;
 	}
@@ -153,8 +153,7 @@ public class OthelloImpl implements Othello {
 		}
 
 		List<Node> nodesToSwap = nodeCapturer.getNodesToCapture(board, playerId, nodeId, true);
-		registerMove(nodesToSwap);
-		nodeSwapper.swap(nodesToSwap, playerId, nodeId);
+		registerMove(nodesToSwap, playerId, nodeId);
 
 		return nodesToSwap;
 	}
@@ -181,12 +180,16 @@ public class OthelloImpl implements Othello {
 	 * the game observers will also be notified that the game has ended.
 	 *
 	 * @param nodesToSwap the nodes swapped for this move
+	 * @param playerId the moving player
+	 * @param nodeId the new move
 	 */
-	private void registerMove(List<Node> nodesToSwap) {
+	private void registerMove(List<Node> nodesToSwap, String playerId, String nodeId) {
 		moveHistory.pushNewMoves(nodesToSwap);
 		playerSwitcher.switchToNextPlayer();
 
 		notifyMoveObservers(nodesToSwap);
+
+		nodeSwapper.swap(nodesToSwap, playerId, nodeId);
 
 		if (!isActive()) {
 			notifyGameFinishedObservers();
