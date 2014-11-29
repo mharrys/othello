@@ -84,14 +84,12 @@ public class NodeCapturer {
 
 		boolean validCapture = false;
 		while (x >= 0 && y >= 0 && x < maxX && y < maxY) {
-			Node n;
-			try {
-				n = board.getNode(x, y);
-			} catch (IllegalArgumentException e) {
+			if (!board.hasNode(x, y)) {
 				// there can exist "gaps" in the board, it should be treated the same way as hitting the end of the
 				// board and not be considered an error
 				break;
 			}
+			Node n = board.getNode(x, y);
 
 			if (!n.isMarked()) {
 				// we hit a unmarked node before finding a node which was occupied by one of the moving players
