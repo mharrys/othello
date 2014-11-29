@@ -10,6 +10,7 @@ import kth.game.othello.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 /**
  * This class represents an classic Othello game.
@@ -39,8 +40,23 @@ public class OthelloImpl implements Othello {
 	}
 
 	@Override
+	public void addGameFinishedObserver(Observer observer) {
+
+	}
+
+	@Override
+	public void addMoveObserver(Observer observer) {
+
+	}
+
+	@Override
 	public Board getBoard() {
 		return board;
+	}
+
+	@Override
+	public String getId() {
+		return null;
 	}
 
 	@Override
@@ -137,6 +153,11 @@ public class OthelloImpl implements Othello {
 	@Override
 	public void start(String playerId) {
 		playerSwitcher.setStartingPlayer(playerId);
+	}
+
+	@Override
+	public void undo() {
+
 	}
 
 }
