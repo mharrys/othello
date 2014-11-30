@@ -27,7 +27,7 @@ public interface Board {
 	 * @return the node with given x- and y-coordinate
 	 * @throws IllegalArgumentException if there is no {@link Node} having the specific x- and y-coordinate
 	 */
-	public Node getNode(int x, int y);
+	public Node getNode(int x, int y) throws IllegalArgumentException;
 
 	/**
 	 * Returns an ordered list of rows using the natural order in x- and then y-coordinate of the nodes.
