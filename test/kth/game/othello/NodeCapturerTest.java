@@ -30,7 +30,7 @@ public class NodeCapturerTest {
 					Mockito.when(n.getOccupantPlayerId()).thenReturn(player2Id);
 					Mockito.when(n.isMarked()).thenReturn(true);
 				} else {
-					Mockito.when(n.getOccupantPlayerId()).thenReturn("");
+					Mockito.when(n.getOccupantPlayerId()).thenReturn(null);
 					Mockito.when(n.isMarked()).thenReturn(false);
 				}
 				Mockito.when(n.getId()).thenReturn(j + "-" + i);
