@@ -38,7 +38,6 @@ public class OthelloLab3IT {
 
 		@Override
 		public void update(Observable observable, Object o) {
-			System.out.println("foo");
 			callbacks++;
 		}
 
