@@ -103,7 +103,7 @@ public interface Othello {
 	 * @return the nodes that where swapped for this move, including the node where the player made the move
 	 * @throws IllegalStateException if there is not a computer in turn
 	 */
-	public List<Node> move();
+	public List<Node> move() throws IllegalStateException;
 
 	/**
 	 * Validates if the move is correct and if the player is in turn. If so, then the move is made which updates the
