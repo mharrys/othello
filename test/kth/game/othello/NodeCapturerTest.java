@@ -45,6 +45,8 @@ public class NodeCapturerTest {
 
 	@Test
 	public void nodesToCaptureInDirection() {
+		final int rows = 8;
+		final int cols = 8;
 		String p1Id = "foo";
 		String p2Id = "bar";
 		Player player1 = Mockito.mock(Player.class);
@@ -53,8 +55,11 @@ public class NodeCapturerTest {
 		Mockito.when(player2.getId()).thenReturn(p2Id);
 
 		Board board = Mockito.mock(Board.class);
-		List<Node> nodes = createListOfNodesStateOneMoveMade(8, 8, player1.getId(), player2.getId(), board);
+		Mockito.when(board.getMaxX()).thenReturn(cols);
+		Mockito.when(board.getMaxY()).thenReturn(rows);
+		List<Node> nodes = createListOfNodesStateOneMoveMade(rows, cols, player1.getId(), player2.getId(), board);
 		Mockito.when(board.getNodes()).thenReturn(nodes);
+		Mockito.when(board.hasNode(Mockito.anyInt(), Mockito.anyInt())).thenReturn(true);
 
 		NodeFinder nf = new NodeFinder();
 		NodeCapturer nc = new NodeCapturer(nf);
