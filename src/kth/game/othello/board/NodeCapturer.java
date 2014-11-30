@@ -68,20 +68,8 @@ public class NodeCapturer {
 	public List<Node> getNodesToCaptureInDirection(Board board, String playerId, Node from, Node direction) {
 		List<Node> captures = new ArrayList<Node>();
 
-		int rows = 0;
-		int cols = 0;
-		for (Node node : board.getNodes()) {
-			if (node.getXCoordinate() > cols) {
-				cols = node.getXCoordinate();
-			}
-
-			if (node.getYCoordinate() > rows) {
-				rows = node.getYCoordinate();
-			}
-		}
-		// adjust for zero based coordinates
-		rows++;
-		cols++;
+		int maxX = board.getMaxX();
+		int maxY = board.getMaxY();
 
 		int x = from.getXCoordinate();
 		int y = from.getYCoordinate();
@@ -95,15 +83,13 @@ public class NodeCapturer {
 		y += stepY;
 
 		boolean validCapture = false;
-		while (x >= 0 && y >= 0 && x < cols && y < rows) {
-			Node n;
-			try {
-				n = board.getNode(x, y);
-			} catch (IllegalArgumentException e) {
+		while (x >= 0 && y >= 0 && x < maxX && y < maxY) {
+			if (!board.hasNode(x, y)) {
 				// there can exist "gaps" in the board, it should be treated the same way as hitting the end of the
 				// board and not be considered an error
 				break;
 			}
+			Node n = board.getNode(x, y);
 
 			if (!n.isMarked()) {
 				// we hit a unmarked node before finding a node which was occupied by one of the moving players
