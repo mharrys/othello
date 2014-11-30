@@ -68,8 +68,8 @@ public class NodeCapturer {
 	public List<Node> getNodesToCaptureInDirection(Board board, String playerId, Node from, Node direction) {
 		List<Node> captures = new ArrayList<Node>();
 
-		int maxX = board.getMaxX();
-		int maxY = board.getMaxY();
+		final int maxX = board.getMaxX();
+		final int maxY = board.getMaxY();
 
 		int x = from.getXCoordinate();
 		int y = from.getYCoordinate();
