@@ -99,4 +99,15 @@ public class NodeImpl extends Observable implements Node, Comparable<Node> {
 		marked = true;
 	}
 
+	/**
+	 * Sets node free from any occupying player.
+	 */
+	public void unmark() {
+		setChanged();
+		notifyObservers(Arrays.asList(occupantId, null));
+
+		occupantId = null;
+		marked = false;
+	}
+
 }

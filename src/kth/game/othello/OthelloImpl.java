@@ -9,7 +9,9 @@ import kth.game.othello.player.movestrategy.MoveStrategy;
 import kth.game.othello.score.Score;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Observer;
 
 /**
  * This class represents an classic Othello game.
@@ -19,28 +21,53 @@ import java.util.List;
  */
 public class OthelloImpl implements Othello {
 
+	private String id;
 	private Board board;
 	private NodeCapturer nodeCapturer;
 	private NodeSwapper nodeSwapper;
 	private PlayerSwitcher playerSwitcher;
 	private Score score;
+	private MoveHistory moveHistory;
+	private List<Observer> gameFinishedObservers;
+	private List<Observer> moveObservers;
 
 	public OthelloImpl(
+			String id,
 			Board board,
 			NodeCapturer nodeCapturer,
 			NodeSwapper nodeSwapper,
 			PlayerSwitcher playerSwitcher,
-			Score score) {
+			Score score,
+			MoveHistory moveHistory) {
+		this.id = id;
 		this.board = board;
 		this.nodeCapturer = nodeCapturer;
 		this.nodeSwapper = nodeSwapper;
 		this.playerSwitcher = playerSwitcher;
 		this.score = score;
+		this.moveHistory = moveHistory;
+		gameFinishedObservers = new LinkedList<Observer>();
+		moveObservers = new LinkedList<Observer>();
+	}
+
+	@Override
+	public void addGameFinishedObserver(Observer observer) {
+		gameFinishedObservers.add(observer);
+	}
+
+	@Override
+	public void addMoveObserver(Observer observer) {
+		moveObservers.add(observer);
 	}
 
 	@Override
 	public Board getBoard() {
 		return board;
+	}
+
+	@Override
+	public String getId() {
+		return id;
 	}
 
 	@Override
@@ -106,8 +133,11 @@ public class OthelloImpl implements Othello {
 			return move(player.getId(), node.getId());
 		}
 
-		playerSwitcher.switchToNextPlayer();
-		return new ArrayList<Node>();
+		List<Node> nodesToSwap = new ArrayList<Node>();
+		// even though no swaps could be made we still count this as a move
+		registerMove(nodesToSwap, null, null);
+
+		return nodesToSwap;
 	}
 
 	@Override
@@ -123,8 +153,7 @@ public class OthelloImpl implements Othello {
 		}
 
 		List<Node> nodesToSwap = nodeCapturer.getNodesToCapture(board, playerId, nodeId, true);
-		nodeSwapper.swap(nodesToSwap, playerId, nodeId);
-		playerSwitcher.switchToNextPlayer();
+		registerMove(nodesToSwap, playerId, nodeId);
 
 		return nodesToSwap;
 	}
@@ -137,6 +166,46 @@ public class OthelloImpl implements Othello {
 	@Override
 	public void start(String playerId) {
 		playerSwitcher.setStartingPlayer(playerId);
+	}
+
+	@Override
+	public void undo() {
+		if (moveHistory.hasMoves()) {
+			nodeSwapper.copy(moveHistory.popLastMoves());
+		}
+	}
+
+	/**
+	 * Registers a move and notifies all observers that the move has occurred and if the game was ended after this move
+	 * the game observers will also be notified that the game has ended.
+	 *
+	 * @param nodesToSwap the nodes swapped for this move
+	 * @param playerId the moving player
+	 * @param nodeId the new move
+	 */
+	private void registerMove(List<Node> nodesToSwap, String playerId, String nodeId) {
+		moveHistory.pushNewMoves(nodesToSwap);
+		playerSwitcher.switchToNextPlayer();
+
+		notifyMoveObservers(nodesToSwap);
+
+		nodeSwapper.swap(nodesToSwap, playerId, nodeId);
+
+		if (!isActive()) {
+			notifyGameFinishedObservers();
+		}
+	}
+
+	private void notifyMoveObservers(List<Node> nodesToSwap) {
+		for (Observer observer : moveObservers) {
+			observer.update(null, nodesToSwap);
+		}
+	}
+
+	private void notifyGameFinishedObservers() {
+		for (Observer observer : gameFinishedObservers) {
+			observer.update(null, null);
+		}
 	}
 
 }

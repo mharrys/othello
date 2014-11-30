@@ -81,13 +81,15 @@ public class OthelloFactoryImpl implements OthelloFactory {
 	 * @return othello game
 	 */
 	private Othello createGame(List<NodeImpl> nodes, List<Player> players) {
+		String id = generateId();
 		Board board = createBoard(nodes, players);
 		NodeFinder nodeFinder = new NodeFinder();
 		NodeCapturer nodeCapturer = new NodeCapturer(nodeFinder);
 		NodeSwapper nodeSwapper = new NodeSwapperImpl(nodes);
 		PlayerSwitcher playerSwitcher = new PlayerSwitcher(players);
 		Score score = createScore(nodes, players);
-		return new OthelloImpl(board, nodeCapturer, nodeSwapper, playerSwitcher, score);
+		MoveHistory moveHistory = new MoveHistory();
+		return new OthelloImpl(id, board, nodeCapturer, nodeSwapper, playerSwitcher, score, moveHistory);
 	}
 
 	/**

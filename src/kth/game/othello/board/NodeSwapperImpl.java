@@ -1,5 +1,7 @@
 package kth.game.othello.board;
 
+import kth.game.othello.board.factory.NodeData;
+
 import java.util.List;
 
 /**
@@ -24,6 +26,25 @@ public class NodeSwapperImpl implements NodeSwapper {
 			for (NodeImpl node : nodes) {
 				if (node.getId().equals(nodeToSwap.getId())) {
 					node.mark(playerId);
+					break;
+				}
+			}
+		}
+	}
+
+	@Override
+	public void copy(List<NodeData> nodesToCopy) {
+		for (NodeData nodeToCopy : nodesToCopy) {
+			final int x = nodeToCopy.getXCoordinate();
+			final int y = nodeToCopy.getYCoordinate();
+			final String occupantPlayerId = nodeToCopy.getOccupantPlayerId();
+			for (NodeImpl node : nodes) {
+				if (node.getXCoordinate() == x && node.getYCoordinate() == y) {
+					if (nodeToCopy.getOccupantPlayerId() == null && node.isMarked()) {
+						node.unmark();
+					} else if (!node.getOccupantPlayerId().equals(occupantPlayerId)) {
+						node.mark(occupantPlayerId);
+					}
 					break;
 				}
 			}
