@@ -103,6 +103,8 @@ public class BoardImpl implements Board {
 	}
 
 	private void computeMaxCoordinates() {
+		maxX = 0;
+		maxY = 0;
 		for (Node node : nodes) {
 			if (node.getXCoordinate() > maxX) {
 				maxX = node.getXCoordinate();
