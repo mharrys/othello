@@ -2,10 +2,10 @@ package kth.game.othello;
 
 import kth.game.othello.board.Board;
 import kth.game.othello.board.Node;
-import kth.game.othello.board.NodeCapturer;
 import kth.game.othello.board.NodeSwapper;
 import kth.game.othello.player.Player;
 import kth.game.othello.player.movestrategy.MoveStrategy;
+import kth.game.othello.rules.Rules;
 import kth.game.othello.score.Score;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class OthelloImpl implements Othello {
 
 	private String id;
 	private Board board;
-	private NodeCapturer nodeCapturer;
+	private Rules rules;
 	private NodeSwapper nodeSwapper;
 	private PlayerSwitcher playerSwitcher;
 	private Score score;
@@ -34,14 +34,14 @@ public class OthelloImpl implements Othello {
 	public OthelloImpl(
 			String id,
 			Board board,
-			NodeCapturer nodeCapturer,
+			Rules rules,
 			NodeSwapper nodeSwapper,
 			PlayerSwitcher playerSwitcher,
 			Score score,
 			MoveHistory moveHistory) {
 		this.id = id;
 		this.board = board;
-		this.nodeCapturer = nodeCapturer;
+		this.rules = rules;
 		this.nodeSwapper = nodeSwapper;
 		this.playerSwitcher = playerSwitcher;
 		this.score = score;
@@ -72,7 +72,7 @@ public class OthelloImpl implements Othello {
 
 	@Override
 	public List<Node> getNodesToSwap(String playerId, String nodeId) {
-		return nodeCapturer.getNodesToCapture(board, playerId, nodeId, false);
+		return rules.getNodesToSwap(playerId, nodeId);
 	}
 
 	@Override
@@ -96,12 +96,7 @@ public class OthelloImpl implements Othello {
 
 	@Override
 	public boolean hasValidMove(String playerId) {
-		for (Node node : board.getNodes()) {
-			if (!node.isMarked() && isMoveValid(playerId, node.getId())) {
-				return true;
-			}
-		}
-		return false;
+		return rules.hasValidMove(playerId);
 	}
 
 	@Override
@@ -116,7 +111,7 @@ public class OthelloImpl implements Othello {
 
 	@Override
 	public boolean isMoveValid(String playerId, String nodeId) {
-		return !nodeCapturer.getNodesToCapture(board, playerId, nodeId, false).isEmpty();
+		return rules.isMoveValid(playerId, nodeId);
 	}
 
 	@Override
@@ -128,7 +123,7 @@ public class OthelloImpl implements Othello {
 		}
 
 		MoveStrategy moveStrategy = player.getMoveStrategy();
-		Node node = moveStrategy.move(player.getId(), this);
+		Node node = moveStrategy.move(player.getId(), rules, board);
 		if (node != null) {
 			return move(player.getId(), node.getId());
 		}
@@ -152,7 +147,7 @@ public class OthelloImpl implements Othello {
 			throw new IllegalArgumentException("Invalid move.");
 		}
 
-		List<Node> nodesToSwap = nodeCapturer.getNodesToCapture(board, playerId, nodeId, true);
+		List<Node> nodesToSwap = getNodesToSwap(playerId, nodeId);
 		registerMove(nodesToSwap, playerId, nodeId);
 
 		return nodesToSwap;

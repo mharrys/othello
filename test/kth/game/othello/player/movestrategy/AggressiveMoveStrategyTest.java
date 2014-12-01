@@ -3,9 +3,9 @@ package kth.game.othello.player.movestrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-import kth.game.othello.Othello;
 import kth.game.othello.board.Board;
 import kth.game.othello.board.Node;
+import kth.game.othello.rules.Rules;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -51,8 +51,7 @@ public class AggressiveMoveStrategyTest {
 		List<Node> nodes = createListOfNodes(8, 8, player1Id, player2Id);
 		Mockito.when(b.getNodes()).thenReturn(nodes);
 
-		Othello o = Mockito.mock(Othello.class);
-		Mockito.when(o.getBoard()).thenReturn(b);
+		Rules r = Mockito.mock(Rules.class);
 
 		@SuppressWarnings("unchecked") // Suppress warning because we know it is mocked and not a real List<Node>
 		List<Node> nodesToSwap1 = Mockito.mock(List.class);
@@ -66,17 +65,17 @@ public class AggressiveMoveStrategyTest {
 		Mockito.when(nodesToSwap3.size()).thenReturn(1);
 
 		MoveStrategy ms = new AggressiveMoveStrategy();
-		Assert.assertNull(ms.move(player1Id, o));
-		Mockito.when(o.hasValidMove(player1Id)).thenReturn(true);
-		Mockito.when(o.hasValidMove(player2Id)).thenReturn(true);
-		Assert.assertNull(ms.move(player2Id, o));
-		Mockito.when(o.isMoveValid(player2Id, "5-5")).thenReturn(true);
-		Mockito.when(o.isMoveValid(player2Id, "4-6")).thenReturn(true);
-		Mockito.when(o.isMoveValid(player2Id, "5-3")).thenReturn(true);
-		Mockito.when(o.getNodesToSwap(player2Id, "5-5")).thenReturn(nodesToSwap1);
-		Mockito.when(o.getNodesToSwap(player2Id, "4-6")).thenReturn(nodesToSwap2);
-		Mockito.when(o.getNodesToSwap(player2Id, "5-3")).thenReturn(nodesToSwap3);
-		Assert.assertEquals("4-6", ms.move(player2Id, o).getId());
+		Assert.assertNull(ms.move(player1Id, r, b));
+		Mockito.when(r.hasValidMove(player1Id)).thenReturn(true);
+		Mockito.when(r.hasValidMove(player2Id)).thenReturn(true);
+		Assert.assertNull(ms.move(player2Id, r, b));
+		Mockito.when(r.isMoveValid(player2Id, "5-5")).thenReturn(true);
+		Mockito.when(r.isMoveValid(player2Id, "4-6")).thenReturn(true);
+		Mockito.when(r.isMoveValid(player2Id, "5-3")).thenReturn(true);
+		Mockito.when(r.getNodesToSwap(player2Id, "5-5")).thenReturn(nodesToSwap1);
+		Mockito.when(r.getNodesToSwap(player2Id, "4-6")).thenReturn(nodesToSwap2);
+		Mockito.when(r.getNodesToSwap(player2Id, "5-3")).thenReturn(nodesToSwap3);
+		Assert.assertEquals("4-6", ms.move(player2Id, r, b).getId());
 	}
 	
 }

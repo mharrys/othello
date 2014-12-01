@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import kth.game.othello.Othello;
+import kth.game.othello.board.Board;
 import kth.game.othello.board.Node;
+import kth.game.othello.rules.Rules;
 
 /**
  * This move strategy will make random moves.
@@ -20,11 +21,11 @@ public class RandomMoveStrategy implements MoveStrategy {
 	}
 
 	@Override
-	public Node move(String playerId, Othello othello) {
+	public Node move(String playerId, Rules rules, Board board) {
 		List<Node> possibleMoves = new ArrayList<Node>();
-		if (othello.hasValidMove(playerId)) {
-			for (Node node : othello.getBoard().getNodes()) {
-				if (othello.isMoveValid(playerId, node.getId())) {
+		if (rules.hasValidMove(playerId)) {
+			for (Node node : board.getNodes()) {
+				if (rules.isMoveValid(playerId, node.getId())) {
 					possibleMoves.add(node);
 				}
 			}
