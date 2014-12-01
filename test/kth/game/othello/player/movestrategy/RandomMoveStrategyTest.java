@@ -3,9 +3,9 @@ package kth.game.othello.player.movestrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-import kth.game.othello.Othello;
 import kth.game.othello.board.Board;
 import kth.game.othello.board.Node;
+import kth.game.othello.rules.Rules;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,27 +43,26 @@ public class RandomMoveStrategyTest {
 		List<Node> nodes = createListOfNodes(8, 8, player1Id, player2Id);
 		Mockito.when(b.getNodes()).thenReturn(nodes);
 
-		Othello o = Mockito.mock(Othello.class);
-		Mockito.when(o.getBoard()).thenReturn(b);
+		Rules r = Mockito.mock(Rules.class);
 
 		MoveStrategy ms = new RandomMoveStrategy();
-		Assert.assertNull(ms.move(player1Id, o));
-		Mockito.when(o.hasValidMove(player1Id)).thenReturn(true);
-		Assert.assertNull(ms.move(player1Id, o));
-		Mockito.when(o.isMoveValid(player1Id, "4-2")).thenReturn(true);
-		Assert.assertEquals("4-2", ms.move(player1Id, o).getId());
+		Assert.assertNull(ms.move(player1Id, r, b));
+		Mockito.when(r.hasValidMove(player1Id)).thenReturn(true);
+		Assert.assertNull(ms.move(player1Id, r, b));
+		Mockito.when(r.isMoveValid(player1Id, "4-2")).thenReturn(true);
+		Assert.assertEquals("4-2", ms.move(player1Id, r, b).getId());
 
-		Mockito.when(o.isMoveValid(player1Id, "5-3")).thenReturn(true);
-		Mockito.when(o.isMoveValid(player1Id, "2-4")).thenReturn(true);
-		Mockito.when(o.isMoveValid(player1Id, "3-5")).thenReturn(true);
-		Assert.assertNotNull(ms.move(player1Id, o));
+		Mockito.when(r.isMoveValid(player1Id, "5-3")).thenReturn(true);
+		Mockito.when(r.isMoveValid(player1Id, "2-4")).thenReturn(true);
+		Mockito.when(r.isMoveValid(player1Id, "3-5")).thenReturn(true);
+		Assert.assertNotNull(ms.move(player1Id, r, b));
 
 		ArrayList<String> possibleResult = new ArrayList<String>();
 		possibleResult.add("4-2");
 		possibleResult.add("5-3");
 		possibleResult.add("2-4");
 		possibleResult.add("3-5");
-		Assert.assertTrue(possibleResult.contains(ms.move(player1Id, o).getId()));
+		Assert.assertTrue(possibleResult.contains(ms.move(player1Id, r, b).getId()));
 	}
 
 }
