@@ -14,6 +14,8 @@ import kth.game.othello.player.Player;
 import kth.game.othello.player.movestrategy.MoveStrategy;
 import kth.game.othello.player.movestrategy.NaiveMoveStrategy;
 import kth.game.othello.player.movestrategy.RandomMoveStrategy;
+import kth.game.othello.rules.Rules;
+import kth.game.othello.rules.RulesImpl;
 import kth.game.othello.score.ScoreImpl;
 import kth.game.othello.score.Score;
 import kth.game.othello.score.ScoreItem;
@@ -85,11 +87,12 @@ public class OthelloFactoryImpl implements OthelloFactory {
 		Board board = createBoard(nodes, players);
 		NodeFinder nodeFinder = new NodeFinder();
 		NodeCapturer nodeCapturer = new NodeCapturer(nodeFinder);
+		Rules rules = new RulesImpl(board, nodeCapturer);
 		NodeSwapper nodeSwapper = new NodeSwapperImpl(nodes);
 		PlayerSwitcher playerSwitcher = new PlayerSwitcher(players);
 		Score score = createScore(nodes, players);
 		MoveHistory moveHistory = new MoveHistory();
-		return new OthelloImpl(id, board, nodeCapturer, nodeSwapper, playerSwitcher, score, moveHistory);
+		return new OthelloImpl(id, board, rules, nodeSwapper, playerSwitcher, score, moveHistory);
 	}
 
 	/**
