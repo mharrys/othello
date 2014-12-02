@@ -1,9 +1,7 @@
 package kth.game.othello;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import kth.game.othello.board.Board;
+import kth.game.othello.board.BoardMocker;
 import kth.game.othello.board.Node;
 import kth.game.othello.board.NodeCapturer;
 import kth.game.othello.board.NodeFinder;
@@ -15,50 +13,32 @@ import org.mockito.Mockito;
 
 public class NodeCapturerTest {
 
-	private List<Node> createListOfNodesStateOneMoveMade(int rows, int cols, String player1Id, String player2Id, Board board) {
-		List<Node> nodes = new ArrayList<Node>();
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				Node n = Mockito.mock(Node.class);
-				if ((i == ((rows / 2) - 1) && j == ((cols / 2) - 1))    ||
-						(i == (rows / 2) && j == (cols / 2))            ||
-						(i == ((rows / 2) - 1) && j == (cols / 2))      ||
-						((i == (rows / 2) - 2) && j == (cols / 2))) {
-					Mockito.when(n.getOccupantPlayerId()).thenReturn(player1Id);
-					Mockito.when(n.isMarked()).thenReturn(true);
-				} else if ((i == ((rows / 2)) && j == ((cols / 2) - 1))) {
-					Mockito.when(n.getOccupantPlayerId()).thenReturn(player2Id);
-					Mockito.when(n.isMarked()).thenReturn(true);
-				} else {
-					Mockito.when(n.getOccupantPlayerId()).thenReturn(null);
-					Mockito.when(n.isMarked()).thenReturn(false);
-				}
-				Mockito.when(n.getId()).thenReturn(j + "-" + i);
-				Mockito.when(n.getXCoordinate()).thenReturn(j);
-				Mockito.when(n.getYCoordinate()).thenReturn(i);
-				nodes.add(n);
-				Mockito.when(board.getNode(n.getXCoordinate(), n.getYCoordinate())).thenReturn(n);
-			}
-		}
-		return nodes;
-	}
-
 	@Test
 	public void nodesToCaptureInDirection() {
 		final int rows = 8;
 		final int cols = 8;
-		String p1Id = "foo";
-		String p2Id = "bar";
+		String p1Id = "w";
+		String p2Id = "b";
 		Player player1 = Mockito.mock(Player.class);
 		Player player2 = Mockito.mock(Player.class);
 		Mockito.when(player1.getId()).thenReturn(p1Id);
 		Mockito.when(player2.getId()).thenReturn(p2Id);
 
-		Board board = Mockito.mock(Board.class);
+		String state = 	". . . . . . . .\n" +
+						". . . . . . . .\n" +
+						". . . . w . . .\n" +
+						". . . w w . . .\n" +
+						". . . b w . . .\n" +
+						". . . . . . . .\n" +
+						". . . . . . . .\n" +
+						". . . . . . . .\n";
+		BoardMocker bm = new BoardMocker();
+
+		Board board = bm.mockBoardFromString(state);
+		
 		Mockito.when(board.getMaxX()).thenReturn(cols);
 		Mockito.when(board.getMaxY()).thenReturn(rows);
-		List<Node> nodes = createListOfNodesStateOneMoveMade(rows, cols, player1.getId(), player2.getId(), board);
-		Mockito.when(board.getNodes()).thenReturn(nodes);
+
 		Mockito.when(board.hasNode(Mockito.anyInt(), Mockito.anyInt())).thenReturn(true);
 
 		NodeFinder nf = new NodeFinder();
