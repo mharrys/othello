@@ -75,34 +75,36 @@ public class BoardMocker {
 	}
 
 	/**
-	 * Prints a board to stdout
+	 * Converts a board to a string
 	 * @param board the board that is printed
+	 * @return the string
 	 */
-	public void printBoard(Board board) {
-		printNodes(board.getNodes());
+	public String boardToString(Board board) {
+		return nodesToString(board.getNodes());
 	}
 
 	/**
-	 * Prints out all the nodes to stdout
+	 * Converts nodes to a string
 	 * @param nodes the nodes
 	 */
-	public void printNodes(List<Node> nodes) {
+	public String nodesToString(List<Node> nodes) {
 		int xMax = 0;
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < nodes.size(); i++) {
 			Node node = nodes.get(i);
 			if (!node.isMarked()) {
-				System.out.print('.');
+				sb.append('.');
 			} else {
-				System.out.print(node.getOccupantPlayerId());
+				sb.append(node.getOccupantPlayerId());
 			}
 			if (i < nodes.size() - 1 && nodes.get(i + 1).getXCoordinate() < xMax) {
 				xMax = 0;
-				System.out.print('\n');
+				sb.append('\n');
 			} else {
 				xMax = node.getXCoordinate();
-				System.out.print(' ');
+				sb.append(' ');
 			}
 		}
-		System.out.println();
+		return sb.toString();
 	}
 }

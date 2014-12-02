@@ -75,7 +75,7 @@ public class NodeFinderTest {
 						". . . . . . . .\n";
 
 		List<Node> nodes = bm.mockNodesFromString(state);
-bm.printNodes(nodes);
+
 		Node node = Mockito.mock(Node.class);
 		Mockito.when(node.getXCoordinate()).thenReturn(3);
 		Mockito.when(node.getYCoordinate()).thenReturn(2);
