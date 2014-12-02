@@ -2,9 +2,10 @@ package kth.game.othello;
 
 import java.util.List;
 
+import kth.game.othello.board.BoardMocker;
 import kth.game.othello.board.Node;
-
 import kth.game.othello.board.NodeFinder;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;

@@ -1,6 +1,7 @@
 package kth.game.othello;
 
 import kth.game.othello.board.Board;
+import kth.game.othello.board.BoardMocker;
 import kth.game.othello.board.Node;
 import kth.game.othello.board.NodeCapturer;
 import kth.game.othello.board.NodeFinder;

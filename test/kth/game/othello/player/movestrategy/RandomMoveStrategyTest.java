@@ -2,8 +2,8 @@ package kth.game.othello.player.movestrategy;
 
 import java.util.ArrayList;
 
-import kth.game.othello.BoardMocker;
 import kth.game.othello.board.Board;
+import kth.game.othello.board.BoardMocker;
 import kth.game.othello.rules.Rules;
 
 import org.junit.Assert;
