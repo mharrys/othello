@@ -5,7 +5,7 @@ import kth.game.OthelloGame;
 import kth.game.OthelloGameFactory;
 
 /**
- * Setup and run a one player game of Othello between two computers.
+ * Setup and run a game of Othello between two computers.
  *
  * @author Mattias Harrysson
  */
