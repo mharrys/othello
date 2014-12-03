@@ -38,10 +38,13 @@ public class Demo7 {
 		}
 
 		System.out.println();
+		System.out.println("Player in turn before undo: " + othello.getPlayerInTurn().getName());
 		System.out.println("Undo last move.");
 		othello.undo();
 		System.out.println();
 		System.out.println(othello.getBoard());
+		System.out.println();
+		System.out.println("Player in turn after undo: " + othello.getPlayerInTurn().getName());
 	}
 
 }
