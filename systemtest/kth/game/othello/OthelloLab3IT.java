@@ -130,6 +130,28 @@ public class OthelloLab3IT {
 	}
 
 	@Test
+	public void studyPlayerInTurnAfterUndoTest() {
+		Othello othello = getOthelloFactory().createHumanGame();
+
+		List<Player> players = othello.getPlayers();
+		othello.start(players.get(0).getId());
+
+		final int moves = 10;
+
+		for (int i = 0; i < moves; i++) {
+			Player player = players.get(i % 2); // 0, 1, 0, ...
+			makeAHumanMove(othello, player);
+		}
+
+		Assert.assertEquals(players.get(0).getId(), othello.getPlayerInTurn().getId());
+		for (int i = 0; i < moves; i++) {
+			Player player = players.get((i + 1) % 2); // 1, 0, 1, ...
+			othello.undo();
+			Assert.assertEquals(player.getId(), othello.getPlayerInTurn().getId());
+		}
+	}
+
+	@Test
 	public void studyCallbackAfterGameEndedTest() {
 		Othello othello = getOthelloFactory().createComputerGame();
 
