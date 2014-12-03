@@ -46,15 +46,6 @@ public class PlayerSwitcher {
 	}
 
 	/**
-	 * Returns all players in the game.
-	 * 
-	 * @return the list of players
-	 */
-	public List<Player> getPlayers() {
-		return players;
-	}
-
-	/**
 	 * Proceeds to the next player that can make a valid move.
 	 * 
 	 * @param rules the rules of a game
