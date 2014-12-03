@@ -6,7 +6,7 @@ import kth.game.othello.view.swing.OthelloView;
 import kth.game.othello.view.swing.OthelloViewFactory;
 
 /**
- * Starts an Othello game between two human players on a classic board using a GUI-view.
+ * Starts Othello game between a human versus a computer on a classic board using a GUI.
  */
 public class Demo8 {
 
@@ -14,7 +14,7 @@ public class Demo8 {
 	 * Demo entry point.
 	 */
 	public static void main(String[] args) {
-		Othello othello = new OthelloFactoryImpl().createHumanGame();
+		Othello othello = new OthelloFactoryImpl().createHumanVersusComputerGame();
 		OthelloView othelloView = OthelloViewFactory.create(othello, 500, 1500);
 		othelloView.start();
 	}
