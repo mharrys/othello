@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Mattias Harrysson
  */
-abstract public class Game {
+abstract public class OthelloGame {
 
 	protected Othello othello;
 	protected List<Player> players;
@@ -18,7 +18,7 @@ abstract public class Game {
 	/**
 	 * @param othello the Othello game
 	 */
-	public Game(Othello othello) {
+	public OthelloGame(Othello othello) {
 		this.othello = othello;
 		players = othello.getPlayers();
 	}

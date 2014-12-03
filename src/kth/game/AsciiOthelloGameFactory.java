@@ -15,31 +15,31 @@ import java.util.Set;
  *
  * @author Mattias Harrysson
  */
-public class AsciiGameFactory implements GameFactory {
+public class AsciiOthelloGameFactory implements OthelloGameFactory {
 
 	@Override
-	public Game createComputerGame() {
+	public OthelloGame createComputerGame() {
 		return createGame(createFactory().createComputerGame());
 	}
 
 	@Override
-	public Game createOnePlayerGame() {
+	public OthelloGame createOnePlayerGame() {
 		return createGame(createFactory().createHumanVersusComputerGame());
 	}
 
 	@Override
-	public Game createTwoPlayerGame() {
+	public OthelloGame createTwoPlayerGame() {
 		return createGame(createFactory().createHumanGame());
 	}
 
 	@Override
-	public Game createGame(Set<NodeData> nodesData, List<Player> players) {
+	public OthelloGame createGame(Set<NodeData> nodesData, List<Player> players) {
 		return createGame(createFactory().createGame(nodesData, players));
 	}
 
-	private Game createGame(Othello othello) {
+	private OthelloGame createGame(Othello othello) {
 		Scanner scanner = createInputScanner();
-		return new AsciiGame(othello, scanner);
+		return new AsciiOthelloGame(othello, scanner);
 	}
 
 	private OthelloFactory createFactory() {
