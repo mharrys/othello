@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import kth.game.othello.player.Player;
+import kth.game.othello.rules.Rules;
 
 /**
  * This class is responsible for tracking the player in turn for a turn-based game.
@@ -13,16 +14,31 @@ import kth.game.othello.player.Player;
 public class PlayerSwitcher {
 
 	private List<Player> players;
+	private Rules rules;
 	private int numPlayers;
 	private int playerInTurn;
 
 	/**
 	 * @param players the list of players included in the game
+	 * @param rules the rules that the game is using
 	 */
-	public PlayerSwitcher(List<Player> players) {
+	public PlayerSwitcher(List<Player> players, Rules rules) {
 		this.players = players;
+		this.rules = rules;
 		numPlayers = players.size();
+		setStartingPlayer();
+	}
 
+	/**
+	 * @param players the list of players included in the game
+	 * @param rules the rules that the game is using
+	 * @param playerId the id of the player that should make the first move
+	 */
+	public PlayerSwitcher(List<Player> players, Rules rules, String playerId) {
+		this.players = players;
+		this.rules = rules;
+		numPlayers = players.size();
+		setStartingPlayer(playerId);
 	}
 
 	/**
@@ -35,19 +51,22 @@ public class PlayerSwitcher {
 	}
 
 	/**
-	 * Returns all players in the game.
-	 * 
-	 * @return the list of players
+	 * Proceeds to the next player that can make a valid move.
 	 */
-	public List<Player> getPlayers() {
-		return players;
+	public void switchToNextPlayer() {
+		for (int i = 1; i < players.size(); i++) {
+			String playerId = players.get((playerInTurn + i) % numPlayers).getId();
+			if (rules.hasValidMove(playerId)) {
+				playerInTurn = (playerInTurn + 1) % numPlayers;
+				return;
+			}
+		}
 	}
-
 
 	/**
 	 * Randomly selects a player in turn.
 	 */
-	public void setStartingPlayer() {
+	private void setStartingPlayer() {
 		Random random = new Random();
 		random.setSeed(System.currentTimeMillis());
 		playerInTurn = random.nextInt(numPlayers + 1) % numPlayers;
@@ -58,19 +77,12 @@ public class PlayerSwitcher {
 	 * 
 	 * @param playerId the id of the desired player
 	 */
-	public void setStartingPlayer(String playerId) {
+	private void setStartingPlayer(String playerId) {
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getId().equals(playerId)) {
 				playerInTurn = i;
 			}
 		}
-	}
-
-	/**
-	 * Proceeds to the next player in turn.
-	 */
-	public void switchToNextPlayer() {
-		playerInTurn = (playerInTurn + 1) % numPlayers;
 	}
 
 }
