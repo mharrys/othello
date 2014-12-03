@@ -28,6 +28,7 @@ public class OthelloImpl implements Othello {
 	private PlayerSwitcher playerSwitcher;
 	private Score score;
 	private MoveHistory moveHistory;
+	private List<Player> players;
 	private List<Observer> gameFinishedObservers;
 	private List<Observer> moveObservers;
 
@@ -36,16 +37,16 @@ public class OthelloImpl implements Othello {
 			Board board,
 			Rules rules,
 			NodeSwapper nodeSwapper,
-			PlayerSwitcher playerSwitcher,
 			Score score,
-			MoveHistory moveHistory) {
+			MoveHistory moveHistory,
+			List<Player> players) {
 		this.id = id;
 		this.board = board;
 		this.rules = rules;
 		this.nodeSwapper = nodeSwapper;
-		this.playerSwitcher = playerSwitcher;
 		this.score = score;
 		this.moveHistory = moveHistory;
+		this.players = players;
 		gameFinishedObservers = new LinkedList<Observer>();
 		moveObservers = new LinkedList<Observer>();
 	}
@@ -86,7 +87,7 @@ public class OthelloImpl implements Othello {
 
 	@Override
 	public List<Player> getPlayers() {
-		return playerSwitcher.getPlayers();
+		return this.players;
 	}
 
 	@Override
@@ -155,12 +156,12 @@ public class OthelloImpl implements Othello {
 
 	@Override
 	public void start() {
-		playerSwitcher.setStartingPlayer();
+		playerSwitcher = new PlayerSwitcher(getPlayers());
 	}
 
 	@Override
 	public void start(String playerId) {
-		playerSwitcher.setStartingPlayer(playerId);
+		playerSwitcher = new PlayerSwitcher(getPlayers(), playerId);
 	}
 
 	@Override
@@ -180,7 +181,7 @@ public class OthelloImpl implements Othello {
 	 */
 	private void registerMove(List<Node> nodesToSwap, String playerId, String nodeId) {
 		moveHistory.pushNewMoves(nodesToSwap);
-		playerSwitcher.switchToNextPlayer();
+		playerSwitcher.switchToNextPlayer(rules);
 
 		notifyMoveObservers(nodesToSwap);
 
