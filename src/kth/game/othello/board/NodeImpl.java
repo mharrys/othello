@@ -104,7 +104,7 @@ public class NodeImpl extends Observable implements Node, Comparable<Node> {
 	 */
 	public void unmark() {
 		setChanged();
-		notifyObservers(Arrays.asList(occupantId, null));
+		notifyObservers(Arrays.asList(occupantId, occupantId));
 
 		occupantId = null;
 		marked = false;
