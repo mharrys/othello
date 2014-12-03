@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author Mattias Harrysson
  */
-public class AsciiGame extends Game {
+public class AsciiOthelloGame extends OthelloGame {
 
 	private Scanner scanner;
 
@@ -19,7 +19,7 @@ public class AsciiGame extends Game {
 	 * @param othello the Othello game
 	 * @param scanner the human input scanner
 	 */
-	public AsciiGame(Othello othello, Scanner scanner) {
+	public AsciiOthelloGame(Othello othello, Scanner scanner) {
 		super(othello);
 		this.scanner = scanner;
 	}

@@ -1,8 +1,8 @@
 package kth.demo;
 
-import kth.game.AsciiGameFactory;
-import kth.game.Game;
-import kth.game.GameFactory;
+import kth.game.AsciiOthelloGameFactory;
+import kth.game.OthelloGame;
+import kth.game.OthelloGameFactory;
 import kth.game.othello.board.factory.Diamond;
 import kth.game.othello.board.factory.NodeData;
 import kth.game.othello.player.PlayerImpl;
@@ -32,9 +32,9 @@ public class Demo6 {
 		Diamond diamond = new Diamond();
 		Set<NodeData> nodesData = diamond.getNodes(9, players);
 
-		GameFactory factory = new AsciiGameFactory();
-		Game game = factory.createGame(nodesData, players);
-		game.run();
+		OthelloGameFactory factory = new AsciiOthelloGameFactory();
+		OthelloGame othelloGame = factory.createGame(nodesData, players);
+		othelloGame.run();
 	}
 
 }

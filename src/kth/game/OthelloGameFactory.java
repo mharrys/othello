@@ -11,28 +11,28 @@ import java.util.Set;
  *
  * @author Mattias Harrysson
  */
-public interface GameFactory {
+public interface OthelloGameFactory {
 
 	/**
 	 * Creates a Othello game with two computers.
 	 *
 	 * @return Othello game
 	 */
-	public Game createComputerGame();
+	public OthelloGame createComputerGame();
 
 	/**
 	 * Creates a Othello game with one computer playing against one human.
 	 *
 	 * @return Othello game
 	 */
-	public Game createOnePlayerGame();
+	public OthelloGame createOnePlayerGame();
 
 	/**
 	 * Creates a Othello game with two humans.
 	 *
 	 * @return Othello game
 	 */
-	public Game createTwoPlayerGame();
+	public OthelloGame createTwoPlayerGame();
 
 	/**
 	 * Creates a custom Othello game.
@@ -41,6 +41,6 @@ public interface GameFactory {
 	 * @param players the participating players
 	 * @return Othello game
 	 */
-	public Game createGame(Set<NodeData> nodes, List<Player> players);
+	public OthelloGame createGame(Set<NodeData> nodes, List<Player> players);
 
 }
