@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import kth.game.othello.player.Player;
+import kth.game.othello.rules.Rules;
 
 /**
  * This class is responsible for tracking the player in turn for a turn-based game.
@@ -22,7 +23,17 @@ public class PlayerSwitcher {
 	public PlayerSwitcher(List<Player> players) {
 		this.players = players;
 		numPlayers = players.size();
+		setStartingPlayer();
+	}
 
+	/**
+	 * @param players the list of players included in the game
+	 * @param playerId the id of the player that should make the first move
+	 */
+	public PlayerSwitcher(List<Player> players, String playerId) {
+		this.players = players;
+		numPlayers = players.size();
+		setStartingPlayer(playerId);
 	}
 
 	/**
@@ -43,11 +54,25 @@ public class PlayerSwitcher {
 		return players;
 	}
 
+	/**
+	 * Proceeds to the next player that can make a valid move.
+	 * 
+	 * @param rules the rules of a game
+	 */
+	public void switchToNextPlayer(Rules rules) {
+		for (int i = 1; i < players.size(); i++) {
+			String playerId = players.get((playerInTurn + i) % numPlayers).getId();
+			if (rules.hasValidMove(playerId)) {
+				playerInTurn = (playerInTurn + 1) % numPlayers;
+				return;
+			}
+		}
+	}
 
 	/**
 	 * Randomly selects a player in turn.
 	 */
-	public void setStartingPlayer() {
+	private void setStartingPlayer() {
 		Random random = new Random();
 		random.setSeed(System.currentTimeMillis());
 		playerInTurn = random.nextInt(numPlayers + 1) % numPlayers;
@@ -58,19 +83,12 @@ public class PlayerSwitcher {
 	 * 
 	 * @param playerId the id of the desired player
 	 */
-	public void setStartingPlayer(String playerId) {
+	private void setStartingPlayer(String playerId) {
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getId().equals(playerId)) {
 				playerInTurn = i;
 			}
 		}
-	}
-
-	/**
-	 * Proceeds to the next player in turn.
-	 */
-	public void switchToNextPlayer() {
-		playerInTurn = (playerInTurn + 1) % numPlayers;
 	}
 
 }
