@@ -156,12 +156,12 @@ public class OthelloImpl implements Othello {
 
 	@Override
 	public void start() {
-		playerSwitcher = new PlayerSwitcher(getPlayers());
+		playerSwitcher = new PlayerSwitcher(getPlayers(), rules);
 	}
 
 	@Override
 	public void start(String playerId) {
-		playerSwitcher = new PlayerSwitcher(getPlayers(), playerId);
+		playerSwitcher = new PlayerSwitcher(getPlayers(), rules, playerId);
 	}
 
 	@Override
@@ -181,7 +181,7 @@ public class OthelloImpl implements Othello {
 	 */
 	private void registerMove(List<Node> nodesToSwap, String playerId, String nodeId) {
 		moveHistory.pushNewMoves(nodesToSwap);
-		playerSwitcher.switchToNextPlayer(rules);
+		playerSwitcher.switchToNextPlayer();
 
 		notifyMoveObservers(nodesToSwap);
 

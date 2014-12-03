@@ -14,24 +14,29 @@ import kth.game.othello.rules.Rules;
 public class PlayerSwitcher {
 
 	private List<Player> players;
+	private Rules rules;
 	private int numPlayers;
 	private int playerInTurn;
 
 	/**
 	 * @param players the list of players included in the game
+	 * @param rules the rules that the game is using
 	 */
-	public PlayerSwitcher(List<Player> players) {
+	public PlayerSwitcher(List<Player> players, Rules rules) {
 		this.players = players;
+		this.rules = rules;
 		numPlayers = players.size();
 		setStartingPlayer();
 	}
 
 	/**
 	 * @param players the list of players included in the game
+	 * @param rules the rules that the game is using
 	 * @param playerId the id of the player that should make the first move
 	 */
-	public PlayerSwitcher(List<Player> players, String playerId) {
+	public PlayerSwitcher(List<Player> players, Rules rules, String playerId) {
 		this.players = players;
+		this.rules = rules;
 		numPlayers = players.size();
 		setStartingPlayer(playerId);
 	}
@@ -47,10 +52,8 @@ public class PlayerSwitcher {
 
 	/**
 	 * Proceeds to the next player that can make a valid move.
-	 * 
-	 * @param rules the rules of a game
 	 */
-	public void switchToNextPlayer(Rules rules) {
+	public void switchToNextPlayer() {
 		for (int i = 1; i < players.size(); i++) {
 			String playerId = players.get((playerInTurn + i) % numPlayers).getId();
 			if (rules.hasValidMove(playerId)) {

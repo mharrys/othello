@@ -54,13 +54,13 @@ public class PlayerSwitcherTest {
 		Mockito.when(rules.hasValidMove(p2.getId())).thenReturn(true);
 		Mockito.when(rules.hasValidMove(p3.getId())).thenReturn(true);
 
-		PlayerSwitcher ps = new PlayerSwitcher(players, p1.getId());
+		PlayerSwitcher ps = new PlayerSwitcher(players, rules, p1.getId());
 		Assert.assertEquals(p1, ps.getPlayerInTurn());
-		ps.switchToNextPlayer(rules);
+		ps.switchToNextPlayer();
 		Assert.assertEquals(p2, ps.getPlayerInTurn());
-		ps.switchToNextPlayer(rules);
+		ps.switchToNextPlayer();
 		Assert.assertEquals(p3, ps.getPlayerInTurn());
-		ps.switchToNextPlayer(rules);
+		ps.switchToNextPlayer();
 		Assert.assertEquals(p1, ps.getPlayerInTurn());
 	}
 
@@ -75,14 +75,14 @@ public class PlayerSwitcherTest {
 		Mockito.when(rules.hasValidMove(p1.getId())).thenReturn(true);
 		Mockito.when(rules.hasValidMove(p2.getId())).thenReturn(true);
 
-		PlayerSwitcher ps = new PlayerSwitcher(players, p1.getId());
+		PlayerSwitcher ps = new PlayerSwitcher(players, rules, p1.getId());
 		Assert.assertEquals(p1, ps.getPlayerInTurn());
-		ps.switchToNextPlayer(rules);
+		ps.switchToNextPlayer();
 		Assert.assertEquals(p2, ps.getPlayerInTurn());
-		ps.switchToNextPlayer(rules);
+		ps.switchToNextPlayer();
 		Assert.assertEquals(p1, ps.getPlayerInTurn());
 		Mockito.when(rules.hasValidMove(p2.getId())).thenReturn(false);
-		ps.switchToNextPlayer(rules);
+		ps.switchToNextPlayer();
 		Assert.assertEquals(p1, ps.getPlayerInTurn());
 	}
 
@@ -92,7 +92,7 @@ public class PlayerSwitcherTest {
 
 		Player p1 = players.get(0);
 
-		PlayerSwitcher ps = new PlayerSwitcher(players, p1.getId());
+		PlayerSwitcher ps = new PlayerSwitcher(players, null, p1.getId());
 
 		Assert.assertEquals(p1, ps.getPlayerInTurn());
 	}
@@ -104,7 +104,7 @@ public class PlayerSwitcherTest {
 		Player p1 = players.get(0);
 		Player p2 = players.get(1);
 
-		PlayerSwitcher ps = new PlayerSwitcher(players);
+		PlayerSwitcher ps = new PlayerSwitcher(players, null);
 
 		Player playerInTurnId = ps.getPlayerInTurn();
 		assert(playerInTurnId.equals(p1) || playerInTurnId.equals(p2));
