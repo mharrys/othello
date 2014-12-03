@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kth.game.othello.player.Player;
+import kth.game.othello.rules.Rules;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -48,14 +49,18 @@ public class PlayerSwitcherTest {
 		Player p2 = players.get(1);
 		Player p3 = players.get(2);
 
-		PlayerSwitcher ps = new PlayerSwitcher(players);
-		ps.setStartingPlayer(p1.getId());
+		Rules rules = Mockito.mock(Rules.class);
+		Mockito.when(rules.hasValidMove(p1.getId())).thenReturn(true);
+		Mockito.when(rules.hasValidMove(p2.getId())).thenReturn(true);
+		Mockito.when(rules.hasValidMove(p3.getId())).thenReturn(true);
+
+		PlayerSwitcher ps = new PlayerSwitcher(players, p1.getId());
 		Assert.assertEquals(p1, ps.getPlayerInTurn());
-		ps.switchToNextPlayer();
+		ps.switchToNextPlayer(rules);
 		Assert.assertEquals(p2, ps.getPlayerInTurn());
-		ps.switchToNextPlayer();
+		ps.switchToNextPlayer(rules);
 		Assert.assertEquals(p3, ps.getPlayerInTurn());
-		ps.switchToNextPlayer();
+		ps.switchToNextPlayer(rules);
 		Assert.assertEquals(p1, ps.getPlayerInTurn());
 	}
 
@@ -65,16 +70,20 @@ public class PlayerSwitcherTest {
 
 		Player p1 = players.get(0);
 		Player p2 = players.get(1);
-		
-		PlayerSwitcher ps = new PlayerSwitcher(players);
-		ps.setStartingPlayer(p1.getId());
+
+		Rules rules = Mockito.mock(Rules.class);
+		Mockito.when(rules.hasValidMove(p1.getId())).thenReturn(true);
+		Mockito.when(rules.hasValidMove(p2.getId())).thenReturn(true);
+
+		PlayerSwitcher ps = new PlayerSwitcher(players, p1.getId());
 		Assert.assertEquals(p1, ps.getPlayerInTurn());
-		ps.switchToNextPlayer();
+		ps.switchToNextPlayer(rules);
 		Assert.assertEquals(p2, ps.getPlayerInTurn());
-		ps.switchToNextPlayer();
+		ps.switchToNextPlayer(rules);
 		Assert.assertEquals(p1, ps.getPlayerInTurn());
-		ps.switchToNextPlayer();
-		Assert.assertEquals(p2, ps.getPlayerInTurn());
+		Mockito.when(rules.hasValidMove(p2.getId())).thenReturn(false);
+		ps.switchToNextPlayer(rules);
+		Assert.assertEquals(p1, ps.getPlayerInTurn());
 	}
 
 	@Test
@@ -82,15 +91,10 @@ public class PlayerSwitcherTest {
 		List<Player> players = create2Players();
 
 		Player p1 = players.get(0);
-		Player p2 = players.get(1);
 
-		PlayerSwitcher ps = new PlayerSwitcher(players);
+		PlayerSwitcher ps = new PlayerSwitcher(players, p1.getId());
 
-		ps.setStartingPlayer(p1.getId());
 		Assert.assertEquals(p1, ps.getPlayerInTurn());
-
-		ps.setStartingPlayer(p2.getId());
-		Assert.assertEquals(p2, ps.getPlayerInTurn());
 	}
 
 	@Test
@@ -101,7 +105,6 @@ public class PlayerSwitcherTest {
 		Player p2 = players.get(1);
 
 		PlayerSwitcher ps = new PlayerSwitcher(players);
-		ps.setStartingPlayer();
 
 		Player playerInTurnId = ps.getPlayerInTurn();
 		assert(playerInTurnId.equals(p1) || playerInTurnId.equals(p2));
