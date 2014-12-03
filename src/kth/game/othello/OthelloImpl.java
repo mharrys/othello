@@ -167,6 +167,10 @@ public class OthelloImpl implements Othello {
 	public void undo() {
 		if (moveHistory.hasMoves()) {
 			nodeSwapper.copy(moveHistory.popLastMoves());
+			// loop until we hit the player before this move (in place if we are more than two players)
+			for (int i = 0; i < getPlayers().size() - 1; i++) {
+				playerSwitcher.switchToNextPlayer();
+			}
 		}
 	}
 
