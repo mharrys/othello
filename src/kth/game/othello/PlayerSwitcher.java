@@ -13,6 +13,7 @@ import kth.game.othello.rules.Rules;
  */
 public class PlayerSwitcher {
 
+	private static final int NO_PLAYER_IN_TURN = -1;
 	private List<Player> players;
 	private Rules rules;
 	private int numPlayers;
@@ -47,6 +48,10 @@ public class PlayerSwitcher {
 	 * @return the player in turn
 	 */
 	public Player getPlayerInTurn() {
+		if (playerInTurn == NO_PLAYER_IN_TURN) {
+			return null;
+		}
+
 		return players.get(playerInTurn);
 	}
 
@@ -54,13 +59,15 @@ public class PlayerSwitcher {
 	 * Proceeds to the next player that can make a valid move.
 	 */
 	public void switchToNextPlayer() {
-		for (int i = 1; i < players.size(); i++) {
-			String playerId = players.get((playerInTurn + i) % numPlayers).getId();
+		for (int i = 1; i <= players.size(); i++) {
+			int index = (playerInTurn + i) % numPlayers;
+			String playerId = players.get(index).getId();
 			if (rules.hasValidMove(playerId)) {
-				playerInTurn = (playerInTurn + i) % numPlayers;
+				playerInTurn = index;
 				return;
 			}
 		}
+		playerInTurn = NO_PLAYER_IN_TURN;
 	}
 
 	/**

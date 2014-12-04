@@ -78,11 +78,7 @@ public class OthelloImpl implements Othello {
 
 	@Override
 	public Player getPlayerInTurn() {
-		if (isActive()) {
-			return playerSwitcher.getPlayerInTurn();
-		} else {
-			return null;
-		}
+		return playerSwitcher.getPlayerInTurn();
 	}
 
 	@Override

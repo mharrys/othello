@@ -72,7 +72,7 @@ public class PlayerSwitcherTest {
 		Assert.assertEquals(p3, ps.getPlayerInTurn());
 		Mockito.when(rules.hasValidMove(p3.getId())).thenReturn(false);
 		ps.switchToNextPlayer();
-		Assert.assertEquals(p3, ps.getPlayerInTurn());
+		Assert.assertEquals(null, ps.getPlayerInTurn());
 	}
 
 	@Test
