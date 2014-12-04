@@ -57,7 +57,7 @@ public class PlayerSwitcher {
 		for (int i = 1; i < players.size(); i++) {
 			String playerId = players.get((playerInTurn + i) % numPlayers).getId();
 			if (rules.hasValidMove(playerId)) {
-				playerInTurn = (playerInTurn + 1) % numPlayers;
+				playerInTurn = (playerInTurn + i) % numPlayers;
 				return;
 			}
 		}
