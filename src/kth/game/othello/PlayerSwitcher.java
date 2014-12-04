@@ -14,7 +14,7 @@ import kth.game.othello.rules.Rules;
 public class PlayerSwitcher {
 
 	private static final int NO_PLAYER_IN_TURN = -1;
-	
+
 	private List<Player> players;
 	private Rules rules;
 	private int numPlayers;
@@ -46,7 +46,7 @@ public class PlayerSwitcher {
 	/**
 	 * Returns the player in turn.
 	 * 
-	 * @return the player in turn
+	 * @return the player in turn, or null if no player can make a move
 	 */
 	public Player getPlayerInTurn() {
 		if (playerInTurn == NO_PLAYER_IN_TURN) {
