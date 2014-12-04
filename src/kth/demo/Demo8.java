@@ -7,6 +7,8 @@ import kth.game.othello.view.swing.OthelloViewFactory;
 
 /**
  * Starts Othello game between a human versus a computer on a classic board using a GUI.
+ *
+ * @author Mattias Harrysson
  */
 public class Demo8 {
 
