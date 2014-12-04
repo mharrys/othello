@@ -76,8 +76,8 @@ public class NodeCapturer {
 		int adjX = direction.getXCoordinate();
 		int adjY = direction.getYCoordinate();
 
-		int stepX = adjX - x;
-		int stepY = adjY - y;
+		final int stepX = adjX - x;
+		final int stepY = adjY - y;
 		// start looking on the next adjacent node
 		x += stepX;
 		y += stepY;
@@ -94,11 +94,11 @@ public class NodeCapturer {
 			if (!n.isMarked()) {
 				// we hit a unmarked node before finding a node which was occupied by one of the moving players
 				break;
-			} else if (!n.getOccupantPlayerId().equals(playerId)) {
-				captures.add(n);
 			} else if (n.getOccupantPlayerId().equals(playerId)) {
 				validCapture = true;
 				break;
+			} else {
+				captures.add(n);
 			}
 
 			x += stepX;
