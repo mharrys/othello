@@ -78,11 +78,7 @@ public class OthelloImpl implements Othello {
 
 	@Override
 	public Player getPlayerInTurn() {
-		if (isActive()) {
-			return playerSwitcher.getPlayerInTurn();
-		} else {
-			return null;
-		}
+		return playerSwitcher.getPlayerInTurn();
 	}
 
 	@Override
@@ -185,8 +181,8 @@ public class OthelloImpl implements Othello {
 	 */
 	private void registerMove(List<Node> nodesToSwap, String playerId, String nodeId) {
 		moveHistory.pushNewMoves(nodesToSwap);
-		playerSwitcher.switchToNextPlayer();
 		nodeSwapper.swap(nodesToSwap, playerId, nodeId);
+		playerSwitcher.switchToNextPlayer();
 
 		notifyMoveObservers(nodesToSwap);
 
