@@ -181,8 +181,8 @@ public class OthelloImpl implements Othello {
 	 */
 	private void registerMove(List<Node> nodesToSwap, String playerId, String nodeId) {
 		moveHistory.pushNewMoves(nodesToSwap);
-		playerSwitcher.switchToNextPlayer();
 		nodeSwapper.swap(nodesToSwap, playerId, nodeId);
+		playerSwitcher.switchToNextPlayer();
 
 		notifyMoveObservers(nodesToSwap);
 
