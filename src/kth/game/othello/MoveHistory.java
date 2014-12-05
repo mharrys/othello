@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * The responsibility of this class is to store the history of moves by value and in order.
+ * The responsibility of this class is to store the history of moves by value in chronological order.
  *
  * @author Mattias Harrysson
  */
@@ -52,6 +52,13 @@ public class MoveHistory {
 	 */
 	boolean hasMoves() {
 		return !history.isEmpty();
+	}
+
+	/**
+	 * Clears all moves stored.
+	 */
+	void clear() {
+		history.clear();;
 	}
 
 }
