@@ -12,6 +12,8 @@ import kth.game.othello.board.factory.NodeData;
 import kth.game.othello.board.factory.Square;
 import kth.game.othello.player.Player;
 import kth.game.othello.score.Score;
+import kth.game.othello.view.swing.OthelloView;
+import kth.game.othello.view.swing.OthelloViewFactory;
 
 /**
  * The responsibility of this class is to perform an othello tournament.
@@ -35,6 +37,7 @@ public class OthelloTournament {
 
 	/**
 	 *  Runs the tournament until all players have met every other player two times.
+	 *  Games are printed in the console.
 	 */
 	public void run() {
 		for (int i = 0; i < players.size(); i++) {
@@ -47,6 +50,31 @@ public class OthelloTournament {
 				Othello game = othelloFactory.createGame(createNodesForSquareBoard(8, currentGamePlayers), currentGamePlayers);
 				runGameInConsole(game, startPlayer, opponent);
 				printScoreOfGame(game.getScore(), currentGamePlayers);
+				updateTournamentScores(game.getScore(), currentGamePlayers);
+			}
+		}
+		
+		printTournamentResult(players);
+	}
+	
+	/**
+	 *  Runs the tournament until all players have met every other player two times.
+	 *  Games are printed in a GUI.
+	 */
+	public void run(int timeBetweenSwaps, int timeBetweenMoves) {
+		for (int i = 0; i < players.size(); i++) {
+			Player startPlayer = players.get(i);
+			for (Player opponent : players) {
+				if (startPlayer.getId().equals(opponent.getId())) {
+					continue;
+				}
+				List<Player> currentGamePlayers = createGamePlayerList(startPlayer, opponent);
+				Othello game = othelloFactory.createGame(createNodesForSquareBoard(8, currentGamePlayers), currentGamePlayers);
+				OthelloView othelloView = OthelloViewFactory.create(game, timeBetweenSwaps, timeBetweenMoves);
+				othelloView.start(startPlayer.getId());
+				while (game.isActive()) {
+					
+				}
 				updateTournamentScores(game.getScore(), currentGamePlayers);
 			}
 		}
