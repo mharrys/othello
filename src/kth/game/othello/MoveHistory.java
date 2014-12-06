@@ -50,14 +50,14 @@ public class MoveHistory {
 	 *
 	 * @return true if has history of moves, false otherwise
 	 */
-	boolean hasMoves() {
+	public boolean hasMoves() {
 		return !history.isEmpty();
 	}
 
 	/**
 	 * Clears all moves stored.
 	 */
-	void clear() {
+	public void clear() {
 		history.clear();;
 	}
 
