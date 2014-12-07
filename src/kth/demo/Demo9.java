@@ -2,15 +2,15 @@ package kth.demo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-import kth.game.OthelloTournament;
 import kth.game.othello.player.Player;
 import kth.game.othello.player.PlayerImpl;
 import kth.game.othello.player.Player.Type;
 import kth.game.othello.player.movestrategy.AggressiveMoveStrategy;
 import kth.game.othello.player.movestrategy.NaiveMoveStrategy;
 import kth.game.othello.player.movestrategy.RandomMoveStrategy;
+import kth.tournament.OthelloTournament;
+import kth.tournament.OthelloTournamentFactory;
 
 /**
  * Starts an Othello game tournament between four different computers on a classic board using either a GUI or console.
@@ -31,19 +31,9 @@ public class Demo9 {
 		players.add(naivePlayer);
 		players.add(randomPlayer);
 		players.add(aggressivePlayer);
-		OthelloTournament t = new OthelloTournament(players);
-
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("View games in GUI view? (y or n)");
-		System.out.print("> ");
-		char c = scanner.next().charAt(0);
-
-		if (c == 'y') {
-			t.run(100, 100);
-		} else {
-			t.run();
-		}
-		scanner.close();
+		OthelloTournamentFactory othelloTournamentFactory = new OthelloTournamentFactory();
+		OthelloTournament tournament = othelloTournamentFactory.createOthelloTournamentConsole(players);
+		tournament.run();
 	}
 
 }
