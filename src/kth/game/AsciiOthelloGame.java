@@ -4,6 +4,7 @@ import kth.game.othello.Othello;
 import kth.game.othello.player.Player;
 import kth.game.othello.score.ScoreItem;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -11,8 +12,10 @@ import java.util.Scanner;
  *
  * @author Mattias Harrysson
  */
-public class AsciiOthelloGame extends OthelloGame {
+public class AsciiOthelloGame implements OthelloGame {
 
+	protected Othello othello;
+	protected List<Player> players;
 	private Scanner scanner;
 
 	/**
@@ -20,20 +23,75 @@ public class AsciiOthelloGame extends OthelloGame {
 	 * @param scanner the human input scanner
 	 */
 	public AsciiOthelloGame(Othello othello, Scanner scanner) {
-		super(othello);
+		this.othello = othello;
 		this.scanner = scanner;
+		players = othello.getPlayers();
 	}
 
 	@Override
-	protected void onStart() {
+	public void start() {
+		othello.start();
+		run();
+	}
+
+	@Override
+	public void start(String playerId) {
+		othello.start(playerId);
+		run();
+	}
+
+	/**
+	 * Runs the game until no more moves can be made.
+	 */
+	private void run() {
+		printStartMessage();
+		while (othello.isActive()) {
+			printGameState();
+			Player movingPlayer = othello.getPlayerInTurn();
+			if (movingPlayer.getType() == Player.Type.COMPUTER) {
+				othello.move();
+			} else if (othello.hasValidMove(movingPlayer.getId())) {
+				try {
+					othello.move(movingPlayer.getId(), getHumanMove());
+				} catch (IllegalArgumentException e) {
+					printErrorMessage(e.getMessage());
+				}
+			}
+		}
+		printGameState();
+		printEndMessage();
+	}
+
+	private void printStartMessage() {
 		System.out.println("**** Othello: Game start ****");
 		System.out.println();
 		System.out.println(othello.getPlayerInTurn().getName() + " is first to move.");
 		System.out.println();
 	}
 
-	@Override
-	protected String onHumanMove() {
+	private void printErrorMessage(String message) {
+		System.out.println("Error: " + message);
+	}
+
+	private void printGameState() {
+		System.out.println();
+		printScore();
+		System.out.print("\n\n");
+
+		System.out.println(othello.getBoard());
+	}
+
+	private void printEndMessage() {
+		System.out.println();
+		System.out.println("**** Othello: Game Ended ****");
+	}
+
+	/**
+	 * Read and return input from a human player.
+	 *
+	 * @return node id to make move to
+	 */
+	private String getHumanMove() {
 		System.out.println();
 		System.out.println("Enter move");
 		System.out.print("> ");
@@ -45,26 +103,6 @@ public class AsciiOthelloGame extends OthelloGame {
 		System.out.println();
 
 		return "" + x + "-" + y;
-	}
-
-	@Override
-	protected void onError(String message) {
-		System.out.println("Error: " + message);
-	}
-
-	@Override
-	protected void onDraw() {
-		System.out.println();
-		printScore();
-		System.out.print("\n\n");
-
-		System.out.println(othello.getBoard());
-	}
-
-	@Override
-	protected void onEnd() {
-		System.out.println();
-		System.out.println("**** Othello: Game Ended ****");
 	}
 
 	/**

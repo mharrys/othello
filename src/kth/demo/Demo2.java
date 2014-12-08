@@ -2,7 +2,8 @@ package kth.demo;
 
 import kth.game.AsciiOthelloGameFactory;
 import kth.game.OthelloGame;
-import kth.game.OthelloGameFactory;
+import kth.game.othello.Othello;
+import kth.game.othello.OthelloFactoryImpl;
 
 /**
  * Setup and run a game of Othello between a human and a computer.
@@ -15,9 +16,9 @@ public class Demo2 {
 	 * Demo entry point.
 	 */
 	public static void main(String[] args) {
-		OthelloGameFactory factory = new AsciiOthelloGameFactory();
-		OthelloGame othelloGame = factory.createOnePlayerGame();
-		othelloGame.run();
+		Othello othello = new OthelloFactoryImpl().createHumanVersusComputerGame();
+		OthelloGame othelloGame = new AsciiOthelloGameFactory().createGame(othello);
+		othelloGame.start();
 	}
 
 }

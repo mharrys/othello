@@ -10,7 +10,6 @@ import kth.game.othello.player.movestrategy.AggressiveMoveStrategy;
 import kth.game.othello.player.movestrategy.NaiveMoveStrategy;
 import kth.game.othello.player.movestrategy.RandomMoveStrategy;
 import kth.tournament.AsciiOthelloTournamentFactory;
-import kth.tournament.GuiOthelloTournamentFactory;
 import kth.tournament.Tournament;
 import kth.tournament.TournamentFactory;
 
