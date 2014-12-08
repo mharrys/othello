@@ -1,59 +1,68 @@
 package kth.tournament;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
+import kth.game.OthelloGame;
+import kth.game.OthelloGameFactory;
 import kth.game.othello.Othello;
 import kth.game.othello.OthelloFactory;
 import kth.game.othello.OthelloFactoryImpl;
 import kth.game.othello.board.factory.NodeData;
 import kth.game.othello.board.factory.Square;
 import kth.game.othello.player.Player;
-import kth.game.othello.view.swing.OthelloView;
-import kth.game.othello.view.swing.OthelloViewFactory;
-import kth.tournament.announcer.AsciiMatchAnnouncer;
-import kth.tournament.announcer.MatchAnnouncer;
-import kth.tournament.match.GuiOthelloMatch;
+import kth.game.othello.score.Score;
+import kth.game.othello.score.ScoreImpl;
+import kth.game.othello.score.ScoreItem;
 import kth.tournament.match.Match;
-import kth.tournament.presenter.AsciiResultPresenter;
-import kth.tournament.presenter.ResultPresenter;
-import kth.tournament.score.OthelloScore;
-import kth.tournament.score.Score;
-import kth.tournament.score.ScoreItem;
+import kth.tournament.match.OthelloMatch;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+/**
+ * A factory for producing Othello tournaments.
+ *
+ * @author Henrik Hygerth
+ * @author Mattias Harrysson
+ */
+public class OthelloTournamentFactory implements TournamentFactory {
 
-public class GuiOthelloTournamentFactory implements TournamentFactory {
+	private OthelloGameFactory gameFactory;
+
+	/**
+	 * @param gameFactory the othello game factory to use for each match
+	 */
+	public OthelloTournamentFactory(OthelloGameFactory gameFactory) {
+		this.gameFactory = gameFactory;
+	}
 
 	@Override
 	public OthelloTournament createTournament(List<Player> players) {
-		OthelloFactory factory = new OthelloFactoryImpl();
-		OthelloViewFactory viewFactory = new OthelloViewFactory();
-		List<Match> matches = createGames(factory, viewFactory, players);
+		List<Match> matches = createGames(players);
 		Score score = createScore(matches, players);
-		MatchAnnouncer matchAnnouncer = new AsciiMatchAnnouncer();
-		ResultPresenter resultPresenter = new AsciiResultPresenter();
-		return new OthelloTournament(score, matches, matchAnnouncer, resultPresenter);
+		return new OthelloTournament(score, players, matches);
 	}
 
-	private List<Match> createGames(OthelloFactory factory, OthelloViewFactory viewFactory, List<Player> players) {
+	/**
+	 * Creates a list of games to be played by the specified contestants in a tournament.
+	 *
+	 * @param players the contestant
+	 * @return list of games
+	 */
+	private List<Match> createGames(List<Player> players) {
 		List<Match> matches = new ArrayList<Match>();
+		OthelloFactory factory = new OthelloFactoryImpl();
 		for (Player playerA : players) {
 			for (Player playerB : players) {
 				if (playerA.getId().equals(playerB.getId())) {
 					continue;
 				}
 				Othello othello = createClassicOthello(factory, playerA, playerB);
-				OthelloView othelloView = createOthelloView(viewFactory, othello);
-				Match match = new GuiOthelloMatch(othello, othelloView, playerA.getId());
-				matches.add(match);
+				OthelloGame game = gameFactory.createGame(othello);
+				matches.add(new OthelloMatch(game, playerA.getId()));
 			}
 		}
 		return matches;
-	}
-
-	private OthelloView createOthelloView(OthelloViewFactory factory, Othello othello) {
-		return factory.create(othello, 0, 0);
 	}
 
 	/**
@@ -89,7 +98,7 @@ public class GuiOthelloTournamentFactory implements TournamentFactory {
 	 * @return new score instance
 	 */
 	private Score createScore(List<Match> matches, List<Player> players) {
-		OthelloScore score = new OthelloScore(createScoreItems(players));
+		ScoreImpl score = new ScoreImpl(createScoreItems(players));
 		for (Match match : matches) {
 			match.addObserver(score);
 		}
@@ -105,7 +114,7 @@ public class GuiOthelloTournamentFactory implements TournamentFactory {
 	private List<ScoreItem> createScoreItems(List<Player> players) {
 		List<ScoreItem> items = new ArrayList<ScoreItem>();
 		for (Player player : players) {
-			ScoreItem item = new ScoreItem(player.getId(), player.getName(), 0);
+			ScoreItem item = new ScoreItem(player.getId(), 0);
 			items.add(item);
 		}
 		return items;

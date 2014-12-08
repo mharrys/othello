@@ -16,7 +16,7 @@ public class Demo8 {
 	 * Demo entry point.
 	 */
 	public static void main(String[] args) {
-		Othello othello = new OthelloFactoryImpl().createHumanVersusComputerGame();
+		Othello othello = new OthelloFactoryImpl().createComputerGame();
 		OthelloGame othelloGame = new GuiOthelloGameFactory().createGame(othello);
 		othelloGame.start();
 	}

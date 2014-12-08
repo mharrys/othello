@@ -1,6 +1,5 @@
 package kth.tournament.match;
 
-import java.util.List;
 import java.util.Observer;
 
 /**
@@ -19,8 +18,9 @@ public interface Match {
 	 */
 	public void addObserver(Observer observer);
 
+	/**
+	 * Starts a match, running from start to finish. It must inform the observers when match is finished.
+	 */
 	public void start();
-
-	public List<String> getCompetitorNames();
 
 }

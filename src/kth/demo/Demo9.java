@@ -3,13 +3,15 @@ package kth.demo;
 import java.util.Arrays;
 import java.util.List;
 
+import kth.game.AsciiOthelloGameFactory;
+import kth.game.GuiOthelloGameFactory;
 import kth.game.othello.player.Player;
 import kth.game.othello.player.PlayerImpl;
 import kth.game.othello.player.Player.Type;
 import kth.game.othello.player.movestrategy.AggressiveMoveStrategy;
 import kth.game.othello.player.movestrategy.NaiveMoveStrategy;
 import kth.game.othello.player.movestrategy.RandomMoveStrategy;
-import kth.tournament.AsciiOthelloTournamentFactory;
+import kth.tournament.OthelloTournamentFactory;
 import kth.tournament.Tournament;
 import kth.tournament.TournamentFactory;
 
@@ -32,7 +34,12 @@ public class Demo9 {
 		// TODO: Fourth player implementation
 		List<Player> players = Arrays.asList(naivePlayer, randomPlayer, aggressivePlayer);
 
-		TournamentFactory factory = new AsciiOthelloTournamentFactory();
+		TournamentFactory factory;
+		if (true) {
+			factory = new OthelloTournamentFactory(new AsciiOthelloGameFactory());
+		} else {
+			factory = new OthelloTournamentFactory(new GuiOthelloGameFactory(0, 0));
+		}
 		Tournament tournament = factory.createTournament(players);
 		tournament.start();
 	}

@@ -11,10 +11,23 @@ import kth.game.othello.view.swing.OthelloViewFactory;
  */
 public class GuiOthelloGameFactory implements OthelloGameFactory {
 
+	private int timeBetweenSwaps;
+	private int timeBetweenMoves;
+
+	public GuiOthelloGameFactory() {
+		timeBetweenSwaps = 500;
+		timeBetweenMoves = 1500;
+	}
+
+	public GuiOthelloGameFactory(int timeBetweenSwaps, int timeBetweenMoves) {
+		this.timeBetweenSwaps = timeBetweenSwaps;
+		this.timeBetweenMoves = timeBetweenMoves;
+	}
+
 	@Override
 	public OthelloGame createGame(Othello othello) {
-		OthelloView othelloView = OthelloViewFactory.create(othello, 500, 1500);
-		return new GuiOthelloGame(othelloView);
+		OthelloView othelloView = OthelloViewFactory.create(othello, timeBetweenSwaps, timeBetweenMoves);
+		return new GuiOthelloGame(othelloView, othello);
 	}
 
 }

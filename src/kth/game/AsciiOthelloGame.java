@@ -5,6 +5,8 @@ import kth.game.othello.player.Player;
 import kth.game.othello.score.ScoreItem;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Scanner;
  *
  * @author Mattias Harrysson
  */
-public class AsciiOthelloGame implements OthelloGame {
+public class AsciiOthelloGame extends Observable implements OthelloGame, Observer {
 
 	protected Othello othello;
 	protected List<Player> players;
@@ -24,6 +26,7 @@ public class AsciiOthelloGame implements OthelloGame {
 	 */
 	public AsciiOthelloGame(Othello othello, Scanner scanner) {
 		this.othello = othello;
+		this.othello.addGameFinishedObserver(this);
 		this.scanner = scanner;
 		players = othello.getPlayers();
 	}
@@ -144,6 +147,12 @@ public class AsciiOthelloGame implements OthelloGame {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public void update(Observable observable, Object object) {
+		setChanged();
+		notifyObservers(othello.getScore());
 	}
 
 }
