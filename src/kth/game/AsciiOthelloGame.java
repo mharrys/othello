@@ -68,8 +68,12 @@ public class AsciiOthelloGame extends Observable implements OthelloGame, Observe
 	private void printStartMessage() {
 		System.out.println("**** Othello: Game start ****");
 		System.out.println();
+		int vs = players.size() - 1;
+		for (Player player : players) {
+			System.out.print(player.getName() + (vs > 0 ? " vs " : ". "));
+			vs--;
+		}
 		System.out.println(othello.getPlayerInTurn().getName() + " is first to move.");
-		System.out.println();
 	}
 
 	private void printErrorMessage(String message) {

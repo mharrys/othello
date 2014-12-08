@@ -39,12 +39,10 @@ public class OthelloTournament implements Tournament {
 	}
 
 	private void printScore() {
-		System.out.println();
 		System.out.print("Tournament Score: ");
 		for (ScoreItem item : score.getPlayersScore()) {
 			System.out.print(getPlayerNameFromId(item.getPlayerId()) + " (" + item.getScore() + ") ");
 		}
-		System.out.println();
 	}
 
 	/**

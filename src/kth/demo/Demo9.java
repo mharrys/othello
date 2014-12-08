@@ -35,7 +35,7 @@ public class Demo9 {
 		List<Player> players = Arrays.asList(naivePlayer, randomPlayer, aggressivePlayer);
 
 		TournamentFactory factory;
-		if (true) {
+		if (false) {
 			factory = new OthelloTournamentFactory(new AsciiOthelloGameFactory());
 		} else {
 			factory = new OthelloTournamentFactory(new GuiOthelloGameFactory(0, 0));
