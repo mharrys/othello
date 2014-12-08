@@ -18,6 +18,8 @@ import kth.game.othello.score.ScoreImpl;
 import kth.game.othello.score.ScoreItem;
 import kth.tournament.match.Match;
 import kth.tournament.match.OthelloMatch;
+import kth.tournament.presenter.AsciiResultPresenter;
+import kth.tournament.presenter.ResultPresenter;
 
 /**
  * A factory for producing Othello tournaments.
@@ -40,7 +42,8 @@ public class OthelloTournamentFactory implements TournamentFactory {
 	public OthelloTournament createTournament(List<Player> players) {
 		List<Match> matches = createGames(players);
 		Score score = createScore(matches, players);
-		return new OthelloTournament(score, players, matches);
+		ResultPresenter resultPresenter = new AsciiResultPresenter();
+		return new OthelloTournament(score, players, matches, resultPresenter);
 	}
 
 	/**
