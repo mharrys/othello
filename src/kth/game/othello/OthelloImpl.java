@@ -27,6 +27,7 @@ public class OthelloImpl implements Othello, Observer {
 	private PlayerSwitcher playerSwitcher;
 	private List<Player> players;
 	private List<Observer> gameFinishedObservers;
+	private boolean finished;
 
 	/**
 	 * @param id the globally unique id for this Othello
@@ -121,12 +122,14 @@ public class OthelloImpl implements Othello, Observer {
 	public void start() {
 		playerSwitcher = new PlayerSwitcher(getPlayers(), rules);
 		playerMover.undoAll();
+		finished = false;
 	}
 
 	@Override
 	public void start(String playerId) {
 		playerSwitcher = new PlayerSwitcher(getPlayers(), rules, playerId);
 		playerMover.undoAll();
+		finished = false;
 	}
 
 	@Override
@@ -136,7 +139,8 @@ public class OthelloImpl implements Othello, Observer {
 
 	@Override
 	public void update(Observable observable, Object object) {
-		if (observable instanceof PlayerMover && !isActive()) {
+		if (observable instanceof PlayerMover && !finished && !isActive()) {
+			finished = true;
 			for (Observer observer : gameFinishedObservers) {
 				observer.update(null, null);
 			}
